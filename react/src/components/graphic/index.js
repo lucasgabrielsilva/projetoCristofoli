@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js';
-
+import * as Zoom from 'chartjs-plugin-zoom';
 import { Container, Canvas } from './styles';
 
 function Graphic(props) {
@@ -19,6 +19,40 @@ function Graphic(props) {
                     text: props.title,
                     fontSize: 2,
                     fontColor: 'gray',
+                },
+                plugins: {
+                    zoom: {
+                        zoom: {
+                            enabled: true,
+                            mode: 'y',
+                            drag: {
+                                borderColor: 'rgba(225,225,225,0.3)',
+                                borderWidth: 5,
+                                backgroundColor: 'rgb(225,225,225)',
+                                animationDuration: 0,
+                            },
+                            rangeMin: {
+                                x: 0,
+                                y: 0,
+                            },
+                            rangeMax: {
+                                x: 0,
+                                y: 50,
+                            },
+                        },
+                        pan: {
+                            enabled: true,
+                            mode: 'y',
+                            rangeMin: {
+                                x: 0,
+                                y: 0,
+                            },
+                            rangeMax: {
+                                x: 0,
+                                y: 50,
+                            },
+                        },
+                    },
                 },
                 animation: {
                     duration: 0,
@@ -43,6 +77,10 @@ function Graphic(props) {
                 scales: {
                     yAxes: [
                         {
+                            ticks: {
+                                max: 40,
+                                min: 0,
+                            },
                             gridLines: {
                                 display: true,
                                 color: 'gray',
@@ -77,18 +115,18 @@ function Graphic(props) {
                 dataset.data.push(props.data.tension);
             }
         });
-        if (refCanvas.current.chart.data.labels.length % 100 === 0) {
+        if (refCanvas.current.chart.data.labels.length % 20 === 0) {
             const size =
                 parseInt(
                     refCanvas.current.canvas.style.width.split('px')[0],
                     10,
                 ) + 100;
             refCanvas.current.canvas.style.width = `${size}px`;
-            refCanvas.current.canvas.width += 100;
-            refCanvas.current.chart.width += 100;
+            refCanvas.current.canvas.width += 20;
+            refCanvas.current.chart.width += 20;
             document.getElementById('container').scrollLeft += 100;
-            refCanvas.current.chart.update();
         }
+        refCanvas.current.chart.update(0);
     }, [props.data]);
 
     useEffect(() => {
@@ -100,10 +138,20 @@ function Graphic(props) {
         refCanvas.current.chart.update(0);
     }, [props.clean]);
 
+    const handleOnClick = (event) => {
+        console.log(refCanvas.current.chart.options.scales.yAxes[0].ticks);
+        refCanvas.current.chart.options.scales.yAxes[0].ticks.min += 5;
+        refCanvas.current.chart.options.scales.yAxes[0].ticks.max -= 5;
+        refCanvas.current.chart.update(0);
+    };
+
     return (
-        <Container id="container">
-            <Canvas ref={refCanvas} />
-        </Container>
+        <>
+            <button onClick={(e) => handleOnClick(e)}> teste </button>
+            <Container id="container">
+                <Canvas ref={refCanvas} />
+            </Container>
+        </>
     );
 }
 

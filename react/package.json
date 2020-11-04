@@ -6,6 +6,7 @@
   "dependencies": {
     "canvas-gauges": "^2.1.7",
     "chart.js": "^2.9.4",
+    "chartjs-plugin-zoom": "^0.7.7",
     "cp": "^0.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
