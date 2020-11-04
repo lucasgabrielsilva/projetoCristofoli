@@ -1,0 +1,37 @@
+{
+  "name": "Cristofoli",
+  "version": "1.0.0",
+  "description": "Projeto de comunicação com a autoclave",
+  "main": "./src/main.js",
+  "author": "Cristófoli Biossegurança LTDA",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild",
+    "rebuildi": "electron-rebuild -f -w serialport",
+    "dist": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "^8.5.3",
+    "electron-builder": "^22.8.0",
+    "electron-rebuild": "^2.3.2"
+  },
+  "build": {
+    "files": [
+      "./build/**/*",
+      "./src/**/*",
+      "./assets/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "appId": "com.electron.cristofoli.desktop",
+      "target": "nsis",
+      "icon": "./assets/cristofoli.ico"
+    }
+  },
+  "dependencies": {
+    "fast-csv": "^4.3.2",
+    "serialport": "^9.0.2"
+  }
+}

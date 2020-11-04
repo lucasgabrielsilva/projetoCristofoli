@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img height="32" width="32" src="../../../assets/alert-line.svg"/>
+            <h2>Deseja realmente sair?</h2>
+        </div>
+        <div class="msg">
+            <label>
+                Um teste está sendo realizado, caso você saia agora todo o progresso será perdido!<br />
+                Caso queira salvar o resultado parcial do teste: clique em "Não" e em seguida em "Parar".
+            </label>
+        </div>
+        <div class="buttons">
+            <button onclick="window.api.send('redirect', true)"> Sim </button>
+            <button onclick="window.api.send('redirect', false)"> Não </button> 
+        </div>
+    </div>   
+</body>
+</html>
