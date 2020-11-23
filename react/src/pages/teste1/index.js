@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Moment from 'moment';
 import MenuBar from '../../components/menuBar';
 import Graphic from '../../components/graphic';
-
+import ModelData from '../../configs';
 import {
     Container,
     ButtonBar,
@@ -11,34 +12,17 @@ import {
     TextArea,
     DivTest,
     Main,
+    Select,
     DivResult,
     DivGraph,
 } from './styles';
 
-let dataToCsv = [
-    [
-        'tensão',
-        'Temperatura da resistência',
-        'temperatura do vaso',
-        'pressão',
-        'tempo de pressurização',
-        'tempo de esterilização',
-        'tempo de despressurização',
-        'tempo de secagem',
-        'tempo de resfriamento',
-        'tempo total',
-    ],
-];
-
+let dataToCsv = [];
 let result = false;
+let timeInitial = Date.now();
 
 function Teste1() {
-    const [data, setData] = useState({
-        resistence: 0,
-        vase: 0,
-        pressure: 0,
-        tension: 0,
-    });
+    const [data, setData] = useState(false);
 
     const [statusButton, setStatusButton] = useState({
         start: false,
@@ -48,35 +32,35 @@ function Teste1() {
     const [textAreaValue, setTextAreaValue] = useState('Aguardando...');
     const [isRunning, setIsRunning] = useState(false);
     const [clean, setClean] = useState(false);
+    const [mode, setMode] = useState('realTime');
+    const [lines, setLines] = useState('temperature');
+    const [model, setModel] = useState(false);
 
-    const handleDataA = (data) => {
-        const temp = {
-            resistence: data.resistence,
-            vase: data.vase,
-            pressure: data.pressure,
-            tension: data.tension,
-        };
-        dataToCsv.push([
-            temp.tension,
-            temp.resistence,
-            temp.vase,
-            temp.pressure,
-        ]);
-        setData(temp);
+    const handleTime = (now) => {
+        return Moment(now - timeInitial)
+            .add('-21', 'h')
+            .toDate();
     };
 
-    function handleDataB(data) {
+    const handleDataA = (data) => {
+        data.timeStamp = handleTime(data.timeStamp);
+        const temp = Object.keys(data).map((parameter) => {
+            return data[parameter];
+        });
+        temp[0] = temp[0].getTime();
+        dataToCsv.push(temp);
+        setData(data);
+    };
+
+    const handleDataB = (data) => {
         if (data) {
-            dataToCsv[1].push(data.presurization);
-            dataToCsv[1].push(data.sterilization);
-            dataToCsv[1].push(data.depresurization);
-            dataToCsv[1].push(data.drying);
-            dataToCsv[1].push(data.coulding);
-            dataToCsv[1].push(data.total);
+            data.forEach((value) => {
+                dataToCsv[1].push(value);
+            });
             result = true;
         }
         handleStop();
-    }
+    };
 
     const handleDataC = (data) => {
         setTextAreaValue('finalizando teste...');
@@ -94,7 +78,7 @@ function Teste1() {
         if (result) {
             setTextAreaValue(
                 textAreaValue.concat(
-                    `\nResultado.\ntempo de pressurização: ${dataToCsv[1][4]}\ntempo de esterilização: ${dataToCsv[1][5]}\ntempo de despressurização: ${dataToCsv[1][6]}\ntempo de secagem: ${dataToCsv[1][7]}\ntempo de resfriamento: ${dataToCsv[1][8]}\ntempo total: ${dataToCsv[1][9]}\n`,
+                    `\nResultado.\ntempo de pressurização: ${dataToCsv[1][5]}\ntempo de esterilização: ${dataToCsv[1][6]}\ntempo de despressurização: ${dataToCsv[1][7]}\ntempo de secagem: ${dataToCsv[1][8]}\ntempo de resfriamento: ${dataToCsv[1][9]}\ntempo total: ${dataToCsv[1][10]}\n`,
                 ),
             );
         }
@@ -115,6 +99,7 @@ function Teste1() {
         setTextAreaValue(
             textAreaValue.concat('\nIniciando...\nrealizando testes...'),
         );
+        timeInitial = Date.now();
     };
 
     const handleClean = (event) => {
@@ -122,7 +107,7 @@ function Teste1() {
         setClean(true);
         setTimeout(() => {
             setClean(false);
-        }, 100);
+        }, 10);
         dataToCsv = [dataToCsv[0]];
         result = false;
         setStatusButton({
@@ -143,21 +128,51 @@ function Teste1() {
             stop: true,
             clean: false,
         });
+        dataToCsv.forEach((line, index) => {
+            if (index === 0) {
+                line.unshift('modelo');
+            } else if (index === 1) {
+                line.unshift(window.api.get('model'));
+            } else {
+                line.unshift(null);
+            }
+        });
         window.api.stop('A');
         window.api.stop('B');
         window.api.send('saveCSV', dataToCsv);
     };
+
+    const handleChangeLines = (event) => {
+        event.preventDefault();
+        setLines(event.target.value);
+    };
+
+    const handleChangeMode = (event) => {
+        event.preventDefault();
+        setMode(event.target.value);
+    };
+
+    useEffect(async () => {
+        setModel(ModelData[`${await window.api.get('model')}`]);
+    }, []);
+
+    useEffect(() => {
+        if (model) {
+            dataToCsv.push(model.csvHead);
+        }
+    }, [model]);
 
     return (
         <Container>
             <MenuBar changeWindow={isRunning} />
             <DivTest>
                 <Header>
-                    <Title> Teste</Title>
+                    <Title> DataLogger </Title>
                     <ButtonBar>
                         <Button
                             disabled={statusButton.start}
                             onClick={(e) => handleStart(e)}
+                            title="Iniciar ciclo"
                         >
                             {' '}
                             Iniciar{' '}
@@ -165,6 +180,7 @@ function Teste1() {
                         <Button
                             disabled={statusButton.stop}
                             onClick={(e) => handleStop(e)}
+                            title="Interromper ciclo"
                         >
                             {' '}
                             Parar{' '}
@@ -172,43 +188,57 @@ function Teste1() {
                         <Button
                             disabled={statusButton.clean}
                             onClick={(e) => handleClean(e)}
+                            title="Limpar gráfico"
                         >
                             {' '}
                             Limpar{' '}
                         </Button>
+                        <Select
+                            value={lines}
+                            onChange={(e) => handleChangeLines(e)}
+                            title="Selecionar linhas do gráfico"
+                        >
+                            {model
+                                ? model.scales.map((scale) => {
+                                      return (
+                                          <option
+                                              title={scale.title}
+                                              value={scale.id}
+                                          >
+                                              {scale.name}
+                                          </option>
+                                      );
+                                  })
+                                : null}
+                        </Select>
+                        <Select
+                            value={mode}
+                            onChange={(e) => handleChangeMode(e)}
+                            title="Selecionar mode de visualização"
+                        >
+                            <option
+                                title="Visualizar dados em tempo real"
+                                value="realTime"
+                            >
+                                Tempo Real{' '}
+                            </option>
+                            <option
+                                title="Analisar dados obtidos"
+                                value="analyze"
+                            >
+                                {' '}
+                                Analisar{' '}
+                            </option>
+                        </Select>
                     </ButtonBar>
                 </Header>
                 <Main>
                     <DivGraph>
                         <Graphic
-                            datasets={[
-                                {
-                                    label: 'Resistência(ºC)',
-                                    borderColor: 'blue',
-                                    fill: false,
-                                    showLine: true,
-                                },
-                                {
-                                    label: 'Vaso(ºC)',
-                                    borderColor: 'green',
-                                    fill: false,
-                                    showLine: true,
-                                },
-                                {
-                                    label: 'Pressão(bar)',
-                                    borderColor: 'orange',
-                                    fill: false,
-                                    showLine: true,
-                                },
-                                {
-                                    label: 'Voltagem(V)',
-                                    borderColor: 'red',
-                                    fill: false,
-                                    showLine: true,
-                                },
-                            ]}
                             data={data}
                             clean={clean}
+                            mode={mode}
+                            lines={lines}
                         />
                     </DivGraph>
                     <DivResult>

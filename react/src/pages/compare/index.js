@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MenuBar from '../../components/menuBar';
 import GraphicCompare from '../../components/graphicCompare';
-
+import ModelData from '../../configs';
 import {
     Container,
     ButtonBar,
@@ -18,33 +18,94 @@ import {
 
 function Teste1() {
     const [data1, setData1] = useState({
-        resistence: [0],
-        vase: [0],
-        pressure: [0],
-        tension: [0],
+        resistence: [],
+        vase: [],
+        pressure: [],
+        tension: [],
         label: 'dados 1',
     });
 
     const [data2, setData2] = useState({
-        resistence: [0],
-        vase: [0],
-        pressure: [0],
-        tension: [0],
+        resistence: [],
+        vase: [],
+        pressure: [],
+        tension: [],
         label: 'dados 2',
     });
 
-    const [show, setShow] = useState([data1.resistence, data2.resistence]);
+    const [show, setShow] = useState(false);
     const [type, setType] = useState('Resistência(ºC)');
     const [clean, setClean] = useState(false);
+    const [zoom, setZoom] = useState(false);
+    const [unit, setUnit] = useState('temperature');
+    const [model, setModel] = useState(false);
     const [textArea1, setTextArea1] = useState('Aguardando dados...');
     const [textArea2, setTextArea2] = useState('Aguardando dados...');
 
     const handleLoad1 = (data) => {
+        const temp = {
+            resistence: [],
+            vase: [],
+            pressure: [],
+            tension: [],
+            label: data.label,
+        };
+        for (let i = 0; i < data.date.length; i += 1) {
+            temp.resistence.push({
+                x: parseInt(data.date[i], 10),
+                y: data.resistence[i],
+            });
+            temp.vase.push({
+                x: parseInt(data.date[i], 10),
+                y: data.vase[i],
+            });
+            temp.pressure.push({
+                x: parseInt(data.date[i], 10),
+                y: data.pressure[i],
+            });
+            temp.tension.push({
+                x: parseInt(data.date[i], 10),
+                y: data.tension[i],
+            });
+        }
+        data.resistence = temp.resistence;
+        data.vase = temp.vase;
+        data.pressure = temp.pressure;
+        data.tension = temp.tension;
         setData1(data);
         window.api.stop('dataCSV');
     };
 
     const handleLoad2 = (data) => {
+        const temp = {
+            resistence: [],
+            vase: [],
+            pressure: [],
+            tension: [],
+            label: data.label,
+        };
+        for (let i = 0; i < data.date.length; i += 1) {
+            temp.resistence.push({
+                x: parseInt(data.date[i], 10),
+                y: data.resistence[i],
+            });
+            temp.vase.push({
+                x: parseInt(data.date[i], 10),
+                y: data.vase[i],
+            });
+            temp.pressure.push({
+                x: parseInt(data.date[i], 10),
+                y: data.pressure[i],
+            });
+            temp.tension.push({
+                x: parseInt(data.date[i], 10),
+                y: data.tension[i],
+            });
+        }
+        data.resistence = temp.resistence;
+        data.vase = temp.vase;
+        data.pressure = temp.pressure;
+        data.tension = temp.tension;
         setData2(data);
         window.api.stop('dataCSV');
     };
@@ -63,12 +124,16 @@ function Teste1() {
 
     useEffect(() => {
         if (type === 'Resistência(ºC)') {
+            setUnit('temperature');
             setShow([data1.resistence, data2.resistence]);
-        } else if (type === 'Vaso(ºC)') {
+        } else if (type === 'Vaso de Pressão(ºC)') {
+            setUnit('temperature');
             setShow([data1.vase, data2.vase]);
-        } else if (type === 'Pressão') {
+        } else if (type === 'Pressão(Kgf/cm²)') {
+            setUnit('pressure');
             setShow([data1.pressure, data2.pressure]);
         } else {
+            setUnit('tension');
             setShow([data1.tension, data2.tension]);
         }
         if (data1.avgRe) {
@@ -78,7 +143,7 @@ function Teste1() {
                         `Vaso -> máxima: ${data1.maxVa}ºC média: ${data1.avgVa}ºC\n`,
                     )
                     .concat(
-                        `Pressão -> máxima: ${data1.maxPe}bar média: ${data1.avgPe}bar\n`,
+                        `Pressão -> máxima: ${data1.maxPe}Kgf/cm² média: ${data1.avgPe}Kgf/cm²\n`,
                     )
                     .concat(
                         `Tensão -> máxima: ${data1.maxTe}V média: ${data1.avgTe}V\n`,
@@ -98,7 +163,7 @@ function Teste1() {
                         `Vaso -> máxima: ${data2.maxVa}ºC média: ${data2.avgVa}ºC\n`,
                     )
                     .concat(
-                        `Pressão -> máxima: ${data2.maxPe}bar média: ${data2.avgPe}bar\n`,
+                        `Pressão -> máxima: ${data2.maxPe}Kgf/cm² média: ${data2.avgPe}Kgf/cm²\n`,
                     )
                     .concat(
                         `Tensão -> máxima: ${data2.maxTe}V média: ${data2.avgTe}V\n`,
@@ -119,6 +184,20 @@ function Teste1() {
         setTimeout(() => {
             setClean(false);
         }, 100);
+        setData1({
+            resistence: [],
+            vase: [],
+            pressure: [],
+            tension: [],
+            label: 'dados 1',
+        });
+        setData2({
+            resistence: [],
+            vase: [],
+            pressure: [],
+            tension: [],
+            label: 'dados 2',
+        });
         setTextArea1('Aguardando dados...');
         setTextArea2('Aguardando dados...');
     };
@@ -128,6 +207,18 @@ function Teste1() {
         setType(event.target.value);
     };
 
+    const handleResetZoom = (event) => {
+        event.preventDefault();
+        setZoom(true);
+        setInterval(() => {
+            setZoom(false);
+        }, 10);
+    };
+
+    useEffect(async () => {
+        setModel(ModelData[`${await window.api.get('model')}`]);
+    }, []);
+
     return (
         <Container>
             <MenuBar changeWindow={false} />
@@ -135,29 +226,51 @@ function Teste1() {
                 <Header>
                     <Title> Comparar</Title>
                     <ButtonBar>
-                        <Button onClick={(e) => handleStart1(e)}>
+                        <Button
+                            onClick={(e) => handleStart1(e)}
+                            title="Carregar primeiro conjunto de dados"
+                        >
                             {' '}
                             Carregar dados1{' '}
                         </Button>
-                        <Button onClick={(e) => handleStart2(e)}>
+                        <Button
+                            onClick={(e) => handleStart2(e)}
+                            title="Carregar segundo conjunto de dados"
+                        >
                             {' '}
                             Carregar dados2{' '}
                         </Button>
                         <Select
                             value={type}
                             onChange={(e) => handleChangeType(e)}
+                            title="Selecionar parâmetro para visualização"
                         >
-                            <option value="Resistência(ºC)">
-                                {' '}
-                                resistência{' '}
-                            </option>
-                            <option value="Vaso(ºC)"> vaso </option>
-                            <option value="Pressão(Libras)"> pressão </option>
-                            <option value="Tensão(V)"> tensão </option>
+                            {model
+                                ? model.parameters.map((parameter) => {
+                                      return (
+                                          <option
+                                              title={parameter.title}
+                                              value={parameter.name}
+                                          >
+                                              {parameter.name}
+                                          </option>
+                                      );
+                                  })
+                                : null}
                         </Select>
-                        <Button onClick={(e) => handleClean(e)}>
+                        <Button
+                            onClick={(e) => handleClean(e)}
+                            title="Limpar gráfico"
+                        >
                             {' '}
                             Limpar{' '}
+                        </Button>
+                        <Button
+                            onClick={(e) => handleResetZoom(e)}
+                            title="Voltar o nivel do zoom ao valor inicial"
+                        >
+                            {' '}
+                            Reset Zoom{' '}
                         </Button>
                     </ButtonBar>
                 </Header>
@@ -168,6 +281,8 @@ function Teste1() {
                             title={type}
                             labels={[data1.label, data2.label]}
                             clean={clean}
+                            zoom={zoom}
+                            unit={unit}
                         />
                     </DivGraph>
                     <DivResult>

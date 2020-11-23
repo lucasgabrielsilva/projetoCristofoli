@@ -6,6 +6,7 @@ const csv = require('@fast-csv/parse');
 const { format } = require('@fast-csv/format');
 const SerialPort = require("serialport");
 const ByteLength = require('@serialport/parser-byte-length')
+const Moment = require('moment');
 
 let port = null;
 let parser = null
@@ -18,9 +19,9 @@ let child;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        Width: 1366, 
+        Width: 1366,
         Height: 768,
-        minWidth: 750, 
+        minWidth: 750,
         minHeight: 450,
         center: true,
         useContentSize: true,
@@ -40,7 +41,7 @@ function createWindow() {
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, '..', 'build/index.html'),
         protocol: 'file:',
-        slashes: true 
+        slashes: true
     }));
 
     mainWindow.on('closed', function () {
@@ -68,7 +69,7 @@ function createWindow() {
     child.loadURL(url.format({
     pathname: path.join(__dirname, './components/modal/index.html'),
     protocol: 'file:',
-    slashes: true 
+    slashes: true
     }));
 
     child.on('close', function () {
@@ -85,6 +86,10 @@ const handleTime = (seconds) =>{
     return time.toISOString().substr(11, 8);
 }
 
+const handleFileName = (date) => {
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} - ${date.getHours()}:${date.getMinutes() < 10 ? '0'.concat(date.getMinutes()) : date.getMinutes()}`;
+}
+
 app.on('ready', createWindow);
 
 app.on('window-all-closed', function () {
@@ -99,7 +104,6 @@ ipcMain.on('Exit', (event) => {
 });
 
 ipcMain.on('teste', (event, argument) => {
-    console.log('oi')
     event.reply("B", false);
 });
 
@@ -129,7 +133,7 @@ ipcMain.on("listPorts", (event) => {
         const ports = data.map((port) => {
             return port.path;
         });
-        event.reply("listPort", ports); 
+        event.reply("listPort", ports);
     });
 })
 
@@ -147,7 +151,6 @@ ipcMain.on("portConnect", (event, argument) => {
     });
 
     port.on("error", (data) => {
-        console.log(data)
         event.reply("connectionPort", false);
     });
 });
@@ -158,7 +161,7 @@ ipcMain.on("saveCSV", (event, argument) => {
     date.setMilliseconds(Date.now());
     const path = dialog.showSaveDialogSync(mainWindow, {
         title: "Cristófoli Biossegurança - Salvar dados do teste",
-        defaultPath: date.toDateString(),
+        defaultPath: handleFileName(Moment().toDate()),
         filters: [{
             name: '.csv', extensions: ['csv']
         }]
@@ -189,68 +192,23 @@ ipcMain.on("loadCSV", async (event, argument) => {
         }]
     });
     if(path){
-        let data = {
-            resistence: [],
-            vase: [],
-            pressure: [],
-            tension: [],
-            avgRe: 0,
-            maxRe: 0,
-            avgVa: 0,
-            maxVa: 0,
-            avgPe: 0,
-            maxPe: 0,
-            avgTe: 0,
-            maxTe: 0,
-            tempPre: undefined,
-            tempEst: undefined,
-            tempDes: undefined,
-            tempSec: undefined,
-            tempRes: undefined,
-            tempTot: undefined,
-            label: path[0].split("\\").pop()
-        };
+        let temp = [];
+        let data = {};
         csv.parseFile(path[0])
         .on('error', error => console.error(error))
         .on('data', (row) => {
-            const value = row[0].split("\t");
-            data.resistence.push(value[1]);
-            data.vase.push(value[2]);
-            data.pressure.push(value[3]);
-            data.tension.push(value[0]);
-            data.avgRe += (parseFloat(value[1]) || 0);
-            data.avgVa += (parseFloat(value[2]) || 0);
-            data.avgPe += (parseFloat(value[3]) || 0);
-            data.avgTe += (parseFloat(value[0]) || 0);
-            if((parseFloat(value[1])) > data.maxRe){
-                data.maxRe = parseFloat(value[1]);
-            }
-            if((parseFloat(value[2])) > data.maxVa){
-                data.maxVa = parseFloat(value[2]);
-            }
-            if((parseFloat(value[3])) > data.maxPe){
-                data.maxPe = parseFloat(value[3]);
-            }
-            if((parseFloat(value[0])) > data.maxTe){
-                data.maxTe = parseFloat(value[0]);
-            }
-            if(regex.test(value[4])){
-                data.tempPre = value[4];
-                data.tempEst = value[5];
-                data.tempDes = value[6];
-                data.tempSec = value[7];
-                data.tempRes = value[8];
-                data.tempTot = value[9];
-            }
+            temp.push(row[0].split("\t"));
         }).on('end', () => {
-            data.resistence.shift();
-            data.vase.shift();
-            data.pressure.shift();
-            data.tension.shift(); 
-            data.avgRe = (data.avgRe / data.resistence.length).toFixed(2);
-            data.avgVa = (data.avgVa / data.vase.length).toFixed(2);
-            data.avgPe = (data.avgPe / data.pressure.length).toFixed(2);
-            data.avgTe = (data.avgTe / data.tension.length).toFixed(2);
+            temp[0].map((element, index) => {
+                data[element] = temp.map((value, subIndex) => {
+                    if(subIndex != 0){
+                        return value[index];
+                    }
+                })
+            });
+            Object.keys(data).forEach((element) => {
+                data[element].shift();
+            });
             event.reply("dataCSV", data);
         });
     }
@@ -259,33 +217,41 @@ ipcMain.on("loadCSV", async (event, argument) => {
     }
 })
 
-ipcMain.on("reload", (event, argument) => {
-    mainWindow.webContents.reload();
-})
-
 const handleParser = () => {
     parser = port.pipe(new ByteLength({length: 13}))
     parser.on("data", (values) => {
         const valuesInt = new Uint8Array(values)
         if((values[0] == 0x55) && (values[1] == 0x66) && (values[2] == 0xAA) && (values[3] == 0xBB) && (values[12] == 0x0A)){
+            const values16 = new Uint16Array([
+                ((valuesInt[4] << 8) + valuesInt[5]),
+                ((valuesInt[6] << 8) + valuesInt[7]),
+                ((valuesInt[8] << 8) + valuesInt[9]),
+                ((valuesInt[10] << 8) + valuesInt[11]),
+            ]);
             const data = {
-                tension: (((valuesInt[4] * 256) + valuesInt[5]) / 100),
-                resistence: (((valuesInt[6] * 256) + valuesInt[7]) / 10),
-                vase: (((valuesInt[8] * 256) + valuesInt[9]) / 10),
-                pressure: (((valuesInt[10] * 256) + valuesInt[11]) / 10)
+                'timeStamp': Date.now(),
+                'Tensão(V)': (values16[0] / 10),
+                'Resistência(ºC)': (values16[1] / 10),
+                'Vaso de Pressão(ºC)': (values16[2] / 10),
+                'Pressão(Kgf/cm²)': (values16[3] / 100)
             }
             mainWindow.webContents.send("A", data);
         }
         else if(values[0] == 0x0A){
-            const valuesInt = new Uint8Array(values)
-            const data = {
-                presurization: handleTime((valuesInt[1] * 256) + valuesInt[2]),
-                sterilization: handleTime((valuesInt[3] * 256) + valuesInt[4]),
-                depresurization: handleTime((valuesInt[5] * 256) + valuesInt[6]),
-                drying: handleTime((valuesInt[7] * 256) + valuesInt[8]),
-                coulding: handleTime((valuesInt[9] * 256) + valuesInt[10]),
-                total: handleTime((valuesInt[11] * 256) + valuesInt[12])
-            }
+            const values16 = new Uint16Array([
+                ((valuesInt[1] << 8) + valuesInt[2]),
+                ((valuesInt[3] << 8) + valuesInt[4]),
+                ((valuesInt[5] << 8) + valuesInt[6]),
+                ((valuesInt[7] << 8) + valuesInt[8]),
+                ((valuesInt[9] << 8) + valuesInt[10]),
+                ((valuesInt[11] << 8) + valuesInt[12]),
+            ]);
+            const data = [handleTime(values16[0]),
+                handleTime(values16[1]),
+                handleTime(values16[2]),
+                handleTime(values16[3]),
+                handleTime(values16[4]),
+                handleTime(values16[5]),]
             mainWindow.webContents.send("B",data);
         }
     });

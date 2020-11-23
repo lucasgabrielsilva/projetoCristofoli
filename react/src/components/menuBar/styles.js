@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-    height: 100vh;
+    height: 100%;
     width: 120px;
     display: flex;
     flex-flow: column wrap;
@@ -9,6 +9,10 @@ const Container = styled.div`
     justify-content: space-between;
     border-right: 2px solid gray;
     background-color: #fafafa;
+
+    @media (max-width: 800px) {
+        justify-content: flex-start;
+    }
 `;
 
 const DivOptions = styled.div`
@@ -24,6 +28,7 @@ const DivOptions = styled.div`
 const DivExit = styled.div`
     height: 5%;
     width: 100%;
+    align-self: flex-end;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -68,10 +73,14 @@ const Item = styled.button`
     border-bottom: 1px solid darkgray;
     font-size: 100%;
     cursor: pointer;
-    &:hover{
+    &:disabled {
+        opacity: 0.2;
+        cursor: default;
+    }
+    &:hover {
         background-color: #214f62;
         color: white;
-    };
+    }
 `;
 
 const ButtonExit = styled.button`
@@ -85,10 +94,19 @@ const ButtonExit = styled.button`
     text-decoration: none;
     text-align: center;
     cursor: pointer;
-    &:hover{
+    &:hover {
         background-color: white;
         color: #214f62;
-    };
+    }
 `;
 
-export {Container, Image, DivImg, DivOptions, DivExit, Title, Item, ButtonExit};
+export {
+    Container,
+    Image,
+    DivImg,
+    DivOptions,
+    DivExit,
+    Title,
+    Item,
+    ButtonExit,
+};

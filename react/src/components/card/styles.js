@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-    height: 25%;
+    height: 22.5%;
     width: 50%;
     background-color: #fafafa;
     display: flex;
@@ -10,7 +10,7 @@ const Container = styled.div`
     align-items: center;
     border: 2px solid gray;
 
-    @media(max-width: 800px){
+    @media (max-width: 800px) {
         width: 100%;
     }
 `;
@@ -36,4 +36,4 @@ const DivInfo = styled.div`
     flex-flow: row nowrap;
 `;
 
-export {Container, DivTitle, DivCanvas, DivInfo};
+export { Container, DivTitle, DivCanvas, DivInfo };

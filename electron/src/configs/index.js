@@ -2,19 +2,6 @@ const models = {
     vdr300: {
         name: 'VDR 3.00',
         states: false,
-        csvHead: [
-            'timeStamp',
-            'Tensão(V)',
-            'Resistência(ºC)',
-            'Vaso de Pressão(ºC)',
-            'Pressão(Kgf/cm²)',
-            'tempo de pressurização',
-            'tempo de esterilização',
-            'tempo de despressurização',
-            'tempo de secagem',
-            'tempo de resfriamento',
-            'tempo total',
-        ],
         scales: [
             {
                 title: 'Linhas da escala da temperatura',
@@ -206,6 +193,32 @@ const models = {
                 ],
             },
             {
+                name: 'Vaso de Pressão(ºC)',
+                idScales: 'temperature',
+                color: 'blue',
+                unit: 'ºC',
+                min: 0,
+                max: 150,
+                majorTicks: ['0', '30', '60', '90', '120', '150'],
+                highLights: [
+                    {
+                        from: '0',
+                        to: '90',
+                        color: 'lightgreen',
+                    },
+                    {
+                        from: '90',
+                        to: '120',
+                        color: 'yellow',
+                    },
+                    {
+                        from: '120',
+                        to: '150',
+                        color: 'coral',
+                    },
+                ],
+            },
+            {
                 name: 'Pressão(Kgf/cm²)',
                 idScales: 'pressure',
                 color: 'orange',
@@ -260,4 +273,4 @@ const models = {
         ],
     },
 };
-export default models;
+module.exports.model = models;

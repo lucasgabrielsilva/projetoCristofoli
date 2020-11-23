@@ -9,11 +9,10 @@
   "scripts": {
     "start": "electron .",
     "rebuild": "electron-rebuild",
-    "rebuildi": "electron-rebuild -f -w serialport",
     "dist": "electron-builder --win --x64"
   },
   "devDependencies": {
-    "electron": "^10.1.5",
+    "electron": "^9.3.4",
     "electron-builder": "^22.8.0",
     "electron-rebuild": "^2.3.2"
   },
@@ -32,6 +31,7 @@
   },
   "dependencies": {
     "fast-csv": "^4.3.2",
+    "moment": "^2.29.1",
     "serialport": "^9.0.2"
   }
 }

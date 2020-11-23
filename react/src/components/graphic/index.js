@@ -1,158 +1,261 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Chart from 'chart.js';
 import * as Zoom from 'chartjs-plugin-zoom';
-import { Container, Canvas } from './styles';
+import ModelData from '../../configs';
+import { Container } from './styles';
 
 function Graphic(props) {
     const refCanvas = useRef(null);
+    const [model, setModel] = useState(false);
 
-    useEffect(() => {
-        refCanvas.current = new Chart(refCanvas.current.getContext('2d'), {
-            type: 'line',
-            data: {
-                labels: [0],
-                datasets: props.datasets,
-            },
-            options: {
-                title: {
-                    display: false,
-                    text: props.title,
-                    fontSize: 2,
-                    fontColor: 'gray',
-                },
-                plugins: {
-                    zoom: {
-                        zoom: {
-                            enabled: true,
-                            mode: 'y',
-                            drag: {
-                                borderColor: 'rgba(225,225,225,0.3)',
-                                borderWidth: 5,
-                                backgroundColor: 'rgb(225,225,225)',
-                                animationDuration: 0,
-                            },
-                            rangeMin: {
-                                x: 0,
-                                y: 0,
-                            },
-                            rangeMax: {
-                                x: 0,
-                                y: 50,
-                            },
-                        },
-                        pan: {
-                            enabled: true,
-                            mode: 'y',
-                            rangeMin: {
-                                x: 0,
-                                y: 0,
-                            },
-                            rangeMax: {
-                                x: 0,
-                                y: 50,
-                            },
-                        },
-                    },
-                },
-                animation: {
-                    duration: 0,
-                },
-                elements: {
-                    line: {
-                        tension: 0,
-                    },
-                    point: {
-                        radius: 0,
-                    },
-                },
-                responsiveAnimationDuration: 0,
-                maintainAspectRatio: false,
-                responsive: true,
-                legend: {
-                    display: false,
-                },
-                tooltips: {
-                    enabled: false,
-                },
-                scales: {
-                    yAxes: [
-                        {
-                            ticks: {
-                                max: 40,
-                                min: 0,
-                            },
-                            gridLines: {
-                                display: true,
-                                color: 'gray',
-                            },
-                        },
-                    ],
-                    xAxes: [
-                        {
-                            gridLines: {
-                                display: true,
-                                color: 'gray',
-                            },
-                        },
-                    ],
-                },
-            },
-        });
+    useEffect(async () => {
+        setModel(ModelData[`${await window.api.get('model')}`]);
     }, []);
 
     useEffect(() => {
-        refCanvas.current.chart.data.labels.push(
-            refCanvas.current.chart.data.labels.length + 1,
-        );
-        refCanvas.current.chart.data.datasets.forEach((dataset) => {
-            if (dataset.label === 'Resistência(ºC)') {
-                dataset.data.push(props.data.resistence);
-            } else if (dataset.label === 'Vaso(ºC)') {
-                dataset.data.push(props.data.vase);
-            } else if (dataset.label === 'Pressão(bar)') {
-                dataset.data.push(props.data.pressure);
-            } else {
-                dataset.data.push(props.data.tension);
-            }
-        });
-        if (refCanvas.current.chart.data.labels.length % 20 === 0) {
-            const size =
-                parseInt(
-                    refCanvas.current.canvas.style.width.split('px')[0],
-                    10,
-                ) + 100;
-            refCanvas.current.canvas.style.width = `${size}px`;
-            refCanvas.current.canvas.width += 20;
-            refCanvas.current.chart.width += 20;
-            document.getElementById('container').scrollLeft += 100;
+        if (model) {
+            refCanvas.current = new Chart(refCanvas.current.getContext('2d'), {
+                type: 'line',
+                data: {
+                    datasets: model.parameters.map((parameter) => {
+                        return {
+                            label: parameter.name,
+                            showLine: true,
+                            borderColor: parameter.color,
+                            backgroundColor: parameter.color,
+                            hidden: false,
+                            fill: false,
+                            data: [],
+                            yAxisID: parameter.idScales,
+                        };
+                    }),
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 0,
+                    },
+                    elements: {
+                        line: {
+                            tension: 0,
+                            borderWidth: 0.5,
+                        },
+                        point: {
+                            radius: 0,
+                        },
+                    },
+                    tooltips: {
+                        enabled: true,
+                        mode: 'nearest',
+                        intersect: false,
+                        position: 'average',
+                    },
+                    title: {
+                        display: false,
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            fontColor: 'black',
+                        },
+                        onClick: handleClickLegend,
+                    },
+                    plugins: {
+                        zoom: {
+                            zoom: {
+                                enabled: false,
+                                mode: 'xy',
+                                threshold: 0,
+                                drag: false,
+                            },
+                            pan: {
+                                enabled: false,
+                                mode: 'xy',
+                                threshold: 0,
+                            },
+                        },
+                    },
+                    scales: {
+                        xAxes: [
+                            {
+                                type: 'time',
+                                display: true,
+                                time: {
+                                    unit: 'second',
+                                    displayFormats: {
+                                        second: 'HH:mm:ss',
+                                    },
+                                    tooltipFormat: 'HH:mm:ss.SSS',
+                                },
+                                distribution: 'series',
+                                gridLines: {
+                                    display: true,
+                                    color: '#D3D3D3',
+                                },
+                                ticks: {
+                                    display: true,
+                                    fontColor: 'black',
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Tempo Decorrido',
+                                    fontSize: 18,
+                                    fontColor: 'black',
+                                },
+                            },
+                        ],
+                        yAxes: model.scales.map((scale) => {
+                            return {
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: scale.name,
+                                    fontColor: 'black',
+                                    fontSize: 14,
+                                },
+                                position: scale.position,
+                                gridLines: {
+                                    display: true,
+                                    color: '#d3d3d3',
+                                    drawOnChartArea: props.lines === scale.id,
+                                },
+                                ticks: {
+                                    display: true,
+                                    maxTicksLimit: 20,
+                                    min: scale.min,
+                                    suggestedMax: scale.max,
+                                    fontColor: 'black',
+                                },
+                                id: scale.id,
+                            };
+                        }),
+                    },
+                },
+            });
         }
-        refCanvas.current.chart.update(0);
+    }, [model]);
+
+    useEffect(() => {
+        if (props.data && model) {
+            refCanvas.current.chart.data.datasets.forEach((dataset) => {
+                dataset.data.push({
+                    x: props.data.timeStamp,
+                    y: props.data[dataset.label],
+                });
+            });
+            if (
+                refCanvas.current.chart.options.scales.xAxes[0].ticks.hasOwnProperty(
+                    'max',
+                )
+            ) {
+                delete refCanvas.current.chart.options.scales.xAxes[0].ticks
+                    .max;
+            }
+            if (props.mode === 'realTime') {
+                refCanvas.current.chart.update(0);
+            }
+        }
     }, [props.data]);
 
     useEffect(() => {
-        refCanvas.current.chart.reset();
-        refCanvas.current.chart.data.labels = [0];
-        refCanvas.current.chart.data.datasets.forEach((dataset) => {
-            dataset.data = [0];
-        });
-        refCanvas.current.chart.update(0);
+        if (props.clean && model) {
+            refCanvas.current.chart.reset();
+            refCanvas.current.chart.data.datasets.forEach((dataset) => {
+                if (dataset.label === 'Resistência(ºC)') {
+                    dataset.data = [];
+                } else if (dataset.label === 'Vaso de Pressão(ºC)') {
+                    dataset.data = [];
+                } else if (dataset.label === 'Pressão(Kgf/cm²)') {
+                    dataset.data = [];
+                } else {
+                    dataset.data = [];
+                }
+            });
+            refCanvas.current.chart.update(0);
+        }
     }, [props.clean]);
 
-    const handleOnClick = (event) => {
-        console.log(refCanvas.current.chart.options.scales.yAxes[0].ticks);
-        refCanvas.current.chart.options.scales.yAxes[0].ticks.min += 5;
-        refCanvas.current.chart.options.scales.yAxes[0].ticks.max -= 5;
+    useEffect(() => {
+        if (model) {
+            refCanvas.current.chart.options.scales.yAxes.forEach((scale) => {
+                if (scale.id === props.lines) {
+                    scale.gridLines.drawOnChartArea = true;
+                } else {
+                    scale.gridLines.drawOnChartArea = false;
+                }
+            });
+            refCanvas.current.chart.update(0);
+        }
+    }, [props.lines]);
+
+    useEffect(() => {
+        if (model) {
+            if (props.mode === 'analyze') {
+                refCanvas.current.chart.options.plugins.zoom.zoom.enabled = true;
+                refCanvas.current.chart.options.plugins.zoom.pan.enabled = true;
+            } else {
+                refCanvas.current.chart.resetZoom();
+                refCanvas.current.chart.options.scales.xAxes[0].ticks.max = Date.now();
+                refCanvas.current.chart.options.plugins.zoom.zoom.enabled = false;
+                refCanvas.current.chart.options.plugins.zoom.pan.enabled = false;
+            }
+            refCanvas.current.chart.update(0);
+        }
+    }, [props.mode]);
+
+    const handleClickLegend = (...data) => {
+        const id = refCanvas.current.getDatasetMeta(data[1].datasetIndex)
+            .yAxisID;
+        refCanvas.current.chart.data.datasets[
+            data[1].datasetIndex
+        ].hidden = !refCanvas.current.chart.data.datasets[data[1].datasetIndex]
+            .hidden;
+        if (
+            refCanvas.current.chart.data.datasets[data[1].datasetIndex].hidden
+        ) {
+            const aux = Object.keys(refCanvas.current.chart.data.datasets).map(
+                (dataset) => {
+                    if (
+                        refCanvas.current.chart.data.datasets[dataset]
+                            .yAxisID === id &&
+                        refCanvas.current.chart.data.datasets[dataset].hidden
+                    ) {
+                        return true;
+                    }
+                    if (
+                        refCanvas.current.chart.data.datasets[dataset]
+                            .yAxisID === id &&
+                        !refCanvas.current.chart.data.datasets[dataset].hidden
+                    ) {
+                        return false;
+                    }
+                },
+            );
+            if (
+                aux.every((element) => {
+                    return element !== false;
+                })
+            ) {
+                refCanvas.current.chart.options.scales.yAxes.forEach(
+                    (scale) => {
+                        if (scale.id === id) {
+                            scale.display = false;
+                        }
+                    },
+                );
+            }
+        } else {
+            refCanvas.current.chart.options.scales.yAxes.forEach((scale) => {
+                if (scale.id === id) {
+                    scale.display = true;
+                }
+            });
+        }
         refCanvas.current.chart.update(0);
     };
 
-    return (
-        <>
-            <button onClick={(e) => handleOnClick(e)}> teste </button>
-            <Container id="container">
-                <Canvas ref={refCanvas} />
-            </Container>
-        </>
-    );
+    return <canvas ref={refCanvas} />;
 }
 
 export default Graphic;

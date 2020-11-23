@@ -64,22 +64,6 @@ const ButtonBar = styled.div`
     background-color: inherit;
 `;
 
-const Select = styled.select`
-    align-self: auto;
-    height: 70%;
-    color: white;
-    margin: 2px;
-    padding: 2px;
-    border: 2px solid white;
-    background-color: inherit;
-    border-radius: 20%;
-    cursor: pointer;
-    &:hover {
-        background-color: white;
-        color: black;
-    }
-`;
-
 const Main = styled.div`
     height: 90%;
     width: 100%;
@@ -91,7 +75,7 @@ const Main = styled.div`
 `;
 
 const DivGraph = styled.div`
-    height: 82%;
+    height: 85%;
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
@@ -101,7 +85,7 @@ const DivGraph = styled.div`
 `;
 
 const DivResult = styled.div`
-    height: 18%;
+    height: 15%;
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
@@ -121,16 +105,31 @@ const TextArea = styled.textarea`
     resize: none;
 `;
 
+const Select = styled.select`
+    align-self: auto;
+    height: 70%;
+    color: white;
+    margin: 2px;
+    padding: 2px;
+    border: 2px solid white;
+    background-color: inherit;
+    border-radius: 20%;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+`;
 export {
     Container,
     Button,
     ButtonBar,
     Title,
     DivGraph,
-    Select,
     DivTest,
     TextArea,
     Main,
     Header,
     DivResult,
+    Select,
 };

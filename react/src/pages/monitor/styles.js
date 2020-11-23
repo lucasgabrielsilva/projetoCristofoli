@@ -11,7 +11,7 @@ const Container = styled.div`
 
 const DivCards = styled.div`
     height: 100%;
-    width: 75%;
+    width: calc(100vw - 120px);
     background-color: gray;
     align-self: auto;
     display: flex;
@@ -22,8 +22,25 @@ const DivCards = styled.div`
     @media (max-width: 800px) {
         flex-flow: column nowrap;
         justify-content: flex-start;
-        width: 70%;
     }
 `;
 
-export { Container, DivCards };
+const Header = styled.div`
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #214f62;
+`;
+
+const Title = styled.label`
+    align-self: auto;
+    margin-left: 3%;
+    font-size: 200%;
+    color: white;
+    background-color: inherit;
+`;
+
+export { Container, DivCards, Header, Title };

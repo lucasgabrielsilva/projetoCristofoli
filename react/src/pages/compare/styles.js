@@ -64,6 +64,96 @@ const ButtonBar = styled.div`
     background-color: inherit;
 `;
 
+const DivZoom = styled.div`
+    height: 70%;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 32% 36% 32%;
+    gap: 2px;
+    border: 2px solid white;
+    border-radius: 20%;
+    background-color: inherit;
+`;
+
+const ButtonLeft = styled.button`
+    border: none;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    justify-self: auto;
+    align-self: auto;
+    background-color: inherit;
+    color: white;
+    border-radius: 20%;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+`;
+
+const ButtonRight = styled.button`
+    border: none;
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    justify-self: auto;
+    align-self: auto;
+    background-color: inherit;
+    color: white;
+    border-radius: 20%;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+`;
+
+const ButtonUp = styled.button`
+    border: none;
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    justify-self: auto;
+    align-self: auto;
+    color: white;
+    background-color: inherit;
+    border-radius: 20%;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+`;
+
+const ButtonDown = styled.button`
+    border: none;
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+    justify-self: auto;
+    align-self: auto;
+    background-color: inherit;
+    color: white;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+`;
+
+const ButtonText = styled.button`
+    border: none;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    justify-self: auto;
+    align-self: auto;
+    color: white;
+    background-color: inherit;
+    border-radius: 20%;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+`;
+
 const Main = styled.div`
     height: 90%;
     width: 100%;
@@ -75,7 +165,7 @@ const Main = styled.div`
 `;
 
 const DivGraph = styled.div`
-    height: 82%;
+    height: 85%;
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
@@ -85,7 +175,7 @@ const DivGraph = styled.div`
 `;
 
 const DivResult = styled.div`
-    height: 18%;
+    height: 15%;
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
@@ -125,6 +215,12 @@ export {
     Container,
     Button,
     ButtonBar,
+    DivZoom,
+    ButtonLeft,
+    ButtonRight,
+    ButtonUp,
+    ButtonDown,
+    ButtonText,
     Title,
     DivGraph,
     Select,

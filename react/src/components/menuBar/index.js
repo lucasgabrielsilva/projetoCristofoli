@@ -16,6 +16,7 @@ import {
 function MenuBar(props) {
     const [redirect, setRedirect] = useState(false);
     const [goTo, setGoTo] = useState('#');
+    const [mode, setMode] = useState(false);
 
     const handleChangeWindow = (data) => {
         if (data) {
@@ -30,8 +31,9 @@ function MenuBar(props) {
         }
     };
 
-    useEffect(() => {
+    useEffect(async () => {
         window.api.receive('changeWindow', handleChangeWindow);
+        setMode(await window.api.get('mode'));
     }, []);
 
     const handleTryChangeWindow = (data) => {
@@ -61,19 +63,37 @@ function MenuBar(props) {
                 <DivImg>
                     <Image src={Logo} alt="logo da cristofoli" />
                 </DivImg>
-                <Title>Monitorar</Title>
-                <Item onClick={() => handleTryChangeWindow('/monitor')}>
+                <Title>Análise</Title>
+                <Item
+                    title="Analisar dados salvos previamente"
+                    onClick={() => handleTryChangeWindow('/analise')}
+                >
                     {' '}
-                    Status{' '}
+                    Analisar{' '}
                 </Item>
-                <Title>Testes</Title>
-                <Item onClick={() => handleTryChangeWindow('/compare')}>
+                <Item
+                    title="Comparar dados salvos previamente"
+                    onClick={() => handleTryChangeWindow('/compare')}
+                >
                     {' '}
                     Comparar{' '}
                 </Item>
-                <Item onClick={() => handleTryChangeWindow('/teste1')}>
+                <Item
+                    title="Monitorar dados da autoclave"
+                    onClick={() => handleTryChangeWindow('/monitor')}
+                    disabled={!mode}
+                >
                     {' '}
-                    Teste 1{' '}
+                    Monitorar{' '}
+                </Item>
+                <Title>Teste</Title>
+                <Item
+                    title="Obter dados via datalog"
+                    onClick={() => handleTryChangeWindow('/teste1')}
+                    disabled={!mode}
+                >
+                    {' '}
+                    DataLog{' '}
                 </Item>
             </DivOptions>
             <DivExit>
