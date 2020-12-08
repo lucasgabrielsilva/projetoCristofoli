@@ -15,10 +15,10 @@ const canvasConfigBase = {
     strokeStick: false,
     needleType: 'arrow',
     needleWidth: 7,
-    colorNeedle: '#214f62',
+    colorNeedle: '#434343',
     colorNeedleEnd: false,
     needleSide: 'left',
-    animationDuration: 10,
+    animation: false,
     animationRule: 'linear',
     barBeginCircle: false,
     barWidth: 0,
@@ -43,23 +43,9 @@ export default function Card(props) {
 
     useEffect(() => {
         if (refCanvas.current) {
-            const temp = new LinearGauge(canvasConfigBase);
-            refCanvas.current.options.width = temp.options.width;
-            refCanvas.current.options.height = temp.options.height;
-            refCanvas.current.update(refCanvas);
-        }
-    }, [props.resize]);
-
-    useEffect(() => {
-        if (refCanvas.current) {
             refCanvas.current.value = props.value;
-            refCanvas.current.update(refCanvas);
         }
     }, [props.value]);
-
-    useEffect(() => {
-        return () => refCanvas.current.destroy();
-    }, []);
 
     return (
         <Container>

@@ -10,10 +10,6 @@ function Monitor() {
     const [data, setData] = useState(false);
     const [model, setModel] = useState(false);
 
-    window.onresize = (event) => {
-        setResize(!resize);
-    };
-
     const handleCard = (event) => {
         return model.parameters.map((parameter) => {
             return (
@@ -25,7 +21,6 @@ function Monitor() {
                     minValue={parameter.min}
                     maxValue={parameter.max}
                     unit={parameter.unit}
-                    resize={resize}
                 />
             );
         });

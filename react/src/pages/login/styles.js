@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Container = styled.div`
     height: 100vh;
@@ -7,15 +7,15 @@ const Container = styled.div`
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    background-color: #fafafa;
+    background-color: white;
 `;
 
 const DivLogin = styled.div`
-    height: 70%;
-    width: 35%;
+    height: 65vh;
+    width: 33vw;
     display: flex;
-    flex-flow: column wrap;
-    justify-content: space-around;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
     align-items: center;
     background-color: white;
     border: 2px solid #214f62;
@@ -23,18 +23,38 @@ const DivLogin = styled.div`
 `;
 
 const DivOptions = styled.div`
-    height: 20%;
-    width: 100%;
+    height: 10vh;
+    width: 99%;
     background-color: inherit;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 `;
 
+const DivPort = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+`;
+
+const DivAlerts = styled.div`
+    height: 10vh;
+    width: 95%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: inherit;
+`;
+
 const Image = styled.img`
-    height: 28vh;
-    width: 28vw;
+    height: 25vh;
+    width: 70%;
+    padding-top: 5px;
+    padding-bottom: 5vh;
     background-color: inherit;
 `;
 
@@ -53,33 +73,34 @@ const Button = styled.button`
     color: #214f62;
     background-color: white;
     cursor: pointer;
-    &:hover{
+    &:hover {
         background-color: #214f62;
         color: white;
     }
 `;
 
-const DivPort = styled.div`
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    background-color: inherit;
-`;
-
 const ButtonRefresh = styled.button`
-    max-height: 30%;
-    max-width: 35%;
-    padding: 1%;
+    max-height: 35%;
+    max-width: 40%;
     border: 2px solid #214f62;
     border-radius: 20%;
     color: white;
     background-color: #214f62;
     cursor: pointer;
-    &:hover{
+    &:hover {
         background-color: white;
         color: #214f62;
     }
 `;
 
-export {Container, DivLogin, DivOptions, DivPort, ButtonRefresh, Image, Select, Button};
+export {
+    Container,
+    DivLogin,
+    DivOptions,
+    DivPort,
+    DivAlerts,
+    ButtonRefresh,
+    Image,
+    Select,
+    Button,
+};

@@ -1,4 +1,4 @@
-const models = {
+const infos = {
     vdr300: {
         name: 'VDR 3.00',
         states: false,
@@ -155,8 +155,22 @@ const models = {
     vdr301: {
         name: 'VDR 3.01',
         states: false,
+        csvHead: [
+            'timeStamp',
+            'Tensão(V)',
+            'Resistência(ºC)',
+            'Vaso de Pressão(ºC)',
+            'Pressão(Kgf/cm²)',
+            'tempo de pressurização',
+            'tempo de esterilização',
+            'tempo de despressurização',
+            'tempo de secagem',
+            'tempo de resfriamento',
+            'tempo total',
+        ],
         scales: [
             {
+                title: 'Linhas da escala da temperatura',
                 name: 'Temperatura(ºC)',
                 min: 0,
                 max: 300,
@@ -164,6 +178,7 @@ const models = {
                 position: 'right',
             },
             {
+                title: 'Linhas da escala de pressão',
                 name: 'Pressão(Kgf/cm²)',
                 min: 0,
                 max: 2.8,
@@ -171,6 +186,7 @@ const models = {
                 position: 'left',
             },
             {
+                title: 'Linhas da escala da tensão',
                 name: 'Tensão(V)',
                 min: 80,
                 max: 250,
@@ -180,6 +196,7 @@ const models = {
         ],
         parameters: [
             {
+                title: 'Dados da resistência',
                 name: 'Resistência(ºC)',
                 idScales: 'temperature',
                 color: 'green',
@@ -206,6 +223,7 @@ const models = {
                 ],
             },
             {
+                title: 'Dados da pressão',
                 name: 'Pressão(Kgf/cm²)',
                 idScales: 'pressure',
                 color: 'orange',
@@ -232,6 +250,7 @@ const models = {
                 ],
             },
             {
+                title: 'Dados da tensão',
                 name: 'Tensão(V)',
                 idScales: 'tension',
                 color: 'red',
@@ -260,4 +279,4 @@ const models = {
         ],
     },
 };
-export default models;
+export default infos;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BsClockHistory } from 'react-icons/bs';
 import MenuBar from '../../components/menuBar';
 import ModelData from '../../configs';
@@ -20,7 +20,6 @@ import GraphicAnalyze from '../../components/graphicAnalyze';
 
 function Analyze() {
     const [value, setValue] = useState(false);
-    const [clean, setClean] = useState(false);
     const [textArea, setTextArea] = useState('Aguardando dados...');
     const [lines, setLines] = useState('temperature');
     const [zoom, setZoom] = useState(false);
@@ -44,17 +43,31 @@ function Analyze() {
 
     const handleLoad = (data) => {
         setLoad(true);
+        setModel(ModelData[data.modelo[0]]);
         setTextArea(
-            Object.keys(data).map((parameter) => {
-                if (parameter !== 'timeStamp') {
-                    if (parameter.split(' ').length > 1) {
-                        return `\n${parameter}: ${data[parameter][0]}`;
-                    }
-                    const aux = handleCalc(data[parameter]);
-                    return `\n${parameter} -> Máximo: ${aux.max} Média: ${aux.avg}`;
-                }
-                return '\n';
-            }),
+            data.label
+                .concat(
+                    Object.keys(data)
+                        .map((parameter, index) => {
+                            if (
+                                parameter !== 'timeStamp' &&
+                                parameter !== 'label'
+                            ) {
+                                if (
+                                    parameter !== 'Vaso de Pressão(ºC)' &&
+                                    (parameter.split(' ').length > 1 ||
+                                        index === 0)
+                                ) {
+                                    return `\n${parameter}: ${data[parameter][0]}`;
+                                }
+                                const aux = handleCalc(data[parameter]);
+                                return `\n${parameter} -> Máximo: ${aux.max} Média: ${aux.avg}`;
+                            }
+                            return null;
+                        })
+                        .join(','),
+                )
+                .replace(',', ''),
         );
         data.modelo = ModelData[data.modelo[0]];
         setValue(data);
@@ -80,17 +93,6 @@ function Analyze() {
         }, 10);
     };
 
-    const handleRenderGraph = (event) => {
-        return (
-            <GraphicAnalyze
-                data={value}
-                lines={lines}
-                zoom={zoom}
-                model={model}
-            />
-        );
-    };
-
     return (
         <Container>
             <MenuBar changeWindow={false} />
@@ -106,36 +108,43 @@ function Analyze() {
                             Carregar dados{' '}
                         </Button>
                         {model ? (
-                            <Select
-                                title="Selecionar linhas do gráfico"
-                                value={lines}
-                                onChange={(e) => handleChangeLines(e)}
-                            >
-                                {model.scales.map((scale) => {
-                                    return (
-                                        <option
-                                            title={scale.title}
-                                            value={scale.id}
-                                        >
-                                            {scale.name}
-                                        </option>
-                                    );
-                                })}
-                            </Select>
+                            <>
+                                <Select
+                                    title="Selecionar linhas do gráfico"
+                                    value={lines}
+                                    onChange={(e) => handleChangeLines(e)}
+                                >
+                                    {model.scales.map((scale) => {
+                                        return (
+                                            <option
+                                                title={scale.title}
+                                                value={scale.id}
+                                            >
+                                                {scale.name}
+                                            </option>
+                                        );
+                                    })}
+                                </Select>
+                                <Button
+                                    title="Voltar o nivel do zoom ao valor inicial"
+                                    onClick={(e) => handleResetZoom(e)}
+                                >
+                                    {' '}
+                                    Reset Zoom{' '}
+                                </Button>
+                            </>
                         ) : null}
-                        <Button
-                            title="Voltar o nivel do zoom ao valor inicial"
-                            onClick={(e) => handleResetZoom(e)}
-                        >
-                            {' '}
-                            Reset Zoom{' '}
-                        </Button>
                     </ButtonBar>
                 </Header>
                 <Main>
                     <DivGraph>
                         {load ? (
-                            handleRenderGraph()
+                            <GraphicAnalyze
+                                data={value}
+                                lines={lines}
+                                zoom={zoom}
+                                model={model}
+                            />
                         ) : (
                             <BsClockHistory
                                 size={48}

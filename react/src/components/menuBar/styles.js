@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-    height: 100%;
+    height: 100vh;
     width: 120px;
     display: flex;
     flex-flow: column wrap;
@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const DivOptions = styled.div`
-    max-height: 80%;
+    max-height: 95%;
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
@@ -37,7 +37,7 @@ const DivExit = styled.div`
 `;
 
 const DivImg = styled.div`
-    height: 35%;
+    max-height: 40%;
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
@@ -47,9 +47,9 @@ const DivImg = styled.div`
 `;
 
 const Image = styled.img`
-    height: 90;
-    width: 80%;
-    background-color: white;
+    height: 90%;
+    width: 90%;
+    background-color: #fafafa;
 `;
 
 const Title = styled.label`

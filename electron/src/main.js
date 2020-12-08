@@ -7,7 +7,14 @@ const { format } = require('@fast-csv/format');
 const SerialPort = require("serialport");
 const ByteLength = require('@serialport/parser-byte-length')
 const Moment = require('moment');
+const Axios = require('axios');
+///const PromiseFtp = require('promise-ftp');
+const Exec = require('child_process').exec;
+const Version = require('./configs').version;
+///const ftp = require('basic-ftp');
 
+
+let paf = null;
 let port = null;
 let parser = null
 let howRequestWindow = "";
@@ -26,11 +33,12 @@ function createWindow() {
         center: true,
         useContentSize: true,
         webPreferences: {
-            allowRunningInsecureContent: true,
-            webSecurity: false,
+            allowRunningInsecureContent: false,
+            webSecurity: true,
             nodeIntegration: false,
             contextIsolation: true,
             enableRemoteModule: false,
+            worldSafeExecuteJavaScript: true,
             preload: path.join(__dirname, "./preload.js")
           }
     });
@@ -48,6 +56,7 @@ function createWindow() {
         mainWindow = null
     })
 
+    /*
     child = new BrowserWindow({ parent: mainWindow,
         modal: true,
         minimizable: false,
@@ -58,11 +67,12 @@ function createWindow() {
         height: 200,
         width: 600,
         webPreferences: {
-            allowRunningInsecureContent: true,
-            webSecurity: false,
+            allowRunningInsecureContent: false,
+            webSecurity: true,
             nodeIntegration: false,
             contextIsolation: true,
             enableRemoteModule: false,
+            worldSafeExecuteJavaScript: true,
             preload: path.join(__dirname, "./preload.js")
         }
     })
@@ -77,6 +87,7 @@ function createWindow() {
     })
 
     child.removeMenu();
+    */
 }
 
 
@@ -107,9 +118,26 @@ ipcMain.on('teste', (event, argument) => {
     event.reply("B", false);
 });
 
-ipcMain.on("openModal", (event, argument) => {
+ipcMain.on("openModal", async (event, argument) => {
     howRequestWindow = argument;
-    child.show();
+    const option = await dialog.showMessageBox(mainWindow, {
+        title: "Cristófoli Biossegurança",
+        message: "Um teste está sendo realizado, caso você saia agora todo o progresso será perdido!\nCaso queira salvar o resultado parcial do teste: clique em 'Não' e em seguida em 'Parar'.",
+        buttons: ['Não', 'Sim'],
+        cancelId:0,
+        defaultId:0,
+        type:'warning'
+    });
+    if(option.response){
+        if(howRequestWindow == "/"){
+            port.close();
+        }
+        howRequestWindow = "";
+        mainWindow.webContents.send("changeWindow", true);
+    }
+    else{
+        mainWindow.webContents.send("changeWindow", false);
+    }
 });
 
 ipcMain.on("redirect", (event, argument) => {
@@ -118,14 +146,26 @@ ipcMain.on("redirect", (event, argument) => {
             port.close();
         }
         howRequestWindow = "";
-        child.hide();
+        ///child.hide();
         mainWindow.webContents.send("changeWindow", true);
     }
     else{
         howRequestWindow = "";
-        child.hide();
+        ///child.hide();
         mainWindow.webContents.send("changeWindow", false);
     }
+})
+
+ipcMain.on('modelErro', (event, argument) => {
+    dialog.showMessageBoxSync(mainWindow, {
+        title: "Cristófoli Biossegurança",
+        message: "Não é possivel compara dados de modelos diferentes!",
+        buttons: ['Ok'],
+        cancelId:0,
+        defaultId:0,
+        type:'error'
+    });
+
 })
 
 ipcMain.on("listPorts", (event) => {
@@ -153,6 +193,63 @@ ipcMain.on("portConnect", (event, argument) => {
     port.on("error", (data) => {
         event.reply("connectionPort", false);
     });
+});
+
+ipcMain.on('Update', async (event, argument) => {
+
+    Axios({
+        url: 'https://www.cristofoli.com/apps/AT/SW/version.json',
+        method: 'GET',
+        responseType: 'json',
+    }).then(async (response) => {
+        if(response.data.win.x64.currentVersion > Version){
+            const option = dialog.showMessageBoxSync(mainWindow, {
+                title: "Cristófoli Biossegurança - Atualização",
+                message: "Uma nova versão está disponivel, deseja fazer o download e instalar?",
+                buttons: ['Não', 'Sim'],
+                cancelId:0,
+                defaultId:0,
+                type:'warning'
+            });
+            if(option){
+                const path = dialog.showSaveDialogSync(mainWindow, {
+                    title: "Cristófoli Biossegurança - Salvar nova versão",
+                    defaultPath: response.data.win.x64.name,
+                    filters: [{
+                        name: '.exe', extensions: ['exe']
+                    }]
+                });
+                if(path){
+                    dialog.showMessageBoxSync(mainWindow, {
+                        title: "Cristófoli Biossegurança - Atualização",
+                        message: "Durante o processo você será perguntado se deseja fechar a janela, por favor clique em 'ok'",
+                        buttons:['Prosseguir'],
+                        type:'warning'
+                    });
+                    const { data, headers } = await Axios({
+                        url: response.data.win.x64.address,
+                        method: "GET",
+                        responseType: "stream",
+                    });
+                    let receive = 0;
+                    data.on('data', (data) => {
+                        receive += data.length;
+                        mainWindow.webContents.send("progress",`Download: ${parseInt((receive * 100) / headers['content-length'])}%`)
+                    });
+                    data.on('end', () => {
+                        mainWindow.webContents.send("progress",`Iniciando instalação...`);
+                        setTimeout(() => {
+                            Exec(`start ${path}`, (err, res) => {
+                                mainWindow.webContents.send("status", err)
+                                mainWindow.webContents.send("status", res)
+                            });
+                        },5000);
+                    });
+                    data.pipe(fs.createWriteStream(path));
+                }
+            }
+        }
+    })
 });
 
 ipcMain.on("saveCSV", (event, argument) => {
@@ -209,6 +306,7 @@ ipcMain.on("loadCSV", async (event, argument) => {
             Object.keys(data).forEach((element) => {
                 data[element].shift();
             });
+            data.label = path[0];
             event.reply("dataCSV", data);
         });
     }
@@ -247,12 +345,13 @@ const handleParser = () => {
                 ((valuesInt[11] << 8) + valuesInt[12]),
             ]);
             const data = [handleTime(values16[0]),
-                handleTime(values16[1]),
-                handleTime(values16[2]),
-                handleTime(values16[3]),
-                handleTime(values16[4]),
-                handleTime(values16[5]),]
+            handleTime(values16[1]),
+            handleTime(values16[2]),
+            handleTime(values16[3]),
+            handleTime(values16[4]),
+            handleTime(values16[5]),]
             mainWindow.webContents.send("B",data);
         }
     });
 }
+

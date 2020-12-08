@@ -18,11 +18,12 @@ import {
 } from './styles';
 
 let dataToCsv = [];
+
 let result = false;
 let timeInitial = Date.now();
 
 function Teste1() {
-    const [data, setData] = useState(false);
+    const [value, setValue] = useState(false);
 
     const [statusButton, setStatusButton] = useState({
         start: false,
@@ -49,10 +50,10 @@ function Teste1() {
         });
         temp[0] = temp[0].getTime();
         dataToCsv.push(temp);
-        setData(data);
+        setValue(data);
     };
 
-    const handleDataB = (data) => {
+    function handleDataB(data) {
         if (data) {
             data.forEach((value) => {
                 dataToCsv[1].push(value);
@@ -60,7 +61,7 @@ function Teste1() {
             result = true;
         }
         handleStop();
-    };
+    }
 
     const handleDataC = (data) => {
         setTextAreaValue('finalizando teste...');
@@ -107,7 +108,7 @@ function Teste1() {
         setClean(true);
         setTimeout(() => {
             setClean(false);
-        }, 10);
+        }, 100);
         dataToCsv = [dataToCsv[0]];
         result = false;
         setStatusButton({
@@ -235,7 +236,7 @@ function Teste1() {
                 <Main>
                     <DivGraph>
                         <Graphic
-                            data={data}
+                            data={value}
                             clean={clean}
                             mode={mode}
                             lines={lines}

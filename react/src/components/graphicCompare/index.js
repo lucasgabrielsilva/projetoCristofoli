@@ -1,19 +1,12 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js';
 import * as Zoom from 'chartjs-plugin-zoom';
-import ModelData from '../../configs';
-import { Container, Canvas } from './styles';
 
 function GraphicCompare(props) {
     const refCanvas = useRef(null);
-    const [model, setModel] = useState(false);
-
-    useEffect(async () => {
-        setModel(ModelData[`${await window.api.get('model')}`]);
-    }, []);
 
     useEffect(() => {
-        if (model) {
+        if (props.model) {
             refCanvas.current = new Chart(refCanvas.current.getContext('2d'), {
                 type: 'line',
                 data: {
@@ -23,7 +16,7 @@ function GraphicCompare(props) {
                             borderColor: 'red',
                             backgroundColor: 'red',
                             fill: false,
-                            yAxisID: model.scales[0].id,
+                            yAxisID: props.model.scales[0].id,
                             data: [],
                         },
                         {
@@ -31,7 +24,7 @@ function GraphicCompare(props) {
                             borderColor: 'blue',
                             backgroundColor: 'blue',
                             fill: false,
-                            yAxisID: model.scales[0].id,
+                            yAxisID: props.model.scales[0].id,
                             data: [],
                         },
                     ],
@@ -39,7 +32,7 @@ function GraphicCompare(props) {
                 options: {
                     title: {
                         display: true,
-                        text: props.title,
+                        text: '',
                         fontSize: 30,
                         fontColor: '#214f62',
                     },
@@ -87,7 +80,7 @@ function GraphicCompare(props) {
                                 time: {
                                     unit: 'second',
                                     displayFormats: {
-                                        second: 'HH:mm:ss.SSS',
+                                        second: 'HH:mm:ss',
                                     },
                                     tooltipFormat: 'HH:mm:ss.SSS',
                                 },
@@ -108,9 +101,9 @@ function GraphicCompare(props) {
                                 },
                             },
                         ],
-                        yAxes: model.scales.map((scale) => {
+                        yAxes: props.model.scales.map((scale) => {
                             return {
-                                display: props.unit === scale.id,
+                                display: true,
                                 scaleLabel: {
                                     display: true,
                                     labelString: scale.name,
@@ -121,7 +114,7 @@ function GraphicCompare(props) {
                                 gridLines: {
                                     display: true,
                                     color: '#d3d3d3',
-                                    drawOnChartArea: props.unit === scale.id,
+                                    drawOnChartArea: true,
                                 },
                                 ticks: {
                                     display: true,
@@ -137,62 +130,53 @@ function GraphicCompare(props) {
                 },
             });
         }
-    }, [model]);
+    }, [props.model]);
 
     useEffect(() => {
-        if (props.value && model) {
-            refCanvas.current.chart.reset();
-            refCanvas.current.chart.data.datasets[0].data = props.value[0];
-            refCanvas.current.chart.data.datasets[1].data = props.value[1];
-            refCanvas.current.chart.data.datasets[0].label = props.labels[0];
-            refCanvas.current.chart.data.datasets[1].label = props.labels[1];
-            refCanvas.current.chart.update(0);
-        }
-    }, [props.value]);
-
-    useEffect(() => {
-        if (model) {
-            let id;
+        if (
+            refCanvas.current.chart &&
+            props.title &&
+            props.unit &&
+            props.data
+        ) {
+            refCanvas.current.chart.data.datasets[0].yAxisID = props.unit;
             refCanvas.current.chart.options.title.text = props.title;
-            if (
-                props.title === 'Resistência(ºC)' ||
-                props.title === 'Vaso de Pressão(ºC)'
-            ) {
-                id = 'temperature';
-            } else if (props.title === 'Pressão(Kgf/cm²)') {
-                id = 'pressure';
-            } else {
-                id = 'tension';
-            }
-            refCanvas.current.chart.data.datasets.forEach((dataset) => {
-                dataset.yAxisID = id;
-            });
             refCanvas.current.chart.options.scales.yAxes.forEach((scale) => {
-                if (scale.id === id) {
-                    scale.gridLines.drawOnChartArea = true;
+                if (scale.id === props.unit) {
                     scale.display = true;
                 } else {
-                    scale.gridLines.drawOnChartArea = false;
                     scale.display = false;
                 }
             });
+            refCanvas.current.chart.data.datasets[0].label =
+                props.data[0].label;
+            refCanvas.current.chart.data.datasets[0].data = props.data[0].data.map(
+                (value, index) => {
+                    return {
+                        x: parseInt(props.data[0].timeStamp[index], 10),
+                        y: value,
+                    };
+                },
+            );
+            if (props.data[1].data) {
+                refCanvas.current.chart.data.datasets[1].yAxisID = props.unit;
+                refCanvas.current.chart.data.datasets[1].label =
+                    props.data[1].label;
+                refCanvas.current.chart.data.datasets[1].data = props.data[1].data.map(
+                    (value, index) => {
+                        return {
+                            x: parseInt(props.data[1].timeStamp[index], 10),
+                            y: value,
+                        };
+                    },
+                );
+            }
             refCanvas.current.chart.update(0);
         }
-    }, [props.title]);
+    }, [props.data]);
 
     useEffect(() => {
-        if (props.clean && model) {
-            refCanvas.current.chart.reset();
-            refCanvas.current.chart.data.datasets[0].data = [];
-            refCanvas.current.chart.data.datasets[1].data = [];
-            refCanvas.current.chart.data.datasets[0].label = 'dados 1';
-            refCanvas.current.chart.data.datasets[1].label = 'dados 2';
-            refCanvas.current.chart.update(0);
-        }
-    }, [props.clean]);
-
-    useEffect(() => {
-        if (model) {
+        if (refCanvas.current.chart && props.zoom) {
             refCanvas.current.chart.resetZoom();
             refCanvas.current.chart.update(0);
         }

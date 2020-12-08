@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BiExit } from 'react-icons/bi';
 import { Redirect } from 'react-router-dom';
-import Logo from '../../assets/cristofoli.png';
+import Logo from '../../assets/cristofoli2.png';
 import {
     Container,
     DivOptions,
