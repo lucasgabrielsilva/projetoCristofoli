@@ -55,6 +55,7 @@ function Teste1() {
 
     function handleDataB(data) {
         if (data) {
+            console.log(dataToCsv[1]);
             data.forEach((value) => {
                 dataToCsv[1].push(value);
             });
@@ -109,7 +110,7 @@ function Teste1() {
         setTimeout(() => {
             setClean(false);
         }, 100);
-        dataToCsv = [dataToCsv[0]];
+        dataToCsv = model.csvHead;
         result = false;
         setStatusButton({
             start: false,
@@ -130,10 +131,8 @@ function Teste1() {
             clean: false,
         });
         dataToCsv.forEach((line, index) => {
-            if (index === 0) {
-                line.unshift('modelo');
-            } else if (index === 1) {
-                line.unshift(window.api.get('model'));
+            if (index === 1) {
+                line.unshift(model.name);
             } else {
                 line.unshift(null);
             }
@@ -159,9 +158,19 @@ function Teste1() {
 
     useEffect(() => {
         if (model) {
-            dataToCsv.push(model.csvHead);
+            dataToCsv = [model.csvHead];
         }
     }, [model]);
+
+    useEffect(() => {
+        return () => {
+            dataToCsv = [];
+            result = false;
+            window.api.stop('A');
+            window.api.stop('B');
+            window.api.stop('C');
+        };
+    }, []);
 
     return (
         <Container>

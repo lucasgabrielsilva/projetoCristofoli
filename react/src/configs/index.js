@@ -3,6 +3,7 @@ const infos = {
         name: 'VDR 3.00',
         states: false,
         csvHead: [
+            'modelo',
             'timeStamp',
             'Tensão(V)',
             'Resistência(ºC)',
@@ -156,6 +157,7 @@ const infos = {
         name: 'VDR 3.01',
         states: false,
         csvHead: [
+            'modelo',
             'timeStamp',
             'Tensão(V)',
             'Resistência(ºC)',

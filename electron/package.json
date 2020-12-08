@@ -10,7 +10,8 @@
   "scripts": {
     "start": "electron .",
     "rebuild": "electron-rebuild",
-    "dist": "electron-builder --win --ia32"
+    "dist": "electron-builder --win --x64",
+    "dist32": "electron-builder --win --ia32"
   },
   "devDependencies": {
     "electron": "^9.3.5",

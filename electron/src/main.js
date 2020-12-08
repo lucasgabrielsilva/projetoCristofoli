@@ -98,7 +98,7 @@ const handleTime = (seconds) =>{
 }
 
 const handleFileName = (date) => {
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} - ${date.getHours()}:${date.getMinutes() < 10 ? '0'.concat(date.getMinutes()) : date.getMinutes()}`;
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} - ${date.getHours()}_${date.getMinutes() < 10 ? '0'.concat(date.getMinutes()) : date.getMinutes()}`;
 }
 
 app.on('ready', createWindow);
