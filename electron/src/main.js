@@ -201,6 +201,7 @@ ipcMain.on('Update', async (event, argument) => {
         url: 'https://www.cristofoli.com/apps/AT/SW/version.json',
         method: 'GET',
         responseType: 'json',
+        timeout: 4000,
     }).then(async (response) => {
         if(response.data.win.x64.currentVersion > Version){
             const option = dialog.showMessageBoxSync(mainWindow, {
@@ -247,9 +248,18 @@ ipcMain.on('Update', async (event, argument) => {
                     });
                     data.pipe(fs.createWriteStream(path));
                 }
+                else{
+                    mainWindow.webContents.send("progress",'end');
+                }
+            }
+            else{
+                mainWindow.webContents.send("progress",'end');
             }
         }
-    })
+    }).catch((err) => {
+        mainWindow.webContents.send("progress",'end');
+        console.log(err)
+    });
 });
 
 ipcMain.on("saveCSV", (event, argument) => {

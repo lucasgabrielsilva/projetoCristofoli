@@ -40,7 +40,6 @@ function Teste1() {
     }, [data1]);
 
     const handleLoad2 = (data) => {
-        console.log(data);
         if (ModelData[data.modelo[0]].name === model.name) {
             setData2(data);
         } else {

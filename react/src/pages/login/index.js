@@ -14,6 +14,10 @@ import {
     Image,
     Select,
     Button,
+    DivConfig,
+    DivImage,
+    DivEntry,
+    Text,
 } from './styles';
 
 function Login() {
@@ -25,7 +29,8 @@ function Login() {
     const [model, setModel] = useState(Object.keys(ModelData)[0]);
     const [mode, setMode] = useState(false);
     const [destiny, setDestiny] = useState('/analise');
-    const [progress, setProgess] = useState(0);
+    const [progress, setProgess] = useState('Verificando atualizações...');
+    const [showButton, setShowButton] = useState(false);
 
     const handleConnect = (data) => {
         if (data) {
@@ -83,11 +88,12 @@ function Login() {
     };
 
     const handleProgress = (data) => {
-        setProgess(data);
-    };
-
-    const handleStatus = (data) => {
-        console.log(data);
+        if (data === 'end') {
+            setShowButton(true);
+            setProgess('erro');
+        } else {
+            setProgess(data);
+        }
     };
 
     useEffect(() => {
@@ -96,7 +102,6 @@ function Login() {
         window.api.receive('connectionPort', handleConnect);
         window.api.receive('listPort', handleUpdateListPort);
         window.api.receive('progress', handleProgress);
-        window.api.receive('status', handleStatus);
         window.api.send('listPorts');
         window.api.send('model', Object.keys(ModelData)[0]);
     }, []);
@@ -111,103 +116,103 @@ function Login() {
     return (
         <Container>
             <DivLogin>
-                <Image src={Logo} alt="logo da cristofoli" />
-                <div
-                    style={{
-                        display: 'flex',
-                        flexFlow: 'row nowrap',
-                        justifyContent: 'center',
-                        width: '100%',
-                        backgroundColor: 'inherit',
-                    }}
-                >
-                    <label
-                        style={{
-                            color: '#214f62',
-                            backgroundColor: 'inherit',
-                        }}
-                    >
-                        Conectar autoclave:
+                <DivImage>
+                    <Image src={Logo} alt="logo da cristofoli" />
+                </DivImage>
+                <DivConfig>
+                    <Text>
+                        Conectar autoclave:{' '}
                         <input
                             type="checkbox"
                             checked={mode}
+                            disabled={!showButton}
                             onChange={(e) => handleChangeMode(e)}
                         />
-                    </label>
-                </div>
-                <DivOptions>
-                    {mode ? (
-                        <>
-                            <label style={{ backgroundColor: 'inherit' }}>
-                                modelo:
-                                <Select
-                                    title="Selecione o modelo da autoclave"
-                                    value={model}
-                                    onChange={handleChangeModel}
-                                >
-                                    {Object.keys(ModelData).map((value) => {
-                                        return (
-                                            <option value={value}>
-                                                {ModelData[value].name}
-                                            </option>
-                                        );
-                                    })}
-                                </Select>
-                            </label>
-                            <DivPort>
+                    </Text>
+                    <DivOptions>
+                        {mode ? (
+                            <>
                                 <label style={{ backgroundColor: 'inherit' }}>
-                                    porta:
+                                    modelo:
                                     <Select
-                                        title="Selecione a porta a qual a autoclave está conectada"
-                                        value={port}
-                                        onChange={handlePort}
+                                        title="Selecione o modelo da autoclave"
+                                        value={model}
+                                        onChange={handleChangeModel}
                                     >
-                                        {listPorts.map((portName) => {
+                                        {Object.keys(ModelData).map((value) => {
                                             return (
-                                                <option value={`${portName}`}>
-                                                    {' '}
-                                                    {portName}{' '}
+                                                <option value={value}>
+                                                    {ModelData[value].name}
                                                 </option>
                                             );
                                         })}
                                     </Select>
                                 </label>
-                                <ButtonRefresh
-                                    title="Atulizar lista das portas COM"
-                                    onClick={handleUpdatePorts}
-                                >
-                                    <FiRefreshCcw
-                                        size={16}
+                                <DivPort>
+                                    <label
                                         style={{ backgroundColor: 'inherit' }}
-                                    />
-                                </ButtonRefresh>
-                            </DivPort>
-                        </>
-                    ) : null}
-                </DivOptions>
-                <label style={{ color: 'red', backgroundColor: 'inherit' }}>
-                    {progress || null}
-                </label>
-                <DivAlerts>
-                    {portsSignal ? (
-                        <label
-                            style={{
-                                color: '#214f62',
-                                backgroundColor: 'inherit',
-                            }}
-                        >
-                            Portas COM atualizadas
-                        </label>
-                    ) : null}
-                    {error ? (
-                        <label
-                            style={{ color: 'red', backgroundColor: 'inherit' }}
-                        >
-                            Erro na conexão com a porta COM
-                        </label>
-                    ) : null}
-                </DivAlerts>
-                <Button onClick={handleTryConnect}> Entrar </Button>
+                                    >
+                                        porta:
+                                        <Select
+                                            title="Selecione a porta a qual a autoclave está conectada"
+                                            value={port}
+                                            onChange={handlePort}
+                                        >
+                                            {listPorts.map((portName) => {
+                                                return (
+                                                    <option
+                                                        value={`${portName}`}
+                                                    >
+                                                        {' '}
+                                                        {portName}{' '}
+                                                    </option>
+                                                );
+                                            })}
+                                        </Select>
+                                    </label>
+                                    <ButtonRefresh
+                                        title="Atulizar lista das portas COM"
+                                        onClick={handleUpdatePorts}
+                                    >
+                                        <FiRefreshCcw
+                                            size={16}
+                                            style={{
+                                                backgroundColor: 'inherit',
+                                            }}
+                                        />
+                                    </ButtonRefresh>
+                                </DivPort>
+                            </>
+                        ) : null}
+                    </DivOptions>
+                    <DivAlerts>
+                        {portsSignal ? (
+                            <label
+                                style={{
+                                    color: '#214f62',
+                                    backgroundColor: 'inherit',
+                                }}
+                            >
+                                Portas COM atualizadas
+                            </label>
+                        ) : null}
+                        {error ? (
+                            <label
+                                style={{
+                                    color: 'red',
+                                    backgroundColor: 'inherit',
+                                }}
+                            >
+                                Erro na conexão com a porta COM
+                            </label>
+                        ) : null}
+                    </DivAlerts>
+                </DivConfig>
+                <DivEntry>
+                    <Button disabled={!showButton} onClick={handleTryConnect}>
+                        Entrar
+                    </Button>
+                </DivEntry>
                 {redirect ? <Redirect to={destiny} /> : null}
             </DivLogin>
         </Container>

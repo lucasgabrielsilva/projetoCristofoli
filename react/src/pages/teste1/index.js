@@ -55,7 +55,6 @@ function Teste1() {
 
     function handleDataB(data) {
         if (data) {
-            console.log(dataToCsv[1]);
             data.forEach((value) => {
                 dataToCsv[1].push(value);
             });
@@ -132,8 +131,8 @@ function Teste1() {
         });
         dataToCsv.forEach((line, index) => {
             if (index === 1) {
-                line.unshift(model.name);
-            } else {
+                line.unshift(`${window.api.get('model')}`);
+            } else if (index !== 0) {
                 line.unshift(null);
             }
         });
