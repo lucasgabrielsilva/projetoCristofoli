@@ -49,16 +49,16 @@ function Login() {
 
     const handleUpdatePorts = (event) => {
         event.preventDefault();
+        setPortsSignal(true);
+        setTimeout(() => {
+            setPortsSignal(false);
+        }, 1500);
         window.api.send('listPorts');
     };
 
     const handleUpdateListPort = (data) => {
         setListPorts(data);
         setPort(`${data[0]}`);
-        setPortsSignal(true);
-        setTimeout(() => {
-            setPortsSignal(false);
-        }, 1500);
     };
 
     const handleTryConnect = async (event) => {
@@ -88,9 +88,9 @@ function Login() {
     };
 
     const handleProgress = (data) => {
-        if (data === 'end') {
+        if (!data) {
             setShowButton(true);
-            setProgess('erro');
+            setProgess(data);
         } else {
             setProgess(data);
         }
@@ -120,19 +120,20 @@ function Login() {
                     <Image src={Logo} alt="logo da cristofoli" />
                 </DivImage>
                 <DivConfig>
-                    <Text>
-                        Conectar autoclave:{' '}
-                        <input
-                            type="checkbox"
-                            checked={mode}
-                            disabled={!showButton}
-                            onChange={(e) => handleChangeMode(e)}
-                        />
-                    </Text>
+                    {!progress ? (
+                        <Text>
+                            Conectar autoclave:{' '}
+                            <input
+                                type="checkbox"
+                                checked={mode}
+                                onChange={(e) => handleChangeMode(e)}
+                            />
+                        </Text>
+                    ) : null}
                     <DivOptions>
                         {mode ? (
                             <>
-                                <label style={{ backgroundColor: 'inherit' }}>
+                                <Text>
                                     modelo:
                                     <Select
                                         title="Selecione o modelo da autoclave"
@@ -147,11 +148,9 @@ function Login() {
                                             );
                                         })}
                                     </Select>
-                                </label>
+                                </Text>
                                 <DivPort>
-                                    <label
-                                        style={{ backgroundColor: 'inherit' }}
-                                    >
+                                    <Text>
                                         porta:
                                         <Select
                                             title="Selecione a porta a qual a autoclave está conectada"
@@ -169,7 +168,7 @@ function Login() {
                                                 );
                                             })}
                                         </Select>
-                                    </label>
+                                    </Text>
                                     <ButtonRefresh
                                         title="Atulizar lista das portas COM"
                                         onClick={handleUpdatePorts}
@@ -186,30 +185,24 @@ function Login() {
                         ) : null}
                     </DivOptions>
                     <DivAlerts>
+                        {progress || null}
                         {portsSignal ? (
-                            <label
-                                style={{
-                                    color: '#214f62',
-                                    backgroundColor: 'inherit',
-                                }}
-                            >
-                                Portas COM atualizadas
-                            </label>
+                            <Text>Portas COM atualizadas</Text>
                         ) : null}
                         {error ? (
-                            <label
+                            <h4
                                 style={{
                                     color: 'red',
                                     backgroundColor: 'inherit',
                                 }}
                             >
                                 Erro na conexão com a porta COM
-                            </label>
+                            </h4>
                         ) : null}
                     </DivAlerts>
                 </DivConfig>
                 <DivEntry>
-                    <Button disabled={!showButton} onClick={handleTryConnect}>
+                    <Button disabled={progress} onClick={handleTryConnect}>
                         Entrar
                     </Button>
                 </DivEntry>

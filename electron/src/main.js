@@ -249,16 +249,15 @@ ipcMain.on('Update', async (event, argument) => {
                     data.pipe(fs.createWriteStream(path));
                 }
                 else{
-                    mainWindow.webContents.send("progress",'end');
+                    mainWindow.webContents.send("progress", false);
                 }
             }
             else{
-                mainWindow.webContents.send("progress",'end');
+                mainWindow.webContents.send("progress",false);
             }
         }
     }).catch((err) => {
-        mainWindow.webContents.send("progress",'end');
-        console.log(err)
+        mainWindow.webContents.send("progress", false);
     });
 });
 

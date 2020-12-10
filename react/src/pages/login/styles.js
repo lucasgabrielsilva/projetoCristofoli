@@ -23,13 +23,12 @@ const DivLogin = styled.div`
 `;
 
 const DivImage = styled.div`
-    height: 30%;
-    width: 90%;
+    height: 28%;
+    width: 85%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    border: 1px dotted orange;
     border-radius: 30% 30% 0% 0%;
     background-color: inherit;
 `;
@@ -42,7 +41,6 @@ const DivConfig = styled.div`
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    border: 1px dotted purple;
     background-color: inherit;
 `;
 
@@ -53,7 +51,6 @@ const DivEntry = styled.div`
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    border: 1px dotted green;
     background-color: inherit;
 `;
 
@@ -64,7 +61,7 @@ const Text = styled.h4`
 
 const DivOptions = styled.div`
     height: 10vh;
-    width: 99%;
+    width: 100%;
     background-color: inherit;
     display: flex;
     flex-flow: row nowrap;
@@ -82,13 +79,12 @@ const DivPort = styled.div`
 
 const DivAlerts = styled.div`
     height: 10vh;
-    width: 95%;
+    width: 100%;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     background-color: inherit;
-    border: 1px dotted red;
 `;
 
 const Image = styled.img`

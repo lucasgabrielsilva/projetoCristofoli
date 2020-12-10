@@ -47,9 +47,9 @@ const DivImg = styled.div`
 `;
 
 const Image = styled.img`
-    height: 90%;
-    width: 90%;
-    background-color: #fafafa;
+    height: 85%;
+    width: 85%;
+    background-color: inherit;
 `;
 
 const Title = styled.label`

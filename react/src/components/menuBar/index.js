@@ -95,6 +95,14 @@ function MenuBar(props) {
                     {' '}
                     DataLog{' '}
                 </Item>
+                <Item
+                    title="Enviar Relatório"
+                    onClick={() => handleTryChangeWindow('/sendData')}
+                    disabled={!mode}
+                >
+                    {' '}
+                    Reportar{' '}
+                </Item>
             </DivOptions>
             <DivExit>
                 <ButtonExit
