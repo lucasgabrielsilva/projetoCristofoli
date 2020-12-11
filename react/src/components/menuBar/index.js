@@ -98,7 +98,7 @@ function MenuBar(props) {
                 <Item
                     title="Enviar Relatório"
                     onClick={() => handleTryChangeWindow('/sendData')}
-                    disabled={!mode}
+                    disabled={false}
                 >
                     {' '}
                     Reportar{' '}

@@ -195,10 +195,15 @@ ipcMain.on("portConnect", (event, argument) => {
     });
 });
 
+ipcMain.on('Report', (event, argument) => {
+    console.log(argument)
+
+});
+
 ipcMain.on('Update', async (event, argument) => {
 
     Axios({
-        url: 'https://www.cristofoli.com/apps/AT/SW/version.json',
+        url: 'https://www.cristofoli.com/apps/AT/SW/verson.json',
         method: 'GET',
         responseType: 'json',
         timeout: 4000,
