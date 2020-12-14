@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Dropzone from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -12,9 +13,12 @@ import {
     Main,
     TextArea,
     Input,
-    Button,
-    Element,
+    InputFile,
+    Drop,
     Form,
+    FormLeft,
+    FormRigth,
+    Button,
 } from './styles';
 
 function SendData() {
@@ -66,6 +70,11 @@ function SendData() {
         }
     }, [errors]);
 
+    const handleTeste = (data) => {
+        data.preventDefault();
+        console.log(getInputProps());
+    };
+
     return (
         <Container>
             <MenuBar changeWindow={false} />
@@ -75,35 +84,30 @@ function SendData() {
                 </Header>
                 <Main>
                     <Form onSubmit={handleSubmit(onSubmit)}>
-                        <Input
-                            type="text"
-                            name="name"
-                            ref={register}
-                            placeholder="Nome"
-                            buttonColor={colorName}
-                        />
-                        {errors.name?.message}
-                        <Input
-                            type="text"
-                            name="email"
-                            ref={register}
-                            placeholder="E-Mail"
-                            buttonColor={colorEmail}
-                        />
-                        <Input
-                            type="file"
-                            name="file"
-                            ref={register}
-                            placeholder="Arquivos"
-                            buttonColor={colorFile}
-                        />
-                        {errors.file?.message}
-                        <TextArea
-                            placeholder="Descrição"
-                            buttonColor={colorName}
-                        />
-                        <Button type="reset" />
-                        <Button type="submit" />
+                        <FormLeft>
+                            <Input
+                                type="text"
+                                name="name"
+                                ref={register}
+                                placeholder="Nome:"
+                                lineColor={colorName}
+                            />
+                            <Input
+                                type="text"
+                                name="email"
+                                ref={register}
+                                placeholder="E-Mail:"
+                                lineColor={colorEmail}
+                            />
+                            <TextArea placeholder="Descrição:" />
+                        </FormLeft>
+                        <FormRigth>
+                            <label>
+                                Anexos: <InputFile type="file" />
+                            </label>
+                            <Button type="reset" placeholder="Limpar" />
+                            <Button type="submit" placeholder="Enviar" />
+                        </FormRigth>
                     </Form>
                 </Main>
             </DivTest>

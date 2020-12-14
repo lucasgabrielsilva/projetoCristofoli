@@ -50,16 +50,6 @@ const Button = styled.input`
     }
 `;
 
-const Form = styled.form`
-    height: 80%;
-    width: 70%;
-    background-color: inherit;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: flex-start;
-`;
-
 const Element = styled.div`
     height: 20%;
     width: 80%;
@@ -72,47 +62,107 @@ const Element = styled.div`
 `;
 
 const Main = styled.div`
-    height: 90%;
+    height: calc(100% - 10vh);
+    width: 100vw;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa;
+`;
+
+const Form = styled.form`
+    height: 100%;
     width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+`;
+
+const FormLeft = styled.div`
+    height: 70%;
+    width: 40%;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: inherit;
+`;
+
+const FormRigth = styled.div`
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
 `;
 
 const Input = styled.input`
     height: 10%;
-    width: 100%;
-    font-size: 20px;
-    background-color: inherit;
+    width: 80%;
+    margin-bottom: 2px;
+    font-size: 100%;
     border: none;
-    border-bottom: 1px solid ${(props) => props.buttonColor};
-    &:focus {
-        border-bottom: 1px solid lightblue;
+    border-bottom: 2px solid ${(props) => props.lineColor};
+    background-color: inherit;
+`;
+
+const Drop = styled.div`
+    height: 20vh;
+    width: 80vw;
+    border: 2px doted #214f62;
+    background-color: inherit;
+`;
+
+const InputFile = styled.input`
+    &::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+    -webkit-user-select: none;
+    &-::-webkit-input-placeholder {
+        color: red;
+    }
+    content: none;
+    border: 2px solid #214f62;
+    border-radius: 20%;
+    color: #214f62;
+    background-color: white;
+    cursor: pointer;
+    &:hover {
+        background-color: #214f62;
+        color: white;
     }
 `;
 
 const TextArea = styled.textarea`
-    height: 30%;
-    width: 60vw;
-    background-color: #fafafa;
-    color: black;
-    font-size: 20px;
+    height: 70%;
+    width: 80%;
+    padding: 5px;
+    margin-top: 20px;
+    font-size: 15px;
     resize: none;
-    border: none;
-    border-bottom: 1px solid ${(props) => props.buttonColor};
+    border: 2px solid #214f62;
+    border-radius: 10px;
+    background-color: inherit;
 `;
 
 export {
     Container,
-    Button,
-    Title,
-    Input,
-    DivTest,
-    TextArea,
-    Main,
     Header,
+    Button,
+    Drop,
     Element,
+    Title,
+    DivTest,
+    Main,
+    Input,
+    InputFile,
+    TextArea,
     Form,
+    FormLeft,
+    FormRigth,
 };
