@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import MenuBar from '../../components/menuBar';
+import Dropizone from '../../components/dropzone';
 
 import {
     Container,
@@ -19,6 +20,7 @@ import {
     FormLeft,
     FormRigth,
     Button,
+    Select,
 } from './styles';
 
 function SendData() {
@@ -34,25 +36,34 @@ function SendData() {
 
     const schema = yup.object().shape({
         name: yup.string().min(3, 'Minimo 3 caracteres').required(),
-        email: yup.string().email().required(),
+        serie: yup.number().min(30, 'Número inválido').required(),
+        code: yup.number().min(6, 'Código inválido').required(),
+        description: yup.string().min(20, 'min').required(),
         file: yup
             .mixed()
             .test('Formado do arquivo invalido', (value) => handleTest(value)),
     });
 
-    const { register, handleSubmit, errors } = useForm({
+    const schemaFile = yup.mixed().test('teste', (value) => handleTest(value));
+
+    const { register, handleSubmit, getValues, errors } = useForm({
         resolver: yupResolver(schema),
     });
 
-    const [colorName, setColorName] = useState('#214f62');
-    const [colorEmail, setColorEmail] = useState('#214f62');
-    const [colorFile, setColorFile] = useState('#214f62');
+    const [colorName, setColorName] = useState('#003B4D');
+    const [colorSerie, setColorSerie] = useState('#003B4D');
+    const [colorCode, setColorCode] = useState('#003B4D');
+    const [colorFile, setColorFile] = useState('#003B4D');
+    const [colorModel, setCololorModel] = useState('#003B4D');
+    const [colorCycle, setColorCycle] = useState('#003B4D');
+    const [colorDescription, setColorDescription] = useState('#003B4D');
 
     const onSubmit = (data) => {
         setColorName('green');
-        setColorEmail('green');
+        setColorSerie('green');
+        setColorCode('green');
         setColorFile('green');
-        console.log(data);
+        setColorDescription('green');
         window.api.send('Report', data);
     };
 
@@ -61,8 +72,14 @@ function SendData() {
             if (errors.name) {
                 setColorName('red');
             }
-            if (errors.email) {
-                setColorEmail('red');
+            if (errors.serie) {
+                setColorSerie('red');
+            }
+            if (errors.code) {
+                setColorCode('red');
+            }
+            if (errors.description) {
+                setColorDescription('red');
             }
             if (errors.file) {
                 setColorFile('red');
@@ -73,6 +90,18 @@ function SendData() {
     const handleTeste = (data) => {
         data.preventDefault();
         console.log(getInputProps());
+    };
+
+    const handleFile = (data) => {
+        data.preventDefault();
+        schemaFile
+            .isValid(getValues().file)
+            .then((value) => {
+                console.log(value);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
@@ -94,17 +123,49 @@ function SendData() {
                             />
                             <Input
                                 type="text"
-                                name="email"
+                                name="serie"
                                 ref={register}
-                                placeholder="E-Mail:"
-                                lineColor={colorEmail}
+                                placeholder="Número de serie:"
+                                lineColor={colorSerie}
                             />
-                            <TextArea placeholder="Descrição:" />
+                            <Input
+                                type="text"
+                                name="code"
+                                ref={register}
+                                placeholder="Código da assistência:"
+                                lineColor={colorCode}
+                            />
+                            <Select lineColor={colorModel}>
+                                <option value="vdr300"> VDR 3.00 </option>
+                                <option value="Modelo"> Modelo 2 </option>
+                                <option value="Modelo"> Modelo 3 </option>
+                                <option value="Modelo"> Modelo 4 </option>
+                            </Select>
+                            <Select lineColor={colorCycle}>
+                                <option value="vdr300"> Ciclo 10min </option>
+                                <option value="Modelo"> Ciclo 20min </option>
+                                <option value="Modelo"> Ciclo 30min </option>
+                                <option value="Modelo"> Modelo 4 </option>
+                            </Select>
+                            <InputFile lineColor={colorFile}>
+                                Anexos:
+                                <input
+                                    style={{ display: 'none' }}
+                                    name="file"
+                                    ref={register}
+                                    type="file"
+                                    multiple
+                                    onChange={(e) => handleFile(e)}
+                                />
+                            </InputFile>
                         </FormLeft>
                         <FormRigth>
-                            <label>
-                                Anexos: <InputFile type="file" />
-                            </label>
+                            <TextArea
+                                name="description"
+                                ref={register}
+                                placeholder="Descrição:"
+                                lineColor={colorDescription}
+                            />
                             <Button type="reset" placeholder="Limpar" />
                             <Button type="submit" placeholder="Enviar" />
                         </FormRigth>

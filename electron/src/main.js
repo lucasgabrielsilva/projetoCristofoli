@@ -12,6 +12,8 @@ const Axios = require('axios');
 const Exec = require('child_process').exec;
 const Version = require('./configs').version;
 ///const ftp = require('basic-ftp');
+const nodemailer = require("nodemailer");
+
 
 
 let paf = null;
@@ -195,9 +197,43 @@ ipcMain.on("portConnect", (event, argument) => {
     });
 });
 
-ipcMain.on('Report', (event, argument) => {
+ipcMain.on('Report', async (event, argument) => {
     console.log(argument)
 
+    const transporter = nodemailer.createTransport({
+        host: "pod51010.outlook.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: 'app.tec@cristofoli.com',
+          pass: 'Sax84211',
+        },
+    });
+
+    /*
+      transporter.verify(function(error, success) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(success,"foi");
+        }
+      });
+
+      */
+    let info = await transporter.sendMail({
+        from: 'app.tec@cristofoli.com',
+        to: "app.tec@cristofoli.com",
+        subject: "Report de autoclave",
+        text: `Técnico: ${argument.name}\nVersão do software: ${Version}\nNúmero de série: ${argument.serie}\nCódigo da assistência: ${argument.code}\nDescrição: ${argument.description}`,
+        attachments: [
+            {
+                filename: '10-12-2020 - 10_58.csv',
+                path: '/home/user/Projeto/resultados/10-12-2020 - 10_58.csv',
+            }
+        ]
+    });
+
+    console.log(info)
 });
 
 ipcMain.on('Update', async (event, argument) => {

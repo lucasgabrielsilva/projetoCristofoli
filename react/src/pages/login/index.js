@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FiRefreshCcw } from 'react-icons/fi';
 import { Redirect } from 'react-router-dom';
-import Logo from '../../assets/cristofoli2.png';
+import Logo from '../../assets/LogoCristofoli.svg';
 import ModelData from '../../configs';
 
 import {

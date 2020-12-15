@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "./static/css/main.1e6b779b.chunk.css",
-    "main.js": "./static/js/main.ef8402d3.chunk.js",
-    "main.js.map": "./static/js/main.ef8402d3.chunk.js.map",
+    "main.css": "./static/css/main.b7a84688.chunk.css",
+    "main.js": "./static/js/main.cef51183.chunk.js",
+    "main.js.map": "./static/js/main.cef51183.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.8465ec7f.js",
     "runtime-main.js.map": "./static/js/runtime-main.8465ec7f.js.map",
-    "static/js/2.d430a253.chunk.js": "./static/js/2.d430a253.chunk.js",
-    "static/js/2.d430a253.chunk.js.map": "./static/js/2.d430a253.chunk.js.map",
+    "static/js/2.520f6f6e.chunk.js": "./static/js/2.520f6f6e.chunk.js",
+    "static/js/2.520f6f6e.chunk.js.map": "./static/js/2.520f6f6e.chunk.js.map",
     "index.html": "./index.html",
-    "static/css/main.1e6b779b.chunk.css.map": "./static/css/main.1e6b779b.chunk.css.map",
-    "static/js/2.d430a253.chunk.js.LICENSE.txt": "./static/js/2.d430a253.chunk.js.LICENSE.txt",
-    "static/media/cristofoli2.c9ebec24.png": "./static/media/cristofoli2.c9ebec24.png"
+    "static/css/main.b7a84688.chunk.css.map": "./static/css/main.b7a84688.chunk.css.map",
+    "static/js/2.520f6f6e.chunk.js.LICENSE.txt": "./static/js/2.520f6f6e.chunk.js.LICENSE.txt",
+    "static/media/LogoCristofoli.57beb317.svg": "./static/media/LogoCristofoli.57beb317.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.8465ec7f.js",
-    "static/js/2.d430a253.chunk.js",
-    "static/css/main.1e6b779b.chunk.css",
-    "static/js/main.ef8402d3.chunk.js"
+    "static/js/2.520f6f6e.chunk.js",
+    "static/css/main.b7a84688.chunk.css",
+    "static/js/main.cef51183.chunk.js"
   ]
 }

@@ -27,7 +27,7 @@ const Header = styled.div`
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    background-color: #214f62;
+    background-color: #003b4d;
 `;
 
 const Title = styled.label`
@@ -108,44 +108,49 @@ const Input = styled.input`
     font-size: 100%;
     border: none;
     border-bottom: 2px solid ${(props) => props.lineColor};
+    &:focus {
+        border-bottom: 2px solid #0083c1;
+    }
     background-color: inherit;
 `;
 
-const Drop = styled.div`
-    height: 20vh;
-    width: 80vw;
-    border: 2px doted #214f62;
+const Select = styled.select`
+    height: 10%;
+    width: 80%;
+    margin-bottom: 2px;
+    font-size: 100%;
+    border: none;
+    border-bottom: 2px solid ${(props) => props.lineColor};
+    &:focus {
+        border-bottom: 2px solid #0083c1;
+    }
     background-color: inherit;
 `;
 
-const InputFile = styled.input`
-    &::-webkit-file-upload-button {
-        visibility: hidden;
+const InputFile = styled.label`
+    height: 10%;
+    width: 80%;
+    margin-bottom: 2px;
+    font-size: 100%;
+    border: none;
+    border-bottom: 2px solid ${(props) => props.lineColor};
+    &:focus {
+        border-bottom: 2px solid #0083c1;
     }
-    -webkit-user-select: none;
-    &-::-webkit-input-placeholder {
-        color: red;
-    }
-    content: none;
-    border: 2px solid #214f62;
-    border-radius: 20%;
-    color: #214f62;
-    background-color: white;
-    cursor: pointer;
-    &:hover {
-        background-color: #214f62;
-        color: white;
-    }
+    background-color: inherit;
 `;
 
 const TextArea = styled.textarea`
-    height: 70%;
+    height: 50%;
     width: 80%;
     padding: 5px;
     margin-top: 20px;
     font-size: 15px;
     resize: none;
-    border: 2px solid #214f62;
+    border: 2px solid ${(props) => props.lineColor};
+    &:focus {
+        border: 2px solid #0083c1;
+    }
     border-radius: 10px;
     background-color: inherit;
 `;
@@ -154,7 +159,7 @@ export {
     Container,
     Header,
     Button,
-    Drop,
+    Select,
     Element,
     Title,
     DivTest,
