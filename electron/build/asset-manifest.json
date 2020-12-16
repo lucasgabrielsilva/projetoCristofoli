@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "./static/css/main.b7a84688.chunk.css",
-    "main.js": "./static/js/main.cef51183.chunk.js",
-    "main.js.map": "./static/js/main.cef51183.chunk.js.map",
+    "main.js": "./static/js/main.b4c6c22e.chunk.js",
+    "main.js.map": "./static/js/main.b4c6c22e.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.8465ec7f.js",
     "runtime-main.js.map": "./static/js/runtime-main.8465ec7f.js.map",
-    "static/js/2.520f6f6e.chunk.js": "./static/js/2.520f6f6e.chunk.js",
-    "static/js/2.520f6f6e.chunk.js.map": "./static/js/2.520f6f6e.chunk.js.map",
+    "static/js/2.3ea6a526.chunk.js": "./static/js/2.3ea6a526.chunk.js",
+    "static/js/2.3ea6a526.chunk.js.map": "./static/js/2.3ea6a526.chunk.js.map",
     "index.html": "./index.html",
     "static/css/main.b7a84688.chunk.css.map": "./static/css/main.b7a84688.chunk.css.map",
-    "static/js/2.520f6f6e.chunk.js.LICENSE.txt": "./static/js/2.520f6f6e.chunk.js.LICENSE.txt",
+    "static/js/2.3ea6a526.chunk.js.LICENSE.txt": "./static/js/2.3ea6a526.chunk.js.LICENSE.txt",
     "static/media/LogoCristofoli.57beb317.svg": "./static/media/LogoCristofoli.57beb317.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.8465ec7f.js",
-    "static/js/2.520f6f6e.chunk.js",
+    "static/js/2.3ea6a526.chunk.js",
     "static/css/main.b7a84688.chunk.css",
-    "static/js/main.cef51183.chunk.js"
+    "static/js/main.b4c6c22e.chunk.js"
   ]
 }

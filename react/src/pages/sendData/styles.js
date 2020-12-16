@@ -39,6 +39,7 @@ const Title = styled.label`
 `;
 
 const Button = styled.input`
+    min-width: 10%;
     border: 2px solid #214f62;
     border-radius: 20%;
     color: #214f62;
@@ -92,10 +93,10 @@ const FormLeft = styled.div`
 `;
 
 const FormRigth = styled.div`
-    height: 100%;
+    height: 70%;
     width: 60%;
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: row wrap;
     justify-content: center;
     align-items: center;
     background-color: inherit;
@@ -141,10 +142,9 @@ const InputFile = styled.label`
 `;
 
 const TextArea = styled.textarea`
-    height: 50%;
-    width: 80%;
+    height: 70%;
+    width: 90%;
     padding: 5px;
-    margin-top: 20px;
     font-size: 15px;
     resize: none;
     border: 2px solid ${(props) => props.lineColor};
@@ -152,6 +152,20 @@ const TextArea = styled.textarea`
         border: 2px solid #0083c1;
     }
     border-radius: 10px;
+    background-color: inherit;
+`;
+
+const DivFiles = styled.div`
+    height: 30%;
+    width: 80%;
+    padding: 10px;
+    color: #003b4d;
+`;
+
+const DivButton = styled.div`
+    height: 30%;
+    width: 80%;
+    margin: 5px;
     background-color: inherit;
 `;
 
@@ -170,4 +184,6 @@ export {
     Form,
     FormLeft,
     FormRigth,
+    DivFiles,
+    DivButton,
 };

@@ -219,18 +219,24 @@ ipcMain.on('Report', async (event, argument) => {
         }
       });
 
-      */
+    */
+
+    let anexos = [];
+
+    if(argument.file){
+        argument.file.forEach((path) => {
+            anexos.push({
+                path: path
+            })
+        });
+    }
+
     let info = await transporter.sendMail({
         from: 'app.tec@cristofoli.com',
         to: "app.tec@cristofoli.com",
         subject: "Report de autoclave",
-        text: `Técnico: ${argument.name}\nVersão do software: ${Version}\nNúmero de série: ${argument.serie}\nCódigo da assistência: ${argument.code}\nDescrição: ${argument.description}`,
-        attachments: [
-            {
-                filename: '10-12-2020 - 10_58.csv',
-                path: '/home/user/Projeto/resultados/10-12-2020 - 10_58.csv',
-            }
-        ]
+        html: `<b>Técnico:</b> ${argument.name}<br /><b>Código da assistência:</b> ${argument.code}<br /><b>Modelo da autoclave:</b> ${argument.model}<br /><b>Número de série:</b> ${argument.serie}<br /><b>Versão do software:</b> ${Version}<br /><b>Ciclo Realizado:</b> ${argument.cycle}<br /><br /><b>Descrição:</b> ${argument.description}`,
+        attachments: anexos,
     });
 
     console.log(info)

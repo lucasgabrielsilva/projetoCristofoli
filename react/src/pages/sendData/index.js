@@ -21,13 +21,16 @@ import {
     FormRigth,
     Button,
     Select,
+    DivFiles,
+    DivButton,
 } from './styles';
 
 function SendData() {
     const handleTest = (data) => {
         let result = true;
         Object.keys(data).forEach((element) => {
-            if (data[element].type !== 'text/csv') {
+            console.log(data[element].size);
+            if (data[element].size > 3000000) {
                 result = false;
             }
         });
@@ -36,8 +39,10 @@ function SendData() {
 
     const schema = yup.object().shape({
         name: yup.string().min(3, 'Minimo 3 caracteres').required(),
-        serie: yup.number().min(30, 'Número inválido').required(),
+        serie: yup.string().min(30, 'Número inválido').required(),
         code: yup.number().min(6, 'Código inválido').required(),
+        model: yup.string().required(),
+        cycle: yup.string().required(),
         description: yup.string().min(20, 'min').required(),
         file: yup
             .mixed()
@@ -54,9 +59,19 @@ function SendData() {
     const [colorSerie, setColorSerie] = useState('#003B4D');
     const [colorCode, setColorCode] = useState('#003B4D');
     const [colorFile, setColorFile] = useState('#003B4D');
-    const [colorModel, setCololorModel] = useState('#003B4D');
+    const [colorModel, setColorModel] = useState('#003B4D');
     const [colorCycle, setColorCycle] = useState('#003B4D');
     const [colorDescription, setColorDescription] = useState('#003B4D');
+    const [files, setFiles] = useState([]);
+    const [values, setValues] = useState({
+        name: null,
+        serie: null,
+        code: null,
+        model: null,
+        cycle: null,
+        files: null,
+        description: null,
+    });
 
     const onSubmit = (data) => {
         setColorName('green');
@@ -64,11 +79,16 @@ function SendData() {
         setColorCode('green');
         setColorFile('green');
         setColorDescription('green');
+        setColorModel('green');
+        setColorCycle('green');
+        data.file = files;
+        console.log(data);
         window.api.send('Report', data);
     };
 
     useEffect(() => {
         if (errors) {
+            console.log(errors);
             if (errors.name) {
                 setColorName('red');
             }
@@ -84,24 +104,36 @@ function SendData() {
             if (errors.file) {
                 setColorFile('red');
             }
+            if (errors.model) {
+                setColorModel('red');
+            }
+            if (errors.cycle) {
+                setColorCycle('red');
+            }
         }
     }, [errors]);
 
-    const handleTeste = (data) => {
-        data.preventDefault();
-        console.log(getInputProps());
+    const handleName = (data) => {
+        schema.fields.name.isValid(getValues().name).then((e) => {
+            if (e) {
+                setColorName('green');
+            } else {
+                console.log(errors);
+            }
+        });
     };
 
     const handleFile = (data) => {
         data.preventDefault();
-        schemaFile
-            .isValid(getValues().file)
-            .then((value) => {
-                console.log(value);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        schemaFile.isValid(getValues().file).then((e) => {
+            if (e) {
+                const temp = [];
+                Object.keys(data.target.files).forEach((file) => {
+                    temp.push(data.target.files[file].path);
+                });
+                setFiles(temp);
+            }
+        });
     };
 
     return (
@@ -135,17 +167,29 @@ function SendData() {
                                 placeholder="Código da assistência:"
                                 lineColor={colorCode}
                             />
-                            <Select lineColor={colorModel}>
+                            <Select
+                                name="model"
+                                ref={register}
+                                lineColor={colorModel}
+                            >
+                                <option value="" disabled selected hidden>
+                                    {' '}
+                                    Modelo da autoclave{' '}
+                                </option>
                                 <option value="vdr300"> VDR 3.00 </option>
                                 <option value="Modelo"> Modelo 2 </option>
-                                <option value="Modelo"> Modelo 3 </option>
-                                <option value="Modelo"> Modelo 4 </option>
                             </Select>
-                            <Select lineColor={colorCycle}>
-                                <option value="vdr300"> Ciclo 10min </option>
+                            <Select
+                                name="cycle"
+                                ref={register}
+                                lineColor={colorCycle}
+                            >
+                                <option value="" disabled selected hidden>
+                                    {' '}
+                                    Ciclo realizado:{' '}
+                                </option>
+                                <option value="10min"> Ciclo 10min </option>
                                 <option value="Modelo"> Ciclo 20min </option>
-                                <option value="Modelo"> Ciclo 30min </option>
-                                <option value="Modelo"> Modelo 4 </option>
                             </Select>
                             <InputFile lineColor={colorFile}>
                                 Anexos:
@@ -158,6 +202,15 @@ function SendData() {
                                     onChange={(e) => handleFile(e)}
                                 />
                             </InputFile>
+                            <DivFiles>
+                                {files ? (
+                                    <ul>
+                                        {files.map((file) => {
+                                            return <li>{file}</li>;
+                                        })}
+                                    </ul>
+                                ) : null}
+                            </DivFiles>
                         </FormLeft>
                         <FormRigth>
                             <TextArea
@@ -166,8 +219,10 @@ function SendData() {
                                 placeholder="Descrição:"
                                 lineColor={colorDescription}
                             />
-                            <Button type="reset" placeholder="Limpar" />
-                            <Button type="submit" placeholder="Enviar" />
+                            <DivButton>
+                                <Button type="reset" placeholder="Limpar" />
+                                <Button type="submit" placeholder="Enviar" />
+                            </DivButton>
                         </FormRigth>
                     </Form>
                 </Main>
