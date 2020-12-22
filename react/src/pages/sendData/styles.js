@@ -39,15 +39,17 @@ const Title = styled.label`
 `;
 
 const Button = styled.input`
+    min-height: 40%;
     min-width: 10%;
     border: 2px solid #214f62;
     border-radius: 20%;
-    color: #214f62;
-    background-color: white;
+    margin: 10px;
+    color: white;
+    background-color: #003b4d;
     cursor: pointer;
     &:hover {
-        background-color: #214f62;
-        color: white;
+        background-color: white;
+        color: #003b4d;
     }
 `;
 
@@ -70,10 +72,21 @@ const Main = styled.div`
     justify-content: center;
     align-items: center;
     background-color: #fafafa;
+    opacity: ${(props) => props.opacity};
 `;
 
 const Form = styled.form`
     height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+`;
+
+const Fields = styled.form`
+    height: 80%;
     width: 100%;
     display: flex;
     flex-flow: column wrap;
@@ -142,7 +155,7 @@ const InputFile = styled.label`
 `;
 
 const TextArea = styled.textarea`
-    height: 70%;
+    height: 90%;
     width: 90%;
     padding: 5px;
     font-size: 15px;
@@ -156,16 +169,20 @@ const TextArea = styled.textarea`
 `;
 
 const DivFiles = styled.div`
-    height: 30%;
+    height: 10%;
     width: 80%;
     padding: 10px;
     color: #003b4d;
 `;
 
 const DivButton = styled.div`
-    height: 30%;
+    height: 20%;
     width: 80%;
     margin: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
     background-color: inherit;
 `;
 
@@ -184,6 +201,7 @@ export {
     Form,
     FormLeft,
     FormRigth,
+    Fields,
     DivFiles,
     DivButton,
 };

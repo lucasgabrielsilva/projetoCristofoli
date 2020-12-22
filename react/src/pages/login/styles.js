@@ -18,7 +18,7 @@ const DivLogin = styled.div`
     justify-content: center;
     align-items: center;
     background-color: white;
-    border: 2px solid #214f62;
+    border: 2px solid #003b4d;
     border-radius: 20%;
 `;
 

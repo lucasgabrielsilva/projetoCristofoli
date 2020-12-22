@@ -210,16 +210,6 @@ ipcMain.on('Report', async (event, argument) => {
         },
     });
 
-    /*
-      transporter.verify(function(error, success) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(success,"foi");
-        }
-      });
-
-    */
 
     let anexos = [];
 
@@ -232,11 +222,29 @@ ipcMain.on('Report', async (event, argument) => {
     }
 
     let info = await transporter.sendMail({
-        from: 'app.tec@cristofoli.com',
+        from: 'app.tec@cristofol.com',
         to: "app.tec@cristofoli.com",
         subject: "Report de autoclave",
         html: `<b>Técnico:</b> ${argument.name}<br /><b>Código da assistência:</b> ${argument.code}<br /><b>Modelo da autoclave:</b> ${argument.model}<br /><b>Número de série:</b> ${argument.serie}<br /><b>Versão do software:</b> ${Version}<br /><b>Ciclo Realizado:</b> ${argument.cycle}<br /><br /><b>Descrição:</b> ${argument.description}`,
         attachments: anexos,
+    }, (err, info) => {
+        if(err){
+            dialog.showMessageBoxSync(mainWindow, {
+                title: "Cristófoli Autoclave Manager - Reportar",
+                message: "A mensagem Não foi Enviada, Por Favor Tente Novamente",
+                buttons: ['Ok'],
+                type:'error'
+            });
+        }
+        if(info){
+            dialog.showMessageBoxSync(mainWindow, {
+                title: "Cristófoli Autoclave Manager - Reportar",
+                message: "O Reporte foi Enviado, Agradecemos o contato",
+                buttons:['Ok'],
+                type:'warning'
+            });
+        }
+        event.reply("report", true);
     });
 
     console.log(info)
@@ -245,7 +253,7 @@ ipcMain.on('Report', async (event, argument) => {
 ipcMain.on('Update', async (event, argument) => {
 
     Axios({
-        url: 'https://www.cristofoli.com/apps/AT/SW/verson.json',
+        url: 'https://www.cristofoli.com/apps/AT/SW/version.json',
         method: 'GET',
         responseType: 'json',
         timeout: 4000,

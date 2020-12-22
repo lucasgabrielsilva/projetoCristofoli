@@ -14,11 +14,12 @@
     "dist32": "electron-builder --win --ia32"
   },
   "devDependencies": {
-    "electron": "^9.3.5",
+    "electron": "^11.1.0",
     "electron-builder": "^22.8.0",
     "electron-rebuild": "^2.3.2"
   },
   "build": {
+    "productName":"Cristófoli Autoclave Manager",
     "files": [
       "./build/**/*",
       "./src/**/*",
@@ -26,12 +27,19 @@
       "node_modules/**/*"
     ],
     "win": {
-      "appId": "com.electron.cristofoli.desktop",
+      "appId": "com.cristofoli.manager",
       "target": "nsis",
-      "icon": "./assets/cristofoli.ico"
+      "icon": "./assets/LogoCristofoli.ico"
+    },
+    "nsis":{
+        "oneClick":"false",
+        "perMachine":"false",
+        "license":"./license.txt",
+        "installerIcon": "./assets/LogoCristofoli.ico",
+        "installerSidebar": "./assets/LogoCristofoli.bmp"
     },
     "linux": {
-      "appId": "com.electron.cristofoli.desktop",
+      "appId": "com.cristofoli.manager",
       "target": "deb"
     }
   },
