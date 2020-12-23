@@ -137,7 +137,7 @@ function GraphicAnalyze(props) {
                             distribution: 'series',
                             gridLines: {
                                 display: true,
-                                color: '#d3d3d3',
+                                color: '#bababa',
                             },
                             ticks: {
                                 display: true,
@@ -172,7 +172,7 @@ function GraphicAnalyze(props) {
                         position: scale.position,
                         gridLines: {
                             display: true,
-                            color: '#d3d3d3',
+                            color: '#bababa',
                             drawOnChartArea: props.lines === scale.id,
                         },
                         ticks: {
@@ -224,7 +224,7 @@ function GraphicAnalyze(props) {
         }
     }, [props.zoom]);
 
-    return <canvas ref={refCanvas} />;
+    return <canvas style={{ backgroundColor: 'white' }} ref={refCanvas} />;
 }
 
 export default GraphicAnalyze;

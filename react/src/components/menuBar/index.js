@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BiExit } from 'react-icons/bi';
 import { Redirect } from 'react-router-dom';
-import Logo from '../../assets/LogoCristofoli.svg';
+import Logo from '../../assets/LogoCristofoli3.svg';
 import {
     Container,
     DivOptions,
@@ -63,7 +63,7 @@ function MenuBar(props) {
                 <DivImg>
                     <Image src={Logo} alt="logo da cristofoli" />
                 </DivImg>
-                <Title>Análise</Title>
+                <Title />
                 <Item
                     title="Analisar dados salvos previamente"
                     onClick={() => handleTryChangeWindow('/analise')}
@@ -86,7 +86,6 @@ function MenuBar(props) {
                     {' '}
                     Monitorar{' '}
                 </Item>
-                <Title>Teste</Title>
                 <Item
                     title="Obter dados via datalog"
                     onClick={() => handleTryChangeWindow('/teste1')}

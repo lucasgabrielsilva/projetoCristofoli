@@ -46,7 +46,7 @@ function createWindow() {
     });
 
     mainWindow.maximize();
-    //mainWindow.removeMenu();
+    mainWindow.removeMenu();
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, '..', 'build/index.html'),
@@ -317,7 +317,6 @@ ipcMain.on('Update', async (event, argument) => {
 });
 
 ipcMain.on("saveCSV", (event, argument) => {
-
     const date = new Date(null);
     date.setMilliseconds(Date.now());
     const path = dialog.showSaveDialogSync(mainWindow, {

@@ -4,5 +4,8 @@
   box-sizing: border-box;
   background-color: #fafafa;
   outline: none;
+  font-family: 'Signika-Regular', 'SourceSansPro-Regular';
+  src: url('./assets/Signika/static/Signika-Regular.ttf');
+  src: url('./assets/Source_Sans_Pro/SourceSansPro-Regular.ttf')
 }
 

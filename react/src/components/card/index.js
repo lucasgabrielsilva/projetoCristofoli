@@ -10,7 +10,7 @@ const canvasConfigBase = {
     borderShadowWidth: 0,
     ticksWidth: 25,
     ticksWidthMinor: 15,
-    colorPlate: '#fafafa',
+    colorPlate: 'white',
     borders: false,
     strokeStick: false,
     needleType: 'arrow',

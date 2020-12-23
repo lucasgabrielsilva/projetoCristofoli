@@ -2,13 +2,13 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     height: 100vh;
-    width: 120px;
+    width: 140px;
     display: flex;
     flex-flow: column wrap;
     align-items: center;
     justify-content: space-between;
-    border-right: 2px solid gray;
-    background-color: #fafafa;
+    border-right: 1px solid #003b4d;
+    background-color: #0083c1;
 
     @media (max-width: 800px) {
         justify-content: flex-start;
@@ -43,12 +43,12 @@ const DivImg = styled.div`
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: #0083c1;
 `;
 
 const Image = styled.img`
-    height: 85%;
-    width: 85%;
+    height: 90%;
+    width: 90%;
     background-color: inherit;
 `;
 
@@ -56,47 +56,44 @@ const Title = styled.label`
     padding-top: 5%;
     padding-bottom: 5%;
     width: 100%;
-    border-bottom: 1px solid gray;
     font-size: 90%;
     font-style: italic;
     color: white;
-    background-color: #214f62;
+    background-color: #0083c1;
     align-self: auto;
 `;
 
 const Item = styled.button`
     height: 15%;
     width: 100%;
-    background-color: white;
-    color: black;
+    background-color: inherit;
+    color: white;
     border: none;
-    border-bottom: 1px solid darkgray;
-    font-size: 100%;
+    padding: 15px;
+    font-size: 16px;
     cursor: pointer;
     &:disabled {
         opacity: 0.2;
         cursor: default;
     }
     &:hover {
-        background-color: #214f62;
-        color: white;
+        background-color: white;
+        color: #0083c1;
     }
 `;
 
 const ButtonExit = styled.button`
     height: 100%;
     width: 100%;
-    background-color: #214f62;
+    background-color: #0083c1;
     color: white;
     border: none;
-    border-bottom: 1px solid darkgray;
-    border-top: 1px solid darkgray;
     text-decoration: none;
     text-align: center;
     cursor: pointer;
     &:hover {
         background-color: white;
-        color: #214f62;
+        color: #0083c1;
     }
 `;
 

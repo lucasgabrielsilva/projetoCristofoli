@@ -12,7 +12,7 @@ const Container = styled.div`
 
 const DivTest = styled.div`
     height: 100%;
-    width: calc(100% - 120px);
+    width: calc(100% - 140px);
     display: flex;
     flex-flow: row wrap;
     justify-content: center;

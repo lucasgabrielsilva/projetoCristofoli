@@ -15,6 +15,7 @@ import {
     Select,
     DivResult,
     DivGraph,
+    DivButtons,
 } from './styles';
 
 let dataToCsv = [];
@@ -176,7 +177,7 @@ function Teste1() {
             <MenuBar changeWindow={isRunning} />
             <DivTest>
                 <Header>
-                    <Title> DataLogger </Title>
+                    <Title>DataLogger</Title>
                     <ButtonBar>
                         <Button
                             disabled={statusButton.start}
@@ -250,9 +251,7 @@ function Teste1() {
                             lines={lines}
                         />
                     </DivGraph>
-                    <DivResult>
-                        <TextArea disabled value={textAreaValue} />
-                    </DivResult>
+                    <TextArea disabled value={textAreaValue} />
                 </Main>
             </DivTest>
         </Container>

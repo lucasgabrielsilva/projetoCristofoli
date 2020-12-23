@@ -11,7 +11,7 @@ const Container = styled.div`
 
 const DivCards = styled.div`
     height: 100%;
-    width: calc(100vw - 120px);
+    width: calc(100vw - 140px);
     background-color: gray;
     align-self: auto;
     display: flex;

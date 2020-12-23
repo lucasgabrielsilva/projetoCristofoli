@@ -255,7 +255,7 @@ function Graphic(props) {
         refCanvas.current.chart.update(0);
     };
 
-    return <canvas ref={refCanvas} />;
+    return <canvas style={{ backgroundColor: 'white' }} ref={refCanvas} />;
 }
 
 export default Graphic;

@@ -7,12 +7,12 @@ const Container = styled.div`
     flex-flow: column wrap;
     justify-content: flex-start;
     align-content: flex-start;
-    background-color: #fafafa;
+    background-color: white;
 `;
 
 const DivTest = styled.div`
     height: 100%;
-    width: calc(100% - 120px);
+    width: calc(100% - 140px);
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -27,14 +27,14 @@ const Header = styled.div`
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    background-color: #214f62;
+    background-color: inherit;
 `;
 
 const Title = styled.label`
     align-self: auto;
     margin-left: 3%;
     font-size: 200%;
-    color: white;
+    color: #0083c1;
     background-color: inherit;
 `;
 
@@ -44,13 +44,14 @@ const Button = styled.button`
     color: white;
     margin: 2px;
     padding: 2px;
-    border: 2px solid white;
-    background-color: inherit;
-    border-radius: 20%;
+    border: none;
+    border: 1px solid #0083c1;
+    background-color: #0083c1;
+    border-radius: 5px;
     cursor: pointer;
     &:hover {
         background-color: white;
-        color: black;
+        color: #0083c1;
     }
 `;
 
@@ -92,7 +93,7 @@ const DivResult = styled.div`
     justify-content: center;
     align-items: center;
     border-top: 1px solid black;
-    background-color: lightgray;
+    background-color: #fafafa;
 `;
 
 const TextArea = styled.textarea`
@@ -111,13 +112,14 @@ const Select = styled.select`
     color: white;
     margin: 2px;
     padding: 2px;
-    border: 2px solid white;
-    background-color: inherit;
-    border-radius: 20%;
+    border: none;
+    border: 1px solid #0083c1;
+    background-color: #0083c1;
+    border-radius: 5px;
     cursor: pointer;
     &:hover {
         background-color: white;
-        color: black;
+        color: #0083c1;
     }
 `;
 export {
