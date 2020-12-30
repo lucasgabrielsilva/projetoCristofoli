@@ -13,6 +13,7 @@ const Exec = require('child_process').exec;
 const Version = require('./configs').version;
 ///const ftp = require('basic-ftp');
 const nodemailer = require("nodemailer");
+const conf = require('./configs');
 
 
 
@@ -46,10 +47,10 @@ function createWindow() {
     });
 
     mainWindow.maximize();
-    mainWindow.removeMenu();
+    //mainWindow.removeMenu();
 
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, '..', 'build/index.html'),
+        pathname: path.join(__dirname, '..', 'front/index.html'),
         protocol: 'file:',
         slashes: true
     }));
@@ -105,7 +106,7 @@ const handleFileName = (date) => {
 
 app.on('ready', createWindow);
 
-app.on('window-all-closed', function () {
+app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
     }
@@ -246,11 +247,11 @@ ipcMain.on('Report', async (event, argument) => {
         }
         event.reply("report", true);
     });
-
-    console.log(info)
 });
 
 ipcMain.on('Update', async (event, argument) => {
+
+    console.log(conf);
 
     Axios({
         url: 'https://www.cristofoli.com/apps/AT/SW/version.json',

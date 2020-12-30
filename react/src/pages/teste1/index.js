@@ -3,6 +3,7 @@ import Moment from 'moment';
 import MenuBar from '../../components/menuBar';
 import Graphic from '../../components/graphic';
 import ModelData from '../../configs';
+import Logo from '../../assets/LogoCristofoli3.svg';
 import {
     Container,
     ButtonBar,
@@ -16,6 +17,10 @@ import {
     DivResult,
     DivGraph,
     DivButtons,
+    Menu,
+    Image,
+    Buttons,
+    DivAux
 } from './styles';
 
 let dataToCsv = [];
@@ -174,7 +179,7 @@ function Teste1() {
 
     return (
         <Container>
-            <MenuBar changeWindow={isRunning} />
+             <MenuBar changeWindow={isRunning} />
             <DivTest>
                 <Header>
                     <Title>DataLogger</Title>
@@ -251,7 +256,9 @@ function Teste1() {
                             lines={lines}
                         />
                     </DivGraph>
-                    <TextArea disabled value={textAreaValue} />
+                    <DivResult>
+                        <TextArea disabled value={textAreaValue} />
+                    </DivResult>
                 </Main>
             </DivTest>
         </Container>

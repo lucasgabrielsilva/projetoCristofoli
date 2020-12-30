@@ -237,7 +237,7 @@ function Teste1() {
                             <BsClockHistory
                                 size={48}
                                 style={{
-                                    color: '#214f62',
+                                    color: '#003b4d',
                                     backgroundColor: 'inherit',
                                 }}
                             />

@@ -7,12 +7,12 @@ const Container = styled.div`
     flex-flow: column wrap;
     justify-content: flex-start;
     align-content: flex-start;
-    background-color: #fafafa;
+    background-color: white;
 `;
 
 const DivTest = styled.div`
     height: 100%;
-    width: calc(100% - 120px);
+    width: calc(100% - 140px);
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -41,13 +41,14 @@ const Title = styled.label`
 const Button = styled.input`
     min-height: 40%;
     min-width: 10%;
-    border: 2px solid #214f62;
-    border-radius: 20%;
+    border: none;
+    border-radius: 5px;
     margin: 10px;
     color: white;
     background-color: #003b4d;
     cursor: pointer;
     &:hover {
+        border: 1px solid #003b4d;
         background-color: white;
         color: #003b4d;
     }
@@ -65,18 +66,18 @@ const Element = styled.div`
 `;
 
 const Main = styled.div`
-    height: calc(100% - 10vh);
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    background-color: #fafafa;
+    background-color: white;
     opacity: ${(props) => props.opacity};
 `;
 
 const Form = styled.form`
-    height: 100%;
+    height: 80%;
     width: 100%;
     display: flex;
     flex-flow: row wrap;

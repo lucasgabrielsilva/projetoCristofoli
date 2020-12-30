@@ -21,6 +21,7 @@ import {
     Select,
     DivFiles,
     DivButton,
+    ButtonBar,
 } from './styles';
 
 function SendData() {
@@ -166,13 +167,15 @@ function SendData() {
         });
     };
 
+    const handleReset = (event) => {
+        event.preventDefault();
+        reset();
+    }
+
     return (
         <Container>
             <MenuBar changeWindow={false} />
             <DivTest>
-                <Header>
-                    <Title> Reportar </Title>
-                </Header>
                 <Main opacity={opacity}>
                     {sending ? (
                         <label style={{ color: '#003b4d', fontSize: '28px' }}>
@@ -321,7 +324,7 @@ function SendData() {
                                 </FormRigth>
                             </Fields>
                             <DivButton>
-                                <Button ref={register} type="reset" />
+                                <Button onClick={handleReset} ref={register} type="reset" />
                                 <Button ref={register} type="submit" />
                             </DivButton>
                         </Form>

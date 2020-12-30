@@ -9,6 +9,7 @@ const Container = styled.div`
     justify-content: space-between;
     border-right: 1px solid #003b4d;
     background-color: #0083c1;
+    border-radius: 0px 5px 0px 5px;
 
     @media (max-width: 800px) {
         justify-content: flex-start;
@@ -93,7 +94,7 @@ const ButtonExit = styled.button`
     cursor: pointer;
     &:hover {
         background-color: white;
-        color: #0083c1;
+        color: #003b4d;
     }
 `;
 

@@ -182,7 +182,7 @@ function GraphicCompare(props) {
         }
     }, [props.zoom]);
 
-    return <canvas ref={refCanvas} />;
+    return <canvas style={{"backgroundColor":"white"}} ref={refCanvas} />;
 }
 
 export default GraphicCompare;

@@ -7,19 +7,18 @@ const Container = styled.div`
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: #0083c1;
 `;
 
 const DivLogin = styled.div`
-    height: 65vh;
-    width: 33vw;
+    height: 55vh;
+    width: 25vw;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
     background-color: white;
-    border: 2px solid #003b4d;
-    border-radius: 20%;
+    border-radius: 10px;
 `;
 
 const DivImage = styled.div`

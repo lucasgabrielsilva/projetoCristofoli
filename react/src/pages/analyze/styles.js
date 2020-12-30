@@ -34,24 +34,25 @@ const Title = styled.label`
     align-self: auto;
     margin-left: 3%;
     font-size: 200%;
-    color: #0083c1;
+    color: #003b4d;
     background-color: inherit;
 `;
 
 const Button = styled.button`
     align-self: auto;
-    height: 70%;
+    height: 80%;
     color: white;
     margin: 2px;
+    border: none;
     padding: 2px;
     border: none;
-    border: 1px solid #0083c1;
-    background-color: #0083c1;
+    background-color: #003b4d;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
+        border: 1px solid #003b4d;
         background-color: white;
-        color: #0083c1;
+        color: #003b4d;
     }
 `;
 
@@ -59,6 +60,7 @@ const ButtonBar = styled.div`
     height: 80%;
     align-self: auto;
     display: flex;
+    margin-right: 5px;
     flex-flow: row nowrap;
     justify-content: space-around;
     align-items: center;
@@ -92,36 +94,35 @@ const DivResult = styled.div`
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    border-top: 1px solid black;
-    background-color: #fafafa;
+    border-top: 1px dotted black;
 `;
 
 const TextArea = styled.textarea`
     height: 100%;
     width: 100%;
-    background-color: inherit;
+    background-color: lightgray;
     color: black;
     font-size: 15px;
-    overflow-y: scroll;
     resize: none;
 `;
 
 const Select = styled.select`
     align-self: auto;
-    height: 70%;
+    height: 80%;
     color: white;
     margin: 2px;
     padding: 2px;
     border: none;
-    border: 1px solid #0083c1;
-    background-color: #0083c1;
+    background-color: #003b4d;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
+        border: 1px solid #003b4d;
         background-color: white;
-        color: #0083c1;
+        color: #003b4d;
     }
 `;
+
 export {
     Container,
     Button,

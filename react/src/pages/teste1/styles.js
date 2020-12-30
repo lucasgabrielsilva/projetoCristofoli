@@ -34,30 +34,33 @@ const Title = styled.label`
     align-self: auto;
     margin-left: 3%;
     font-size: 200%;
-    color: #0083c1;
+    color: #003b4d;
     background-color: inherit;
 `;
 
 const Button = styled.button`
     align-self: auto;
-    height: 70%;
+    height: 80%;
     color: white;
     margin: 2px;
+    border: none;
     padding: 2px;
-    border: 1px solid #0083c1;
-    background-color: #0083c1;
+    border: none;
+    background-color: #003b4d;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
+        border: 1px solid #003b4d;
         background-color: white;
-        color: #0083c1;
+        color: #003b4d;
     }
 `;
 
 const ButtonBar = styled.div`
-    height: 100%;
-    justify-self: flex-end;
+    height: 80%;
+    align-self: auto;
     display: flex;
+    margin-right: 5px;
     flex-flow: row nowrap;
     justify-content: space-around;
     align-items: center;
@@ -84,52 +87,42 @@ const DivGraph = styled.div`
     background-color: inherit;
 `;
 
-const DivButtons = styled.div`
-    height: 10%;
-    width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    background-color: inherit;
-`;
-
 const DivResult = styled.div`
-    height: 10%;
+    height: 15%;
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    border: none;
-    background-color: #fafafa;
+    border-top: 1px dotted black;
 `;
 
 const TextArea = styled.textarea`
-    height: 15%;
+    height: 100%;
     width: 100%;
-    border: 1px solid #003b4d;
-    background-color: #fafafa;
+    background-color: lightgray;
     color: black;
     font-size: 15px;
-    overflow-y: scroll;
     resize: none;
 `;
 
 const Select = styled.select`
     align-self: auto;
-    height: 70%;
+    height: 80%;
     color: white;
     margin: 2px;
     padding: 2px;
-    border: 1px solid #0083c1;
-    background-color: #0083c1;
+    border: none;
+    background-color: #003b4d;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
+        border: 1px solid #003b4d;
         background-color: white;
-        color: #0083c1;
+        color: #003b4d;
     }
 `;
+
 export {
     Container,
     Button,
@@ -142,5 +135,4 @@ export {
     Header,
     DivResult,
     Select,
-    DivButtons,
 };

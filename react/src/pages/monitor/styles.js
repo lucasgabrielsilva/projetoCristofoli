@@ -30,16 +30,16 @@ const Header = styled.div`
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    background-color: #214f62;
+    background-color: white;
 `;
 
 const Title = styled.label`
     align-self: auto;
     margin-left: 3%;
     font-size: 200%;
-    color: white;
+    color: #0083c1;
     background-color: inherit;
 `;
 

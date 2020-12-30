@@ -57,9 +57,7 @@ function Monitor() {
         <Container>
             <MenuBar changeWindow={false} />
             <DivCards>
-                <Header>
-                    <Title> {model.name} </Title>
-                </Header>
+
                 {model ? handleCard() : null}
                 {model ? handleCardInvalid() : null}
             </DivCards>
