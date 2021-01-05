@@ -45,12 +45,12 @@ const Button = styled.input`
     border-radius: 5px;
     margin: 10px;
     color: white;
-    background-color: #003b4d;
+    background-color: #0f5aa1;
     cursor: pointer;
     &:hover {
-        border: 1px solid #003b4d;
+        border: 1px solid #0f5aa1;
         background-color: white;
-        color: #003b4d;
+        color: #0f5aa1;
     }
 `;
 

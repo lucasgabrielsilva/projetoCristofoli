@@ -18,9 +18,13 @@ Gulp.task('js', () => {
     return Gulp.src(['./src/main.js', './src/preload.js'])
          .pipe(Babel({
              presets: ['@babel/preset-env'],
-             plugins: ['@babel/transform-runtime']
+             plugins:['@babel/plugin-transform-async-to-generator', '@babel/plugin-transform-runtime']
          }))
-         .pipe(Uglify())
+         .pipe(Uglify({
+             compress: {
+                 arguments: true
+             }
+         }))
          .pipe(Gulp.dest('minify/'))
 });
 

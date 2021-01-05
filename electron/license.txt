@@ -1,45 +1,39 @@
-<h2>End-User License Agreement (EULA) of <span class="app_name">crisManager</span></h2>
+Contrato de Licença de Usuário Final (EULA) do Cristófoli Autoclave Manager
 
-<p>This End-User License Agreement ("EULA") is a legal agreement between you and <span class="company_name">cris</span>. Our EULA was created by <a href="https://www.eulatemplate.com">EULA Template</a> for <span class="app_name">crisManager</span>.</p></p>
+Este Contrato de Licença de Usuário Final ("EULA") é um contrato legal entre você e a Cristófoli Biossegurança. Nosso EULA foi criado pelo EULA Template para Cristófoli Autoclave Manager.
 
-<p>This EULA agreement governs your acquisition and use of our <span class="app_name">crisManager</span> software ("Software") directly from <span class="company_name">cris</span> or indirectly through a <span class="company_name">cris</span> authorized reseller or distributor (a "Reseller"). Our Privacy Policy was created by <a href="https://www.generateprivacypolicy.com/">the Privacy Policy Generator</a>.</p>
+Este contrato EULA rege a aquisição e uso de nosso software Cristófoli Autoclave Manager ("Software") diretamente da Cristófoli Biossegurança ou indiretamente por meio de um revendedor ou distribuidor autorizado da Cristófoli Biossegurança (um "Revendedor"). Nossa Política de Privacidade foi criada pelo Gerador de Política de Privacidade.
 
-<p>Please read this EULA agreement carefully before completing the installation process and using the <span class="app_name">crisManager</span> software. It provides a license to use the <span class="app_name">crisManager</span> software and contains warranty information and liability disclaimers.</p>
+Leia este contrato EULA com atenção antes de concluir o processo de instalação e usar o software Cristófoli Autoclave Manager. Fornece licença de uso do software Cristófoli Autoclave Manager e contém informações de garantia e isenção de responsabilidade.
 
-<p>If you register for a free trial of the <span class="app_name">crisManager</span> software, this EULA agreement will also govern that trial. By clicking "accept" or installing and/or using the <span class="app_name">crisManager</span> software, you are confirming your acceptance of the Software and agreeing to become bound by the terms of this EULA agreement.</p>
+Se você se inscrever para uma avaliação gratuita do software Cristófoli Autoclave Manager, este contrato de EULA também regerá essa avaliação. Ao clicar em "aceitar" ou instalar e / ou usar o software Cristófoli Autoclave Manager, você está confirmando sua aceitação do Software e concordando em se comprometer com os termos deste contrato EULA.
 
-<p>If you are entering into this EULA agreement on behalf of a company or other legal entity, you represent that you have the authority to bind such entity and its affiliates to these terms and conditions. If you do not have such authority or if you do not agree with the terms and conditions of this EULA agreement, do not install or use the Software, and you must not accept this EULA agreement.</p>
+Se você estiver celebrando este contrato EULA em nome de uma empresa ou outra entidade legal, você declara que tem autoridade para vincular tal entidade e suas afiliadas a estes termos e condições. Se você não tiver tal autoridade ou se não concordar com os termos e condições deste contrato EULA, não instale ou use o Software, e você não deve aceitar este contrato EULA.
 
-<p>This EULA agreement shall apply only to the Software supplied by <span class="company_name">cris</span> herewith regardless of whether other software is referred to or described herein. The terms also apply to any <span class="company_name">cris</span> updates, supplements, Internet-based services, and support services for the Software, unless other terms accompany those items on delivery. If so, those terms apply.</p>
+Este contrato de EULA aplica-se apenas ao Software fornecido pela Cristófoli Biossegurança com este instrumento, independentemente de outro software ser referido ou descrito aqui. Os termos também se aplicam a quaisquer atualizações, suplementos, serviços baseados na Internet e serviços de suporte para o Software da Cristófoli Biossegurança, a menos que outros termos acompanhem esses itens na entrega. Nesse caso, esses termos se aplicam.
+Concessão de licença
 
-<h3>License Grant</h3>
+A Cristófoli Biossegurança concede a você uma licença pessoal, intransferível e não exclusiva para usar o software Cristófoli Autoclave Manager em seus dispositivos, de acordo com os termos deste contrato EULA.
 
-<p><span class="company_name">cris</span> hereby grants you a personal, non-transferable, non-exclusive licence to use the <span class="app_name">crisManager</span> software on your devices in accordance with the terms of this EULA agreement.</p>
+Você tem permissão para carregar o software Cristófoli Autoclave Manager (por exemplo, um PC, laptop, celular ou tablet) sob seu controle. Você é responsável por garantir que seu dispositivo atenda aos requisitos mínimos do software Cristófoli Autoclave Manager.
 
-<p>You are permitted to load the <span class="app_name">crisManager</span> software (for example a PC, laptop, mobile or tablet) under your control. You are responsible for ensuring your device meets the minimum requirements of the <span class="app_name">crisManager</span> software.</p>
+Você não tem permissão para:
 
-<p>You are not permitted to:</p>
+    Editar, alterar, modificar, adaptar, traduzir ou de outra forma alterar todo ou qualquer parte do Software nem permitir que todo ou qualquer parte do Software seja combinado com ou incorporado em qualquer outro software, nem descompilar, desmontar ou fazer engenharia reversa do Software ou tentativa de fazer tais coisas
+    Reproduza, copie, distribua, revenda ou de outra forma use o Software para qualquer propósito comercial
+    Permitir que terceiros usem o Software em nome ou para o benefício de terceiros
+    Use o Software de qualquer forma que viole qualquer lei local, nacional ou internacional aplicável
+    usar o Software para qualquer finalidade que a Cristófoli Biossegurança considere uma violação deste contrato EULA
 
-<ul>
-<li>Edit, alter, modify, adapt, translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the Software to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer the Software or attempt to do any such things</li>
-<li>Reproduce, copy, distribute, resell or otherwise use the Software for any commercial purpose</li>
-<li>Allow any third party to use the Software on behalf of or for the benefit of any third party</li>
-<li>Use the Software in any way which breaches any applicable local, national or international law</li>
-<li>use the Software for any purpose that <span class="company_name">cris</span> considers is a breach of this EULA agreement</li>
-</ul>
+Propriedade Intelectual e Propriedade
 
-<h3>Intellectual Property and Ownership</h3>
+A Cristófoli Biossegurança deverá sempre manter a propriedade do Software originalmente baixado por você e de todos os downloads subsequentes do Software feitos por você. O Software (e os direitos autorais, e outros direitos de propriedade intelectual de qualquer natureza no Software, incluindo quaisquer modificações feitas no mesmo) são e permanecerão propriedade da Cristófoli Biossegurança.
 
-<p><span class="company_name">cris</span> shall at all times retain ownership of the Software as originally downloaded by you and all subsequent downloads of the Software by you. The Software (and the copyright, and other intellectual property rights of whatever nature in the Software, including any modifications made thereto) are and shall remain the property of <span class="company_name">cris</span>.</p>
+A Cristófoli Biossegurança reserva-se o direito de conceder licenças de uso do Software a terceiros.
 
-<p><span class="company_name">cris</span> reserves the right to grant licences to use the Software to third parties.</p>
+Este contrato EULA entra em vigor na data em que você usa o Software pela primeira vez e deve continuar até o seu encerramento. Você pode rescindi-lo a qualquer momento mediante notificação por escrito à Cristófoli Biossegurança.
 
-<h3>Termination</h3>
+Ele também será encerrado imediatamente se você deixar de cumprir qualquer termo deste contrato EULA. Após tal rescisão, as licenças concedidas por este contrato EULA serão rescindidas imediatamente e você concorda em interromper todo o acesso e uso do Software. As disposições que, por sua natureza, continuam e sobrevivem, sobreviverão a qualquer rescisão deste contrato EULA.
+Lei Aplicável
 
-<p>This EULA agreement is effective from the date you first use the Software and shall continue until terminated. You may terminate it at any time upon written notice to <span class="company_name">cris</span>.</p>
-
-<p>It will also terminate immediately if you fail to comply with any term of this EULA agreement. Upon such termination, the licenses granted by this EULA agreement will immediately terminate and you agree to stop all access and use of the Software. The provisions that by their nature continue and survive will survive any termination of this EULA agreement.</p>
-
-<h3>Governing Law</h3>
-
-<p>This EULA agreement, and any dispute arising out of or in connection with this EULA agreement, shall be governed by and construed in accordance with the laws of <span class="country">br</span>.</p>
+Este contrato EULA, e qualquer disputa decorrente ou em conexão com este contrato EULA, será regido e interpretado de acordo com as leis de br.

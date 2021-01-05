@@ -40,12 +40,12 @@ function SendData() {
         serie: yup
             .string()
             .matches(/^[0-9]+$/, 'Código inválido')
-            .min(30, 'Código inválido')
+            .min(6, 'Código inválido')
             .required(),
         code: yup
             .string()
             .matches(/^[0-9]+$/, 'Código inválido')
-            .min(6, 'Código inválido')
+            .min(30, 'Código inválido')
             .required(),
         model: yup.string().required('Selecione uma opção'),
         cycle: yup.string().required('Selecione uma opção'),
@@ -78,6 +78,13 @@ function SendData() {
         setSending(false);
         setFiles([]);
         reset();
+        setColorName('#003b4d');
+        setColorSerie('#003b4d');
+        setColorCode('#003b4d');
+        setColorFile('#003b4d');
+        setColorModel('#003b4d');
+        setColorCycle('#003b4d');
+        setColorDescription('#003b4d');
     };
 
     const onSubmit = (data) => {
@@ -169,6 +176,7 @@ function SendData() {
 
     const handleReset = (event) => {
         event.preventDefault();
+        setFiles([]);
         reset();
     }
 

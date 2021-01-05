@@ -63,7 +63,6 @@ function MenuBar(props) {
                 <DivImg>
                     <Image src={Logo} alt="logo da cristofoli" />
                 </DivImg>
-                <Title />
                 <Item
                     title="Analisar dados salvos previamente"
                     onClick={() => handleTryChangeWindow('/analise')}

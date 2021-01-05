@@ -7,12 +7,12 @@ const Container = styled.div`
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    background-color: #0083c1;
+    background-color: #0f5aa1;
 `;
 
 const DivLogin = styled.div`
     height: 55vh;
-    width: 25vw;
+    width: 28vw;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
@@ -54,7 +54,7 @@ const DivEntry = styled.div`
 `;
 
 const Text = styled.h4`
-    color: #214f62;
+    color: #003b4d;
     background-color: inherit;
 `;
 
@@ -94,8 +94,8 @@ const Image = styled.img`
 `;
 
 const Select = styled.select`
-    color: #214f62;
-    border: 2px solid #214f62;
+    color: #003b4d;
+    border: 2px solid #003b4d;
     background-color: inherit;
     border-radius: 20%;
     cursor: pointer;
@@ -103,13 +103,13 @@ const Select = styled.select`
 
 const Button = styled.button`
     padding: 2%;
-    border: 2px solid #214f62;
-    border-radius: 20%;
-    color: #214f62;
-    background-color: white;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #0f5aa1;
     cursor: pointer;
     &:hover {
-        background-color: #214f62;
+        background-color: #0083c1;
         color: white;
     }
     &:disabled {
@@ -121,14 +121,14 @@ const Button = styled.button`
 const ButtonRefresh = styled.button`
     max-height: 35%;
     max-width: 40%;
-    border: 2px solid #214f62;
+    border: 2px solid #003b4d;
     border-radius: 20%;
     color: white;
-    background-color: #214f62;
+    background-color: #003b4d;
     cursor: pointer;
     &:hover {
         background-color: white;
-        color: #214f62;
+        color: #003b4d;
     }
 `;
 

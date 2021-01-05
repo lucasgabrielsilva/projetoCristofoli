@@ -5,12 +5,12 @@ import { Container } from './styles';
 export default function Card() {
     return (
         <Container>
-            <label style={{ fontSize: '14px', fontWeight: 'bold' }}>
+            <label style={{ fontSize: '14px', backgroundColor: 'white', fontWeight: 'bold' }}>
                 Parâmetro inválido nesse modelo
             </label>
             <VscError
                 size={48}
-                style={{ color: 'coral', backgroundColor: 'inherit' }}
+                style={{ color: 'coral', backgroundColor: 'white' }}
             />
         </Container>
     );

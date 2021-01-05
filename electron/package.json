@@ -1,27 +1,27 @@
 {
-  "name": "Cristofoli",
+  "name": "CristofoliAutoclaveManager",
   "homepage": "https://www.cristofoli.com",
   "version": "1.0.0",
   "description": "Projeto de comunicação com a autoclave",
   "main": "./minify/main.js",
-  "author": "Cristófoli Biossegurança LTDA <lucas_gabrielsilva@hotmail.com>",
+  "author": "Cristófoli Biossegurança LTDA <app.tec@cristofoli.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
     "start": "electron .",
     "rebuild": "electron-rebuild",
     "dist": "electron-builder --win --x64",
-    "dist32": "electron-builder --win --ia32",
+    "distDeb": "electron-builder --linux --x64",
     "minify": "gulp minify"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-async-to-generator": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-es2015": "^7.0.0-beta.53",
-    "@babel/runtime": "^7.12.5",
     "babel-loader": "^8.2.2",
-    "electron": "^11.1.0",
+    "electron": "^10.x.x",
     "electron-builder": "^22.8.0",
     "electron-rebuild": "^2.3.2",
     "gulp": "^4.0.2",
@@ -33,7 +33,7 @@
     "productName": "Cristófoli Autoclave Manager",
     "files": [
       "./front/**/*",
-      "./src/**/*",
+      "./minify/**/*",
       "./assets/*",
       "node_modules/**/*"
     ],
@@ -50,15 +50,15 @@
       "installerSidebar": "./assets/LogoCristofoli.bmp"
     },
     "linux": {
-      "appId": "com.cristofoli.manager",
       "target": "deb"
     }
   },
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "axios": "^0.21.0",
     "fast-csv": "^4.3.2",
     "moment": "^2.29.1",
     "nodemailer": "^6.4.17",
-    "serialport": "^9.0.2"
+    "serialport": "^9.0.3"
   }
 }

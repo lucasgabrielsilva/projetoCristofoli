@@ -50,7 +50,7 @@ export default function Card(props) {
     return (
         <Container>
             <DivTitle>
-                <label style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                <label style={{ fontSize: '16px', backgroundColor: 'white', fontWeight: 'bold' }}>
                     {props.title}
                 </label>
             </DivTitle>
@@ -59,7 +59,7 @@ export default function Card(props) {
             </DivCanvas>
             <DivInfo>
                 <label
-                    style={{ fontSize: '18px', fontWeight: 'bold' }}
+                    style={{ fontSize: '18px', backgroundColor: 'white', fontWeight: 'bold' }}
                 >{`${props.value}${props.unit}`}</label>
             </DivInfo>
         </Container>

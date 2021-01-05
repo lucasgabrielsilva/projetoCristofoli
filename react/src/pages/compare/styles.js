@@ -34,7 +34,7 @@ const Title = styled.label`
     align-self: auto;
     margin-left: 3%;
     font-size: 200%;
-    color: #003b4d;
+    color: #0f5aa1;
     background-color: inherit;
 `;
 
@@ -46,13 +46,13 @@ const Button = styled.button`
     border: none;
     padding: 2px;
     border: none;
-    background-color: #003b4d;
+    background-color: #0f5aa1;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
-        border: 1px solid #003b4d;
+        border: 1px solid #0f5aa1;
         background-color: white;
-        color: #003b4d;
+        color: #0f5aa1;
     }
 `;
 
@@ -114,13 +114,13 @@ const Select = styled.select`
     margin: 2px;
     padding: 2px;
     border: none;
-    background-color: #003b4d;
+    background-color: #0f5aa1;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
-        border: 1px solid #003b4d;
+        border: 1px solid #0f5aa1;
         background-color: white;
-        color: #003b4d;
+        color: #0f5aa1;
     }
 `;
 

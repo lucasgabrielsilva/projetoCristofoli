@@ -10,10 +10,10 @@ const Moment = require('moment');
 const Axios = require('axios');
 ///const PromiseFtp = require('promise-ftp');
 const Exec = require('child_process').exec;
-const Version = require('./configs').version;
+//const Version = require('./configs').version;
 ///const ftp = require('basic-ftp');
 const nodemailer = require("nodemailer");
-const conf = require('./configs');
+const config = require('./configs').conf;
 
 
 
@@ -36,6 +36,7 @@ function createWindow() {
         center: true,
         useContentSize: true,
         webPreferences: {
+            devTools: false,
             allowRunningInsecureContent: false,
             webSecurity: true,
             nodeIntegration: false,
@@ -47,7 +48,7 @@ function createWindow() {
     });
 
     mainWindow.maximize();
-    //mainWindow.removeMenu();
+    mainWindow.removeMenu();
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, '..', 'front/index.html'),
@@ -108,7 +109,7 @@ app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        app.quit()
+        app.quit();
     }
 });
 
@@ -117,9 +118,9 @@ ipcMain.on('Exit', (event) => {
     event.reply("changeWindow", true);
 });
 
-ipcMain.on('teste', (event, argument) => {
-    event.reply("B", false);
-});
+//ipcMain.on('teste', (event, argument) => {
+//    event.reply("B", false);
+//});
 
 ipcMain.on("openModal", async (event, argument) => {
     howRequestWindow = argument;
@@ -194,20 +195,20 @@ ipcMain.on("portConnect", (event, argument) => {
     });
 
     port.on("error", (data) => {
+        console.log(data)
         event.reply("connectionPort", false);
     });
 });
 
 ipcMain.on('Report', async (event, argument) => {
-    console.log(argument)
 
     const transporter = nodemailer.createTransport({
-        host: "pod51010.outlook.com",
+        host: config.serverMail,
         port: 587,
         secure: false,
         auth: {
-          user: 'app.tec@cristofoli.com',
-          pass: 'Sax84211',
+          user: config.email,
+          pass: config.password,
         },
     });
 
@@ -222,14 +223,15 @@ ipcMain.on('Report', async (event, argument) => {
         });
     }
 
-    let info = await transporter.sendMail({
-        from: 'app.tec@cristofol.com',
-        to: "app.tec@cristofoli.com",
+    let info = transporter.sendMail({
+        from: config.email,
+        to: config.email,
         subject: "Report de autoclave",
-        html: `<b>Técnico:</b> ${argument.name}<br /><b>Código da assistência:</b> ${argument.code}<br /><b>Modelo da autoclave:</b> ${argument.model}<br /><b>Número de série:</b> ${argument.serie}<br /><b>Versão do software:</b> ${Version}<br /><b>Ciclo Realizado:</b> ${argument.cycle}<br /><br /><b>Descrição:</b> ${argument.description}`,
+        html: `<b>Técnico:</b> ${argument.name}<br /><b>Código da assistência:</b> ${argument.code}<br /><b>Modelo da autoclave:</b> ${argument.model}<br /><b>Número de série:</b> ${argument.serie}<br /><b>Versão do software:</b> ${config.version}<br /><b>Sistema Operacional: </b>${process.platform}<b> - </b>${process.getSystemVersion()}<b> - </b>${process.arch}<br /><b>Ciclo Realizado:</b> ${argument.cycle}<br /><br /><b>Descrição:</b> ${argument.description}`,
         attachments: anexos,
     }, (err, info) => {
         if(err){
+            console.log(config)
             dialog.showMessageBoxSync(mainWindow, {
                 title: "Cristófoli Autoclave Manager - Reportar",
                 message: "A mensagem Não foi Enviada, Por Favor Tente Novamente",
@@ -251,15 +253,14 @@ ipcMain.on('Report', async (event, argument) => {
 
 ipcMain.on('Update', async (event, argument) => {
 
-    console.log(conf);
 
     Axios({
-        url: 'https://www.cristofoli.com/apps/AT/SW/version.json',
+        url: config.url,
         method: 'GET',
         responseType: 'json',
         timeout: 4000,
     }).then(async (response) => {
-        if(response.data.win.x64.currentVersion > Version){
+        if(response.data.win.x64.currentVersion > config.version){
             const option = dialog.showMessageBoxSync(mainWindow, {
                 title: "Cristófoli Biossegurança - Atualização",
                 message: "Uma nova versão está disponivel, deseja fazer o download e instalar?",
