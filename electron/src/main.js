@@ -29,7 +29,7 @@ function createWindow() {
         useContentSize: true,
         icon: Logo,
         webPreferences: {
-            devTools: false,
+            devTools: true,
             allowRunningInsecureContent: false,
             webSecurity: true,
             nodeIntegration: false,
@@ -41,7 +41,7 @@ function createWindow() {
     });
 
     mainWindow.maximize();
-    mainWindow.removeMenu();
+    //mainWindow.removeMenu();
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, '..', 'front/index.html'),

@@ -41,14 +41,14 @@ const Title = styled.label`
 const Button = styled.input`
     min-height: 40%;
     min-width: 10%;
-    border: none;
+    border: 1px solid #0f5aa1;
     border-radius: 5px;
     margin: 10px;
     color: white;
+    padding: 3px;
     background-color: #0f5aa1;
     cursor: pointer;
     &:hover {
-        border: 1px solid #0f5aa1;
         background-color: white;
         color: #0f5aa1;
     }
@@ -173,12 +173,12 @@ const DivFiles = styled.div`
     height: 10%;
     width: 80%;
     padding: 10px;
-    color: #003b4d;
+    color: #0f5aa1;
 `;
 
 const DivButton = styled.div`
     height: 20%;
-    width: 80%;
+    width: 20%;
     margin: 5px;
     display: flex;
     flex-flow: row nowrap;

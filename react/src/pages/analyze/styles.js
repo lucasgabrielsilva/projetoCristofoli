@@ -44,13 +44,12 @@ const Button = styled.button`
     color: white;
     margin: 2px;
     border: none;
-    padding: 2px;
-    border: none;
+    padding: 3px;
+    border: 1px solid #0f5aa1;
     background-color: #0f5aa1;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
-        border: 1px solid #0f5aa1;
         background-color: white;
         color: #0f5aa1;
     }
@@ -112,13 +111,12 @@ const Select = styled.select`
     height: 80%;
     color: white;
     margin: 2px;
-    padding: 2px;
-    border: none;
+    padding: 3px;
+    border: 1px solid #0f5aa1;
     background-color: #0f5aa1;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
-        border: 1px solid #0f5aa1;
         background-color: white;
         color: #0f5aa1;
     }

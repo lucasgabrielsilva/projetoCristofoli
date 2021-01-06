@@ -199,7 +199,7 @@ function SendData() {
                                         lineColor={colorName}
                                     />
                                     {errors ? (
-                                        <label style={{ color: 'red' }}>
+                                        <label style={{ backgroundColor: 'inherit', color: 'red' }}>
                                             {errors.name?.message}
                                         </label>
                                     ) : null}
@@ -212,7 +212,7 @@ function SendData() {
                                         lineColor={colorSerie}
                                     />
                                     {errors ? (
-                                        <label style={{ color: 'red' }}>
+                                        <label style={{ backgroundColor: 'inherit', color: 'red' }}>
                                             {errors.serie?.message}
                                         </label>
                                     ) : null}
@@ -225,7 +225,7 @@ function SendData() {
                                         lineColor={colorCode}
                                     />
                                     {errors ? (
-                                        <label style={{ color: 'red' }}>
+                                        <label style={{ backgroundColor: 'inherit', color: 'red' }}>
                                             {errors.code?.message}
                                         </label>
                                     ) : null}
@@ -254,7 +254,7 @@ function SendData() {
                                         </option>
                                     </Select>
                                     {errors ? (
-                                        <label style={{ color: 'red' }}>
+                                        <label style={{ backgroundColor: 'inherit', color: 'red' }}>
                                             {errors.model?.message}
                                         </label>
                                     ) : null}
@@ -283,7 +283,7 @@ function SendData() {
                                         </option>
                                     </Select>
                                     {errors ? (
-                                        <label style={{ color: 'red' }}>
+                                        <label style={{ backgroundColor: 'inherit', color: 'red' }}>
                                             {errors.cycle?.message}
                                         </label>
                                     ) : null}
@@ -299,15 +299,15 @@ function SendData() {
                                         />
                                     </InputFile>
                                     {errors ? (
-                                        <label style={{ color: 'red' }}>
+                                        <label style={{ backgroundColor: 'inherit', color: 'red' }}>
                                             {errors.file?.message}
                                         </label>
                                     ) : null}
                                     <DivFiles>
                                         {files ? (
-                                            <ul>
+                                            <ul style={{backgroundColor: 'white'}}>
                                                 {files.map((file) => {
-                                                    return <li>{file}</li>;
+                                                    return <li style={{backgroundColor: 'white'}}>{file}</li>;
                                                 })}
                                             </ul>
                                         ) : null}
@@ -322,7 +322,7 @@ function SendData() {
                                         lineColor={colorDescription}
                                     />
                                     {errors ? (
-                                        <label style={{ color: 'red' }}>
+                                        <label style={{ backgroundColor: 'inherit', color: 'red' }}>
                                             {errors.description?.message}
                                         </label>
                                     ) : null}
