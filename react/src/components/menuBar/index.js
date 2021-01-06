@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BiExit } from 'react-icons/bi';
 import { Redirect } from 'react-router-dom';
-import Logo from '../../assets/LogoCristofoli3.svg';
+import Logo from '../../assets/LogoCristofoli2.svg';
 import {
     Container,
     DivOptions,
     DivImg,
     DivExit,
     Image,
-    Title,
     Item,
     ButtonExit,
 } from './styles.js';

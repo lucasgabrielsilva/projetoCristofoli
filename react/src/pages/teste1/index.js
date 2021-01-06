@@ -3,7 +3,6 @@ import Moment from 'moment';
 import MenuBar from '../../components/menuBar';
 import Graphic from '../../components/graphic';
 import ModelData from '../../configs';
-import Logo from '../../assets/LogoCristofoli3.svg';
 import {
     Container,
     ButtonBar,
@@ -16,11 +15,6 @@ import {
     Select,
     DivResult,
     DivGraph,
-    DivButtons,
-    Menu,
-    Image,
-    Buttons,
-    DivAux
 } from './styles';
 
 let dataToCsv = [];

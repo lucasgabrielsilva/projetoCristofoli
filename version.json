@@ -1,5 +1,5 @@
 {
-    "win":{
+    "win32":{
         "x32":{
             "currentVersion": "1.0.0.0",
             "address":"https://www.cristofoli.com/apps/AT/SW/cristofoli.exe",
@@ -14,7 +14,7 @@
         }
     },
     "linux":{
-        "deb":{
+        "x64":{
             "currentVersion": "1.0.0.0",
             "address":"https://www.cristofoli.com/apps/AT/SW/cristofoli.exe",
             "name":"Cristofoli Autoclave Manager",

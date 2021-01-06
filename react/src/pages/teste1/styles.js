@@ -100,6 +100,7 @@ const DivResult = styled.div`
 const TextArea = styled.textarea`
     height: 100%;
     width: 100%;
+    padding-left: 5px;
     background-color: lightgray;
     color: black;
     font-size: 15px;

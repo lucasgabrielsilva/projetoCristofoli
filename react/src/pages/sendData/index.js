@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -6,8 +6,6 @@ import MenuBar from '../../components/menuBar';
 
 import {
     Container,
-    Title,
-    Header,
     DivTest,
     Main,
     TextArea,
@@ -21,7 +19,6 @@ import {
     Select,
     DivFiles,
     DivButton,
-    ButtonBar,
 } from './styles';
 
 function SendData() {

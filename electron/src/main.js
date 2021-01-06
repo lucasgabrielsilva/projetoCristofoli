@@ -8,24 +8,16 @@ const SerialPort = require("serialport");
 const ByteLength = require('@serialport/parser-byte-length')
 const Moment = require('moment');
 const Axios = require('axios');
-///const PromiseFtp = require('promise-ftp');
 const Exec = require('child_process').exec;
-//const Version = require('./configs').version;
-///const ftp = require('basic-ftp');
 const nodemailer = require("nodemailer");
 const config = require('./configs').conf;
+const Logo = '../assets/LogoCristofoli.ico';
 
-
-
-let paf = null;
 let port = null;
 let parser = null
 let howRequestWindow = "";
 let mainWindow;
 const regex = new RegExp("[0-9][0-9]:[0-9][0-9]:[0-9][0-9]", "g");
-
-let child;
-
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -35,6 +27,7 @@ function createWindow() {
         minHeight: 450,
         center: true,
         useContentSize: true,
+        icon: Logo,
         webPreferences: {
             devTools: false,
             allowRunningInsecureContent: false,
@@ -58,327 +51,19 @@ function createWindow() {
 
     mainWindow.on('closed', function () {
         mainWindow = null
-    })
-
-    /*
-    child = new BrowserWindow({ parent: mainWindow,
-        modal: true,
-        minimizable: false,
-        maximizable: false,
-        closable: false,
-        show: false,
-        frame: false,
-        height: 200,
-        width: 600,
-        webPreferences: {
-            allowRunningInsecureContent: false,
-            webSecurity: true,
-            nodeIntegration: false,
-            contextIsolation: true,
-            enableRemoteModule: false,
-            worldSafeExecuteJavaScript: true,
-            preload: path.join(__dirname, "./preload.js")
-        }
-    })
-    child.loadURL(url.format({
-    pathname: path.join(__dirname, './components/modal/index.html'),
-    protocol: 'file:',
-    slashes: true
-    }));
-
-    child.on('close', function () {
-        child.hide();
-    })
-
-    child.removeMenu();
-    */
-}
+    });
+};
 
 
 const handleTime = (seconds) =>{
     const time = new Date(null);
     time.setSeconds(seconds);
     return time.toISOString().substr(11, 8);
-}
+};
 
 const handleFileName = (date) => {
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} - ${date.getHours()}_${date.getMinutes() < 10 ? '0'.concat(date.getMinutes()) : date.getMinutes()}`;
-}
-
-app.on('ready', createWindow);
-
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
-
-ipcMain.on('Exit', (event) => {
-    port.close();
-    event.reply("changeWindow", true);
-});
-
-//ipcMain.on('teste', (event, argument) => {
-//    event.reply("B", false);
-//});
-
-ipcMain.on("openModal", async (event, argument) => {
-    howRequestWindow = argument;
-    const option = await dialog.showMessageBox(mainWindow, {
-        title: "Cristófoli Biossegurança",
-        message: "Um teste está sendo realizado, caso você saia agora todo o progresso será perdido!\nCaso queira salvar o resultado parcial do teste: clique em 'Não' e em seguida em 'Parar'.",
-        buttons: ['Não', 'Sim'],
-        cancelId:0,
-        defaultId:0,
-        type:'warning'
-    });
-    if(option.response){
-        if(howRequestWindow == "/"){
-            port.close();
-        }
-        howRequestWindow = "";
-        mainWindow.webContents.send("changeWindow", true);
-    }
-    else{
-        mainWindow.webContents.send("changeWindow", false);
-    }
-});
-
-ipcMain.on("redirect", (event, argument) => {
-    if(argument){
-        if(howRequestWindow == "/"){
-            port.close();
-        }
-        howRequestWindow = "";
-        ///child.hide();
-        mainWindow.webContents.send("changeWindow", true);
-    }
-    else{
-        howRequestWindow = "";
-        ///child.hide();
-        mainWindow.webContents.send("changeWindow", false);
-    }
-})
-
-ipcMain.on('modelErro', (event, argument) => {
-    dialog.showMessageBoxSync(mainWindow, {
-        title: "Cristófoli Biossegurança",
-        message: "Não é possivel compara dados de modelos diferentes!",
-        buttons: ['Ok'],
-        cancelId:0,
-        defaultId:0,
-        type:'error'
-    });
-
-})
-
-ipcMain.on("listPorts", (event) => {
-    SerialPort.list().then(function (data) {
-        const ports = data.map((port) => {
-            return port.path;
-        });
-        event.reply("listPort", ports);
-    });
-})
-
-ipcMain.on("portConnect", (event, argument) => {
-    port = new SerialPort(argument, {
-        baudRate: 115200,
-        autoOpen: false
-    });
-
-    port.open();
-
-    port.on("open", (data) => {
-        handleParser();
-        event.reply("connectionPort", true);
-    });
-
-    port.on("error", (data) => {
-        console.log(data)
-        event.reply("connectionPort", false);
-    });
-});
-
-ipcMain.on('Report', async (event, argument) => {
-
-    const transporter = nodemailer.createTransport({
-        host: config.serverMail,
-        port: 587,
-        secure: false,
-        auth: {
-          user: config.email,
-          pass: config.password,
-        },
-    });
-
-
-    let anexos = [];
-
-    if(argument.file){
-        argument.file.forEach((path) => {
-            anexos.push({
-                path: path
-            })
-        });
-    }
-
-    let info = transporter.sendMail({
-        from: config.email,
-        to: config.email,
-        subject: "Report de autoclave",
-        html: `<b>Técnico:</b> ${argument.name}<br /><b>Código da assistência:</b> ${argument.code}<br /><b>Modelo da autoclave:</b> ${argument.model}<br /><b>Número de série:</b> ${argument.serie}<br /><b>Versão do software:</b> ${config.version}<br /><b>Sistema Operacional: </b>${process.platform}<b> - </b>${process.getSystemVersion()}<b> - </b>${process.arch}<br /><b>Ciclo Realizado:</b> ${argument.cycle}<br /><br /><b>Descrição:</b> ${argument.description}`,
-        attachments: anexos,
-    }, (err, info) => {
-        if(err){
-            console.log(config)
-            dialog.showMessageBoxSync(mainWindow, {
-                title: "Cristófoli Autoclave Manager - Reportar",
-                message: "A mensagem Não foi Enviada, Por Favor Tente Novamente",
-                buttons: ['Ok'],
-                type:'error'
-            });
-        }
-        if(info){
-            dialog.showMessageBoxSync(mainWindow, {
-                title: "Cristófoli Autoclave Manager - Reportar",
-                message: "O Reporte foi Enviado, Agradecemos o contato",
-                buttons:['Ok'],
-                type:'warning'
-            });
-        }
-        event.reply("report", true);
-    });
-});
-
-ipcMain.on('Update', async (event, argument) => {
-
-
-    Axios({
-        url: config.url,
-        method: 'GET',
-        responseType: 'json',
-        timeout: 4000,
-    }).then(async (response) => {
-        if(response.data.win.x64.currentVersion > config.version){
-            const option = dialog.showMessageBoxSync(mainWindow, {
-                title: "Cristófoli Biossegurança - Atualização",
-                message: "Uma nova versão está disponivel, deseja fazer o download e instalar?",
-                buttons: ['Não', 'Sim'],
-                cancelId:0,
-                defaultId:0,
-                type:'warning'
-            });
-            if(option){
-                const path = dialog.showSaveDialogSync(mainWindow, {
-                    title: "Cristófoli Biossegurança - Salvar nova versão",
-                    defaultPath: response.data.win.x64.name,
-                    filters: [{
-                        name: '.exe', extensions: ['exe']
-                    }]
-                });
-                if(path){
-                    dialog.showMessageBoxSync(mainWindow, {
-                        title: "Cristófoli Biossegurança - Atualização",
-                        message: "Durante o processo você será perguntado se deseja fechar a janela, por favor clique em 'ok'",
-                        buttons:['Prosseguir'],
-                        type:'warning'
-                    });
-                    const { data, headers } = await Axios({
-                        url: response.data.win.x64.address,
-                        method: "GET",
-                        responseType: "stream",
-                    });
-                    let receive = 0;
-                    data.on('data', (data) => {
-                        receive += data.length;
-                        mainWindow.webContents.send("progress",`Download: ${parseInt((receive * 100) / headers['content-length'])}%`)
-                    });
-                    data.on('end', () => {
-                        mainWindow.webContents.send("progress",`Iniciando instalação...`);
-                        setTimeout(() => {
-                            Exec(`start ${path}`, (err, res) => {
-                                mainWindow.webContents.send("status", err)
-                                mainWindow.webContents.send("status", res)
-                            });
-                        },5000);
-                    });
-                    data.pipe(fs.createWriteStream(path));
-                }
-                else{
-                    mainWindow.webContents.send("progress", false);
-                }
-            }
-            else{
-                mainWindow.webContents.send("progress",false);
-            }
-        }
-    }).catch((err) => {
-        mainWindow.webContents.send("progress", false);
-    });
-});
-
-ipcMain.on("saveCSV", (event, argument) => {
-    const date = new Date(null);
-    date.setMilliseconds(Date.now());
-    const path = dialog.showSaveDialogSync(mainWindow, {
-        title: "Cristófoli Biossegurança - Salvar dados do teste",
-        defaultPath: handleFileName(Moment().toDate()),
-        filters: [{
-            name: '.csv', extensions: ['csv']
-        }]
-    });
-    if(path){
-        const ws = fs.createWriteStream(path);
-        const stream = format({ headers: true, delimiter: '\t' });
-        stream.pipe(ws);
-        argument.forEach(element => {
-            stream.write(element)
-        });
-        stream.end();
-        stream.on("end", () => {
-            event.reply("C", "foi");
-        });
-    }
-    else{
-        event.reply("C", false);
-    }
-})
-
-ipcMain.on("loadCSV", async (event, argument) => {
-    const path = dialog.showOpenDialogSync(mainWindow, {
-        title: "Cristófoli Biossegurança - Carregar dados",
-        properties: ['openFile'],
-        filters: [{
-            name: '.csv', extensions: ['csv']
-        }]
-    });
-    if(path){
-        let temp = [];
-        let data = {};
-        csv.parseFile(path[0])
-        .on('error', error => console.error(error))
-        .on('data', (row) => {
-            temp.push(row[0].split("\t"));
-        }).on('end', () => {
-            temp[0].map((element, index) => {
-                data[element] = temp.map((value, subIndex) => {
-                    if(subIndex != 0){
-                        return value[index];
-                    }
-                })
-            });
-            Object.keys(data).forEach((element) => {
-                data[element].shift();
-            });
-            data.label = path[0];
-            event.reply("dataCSV", data);
-        });
-    }
-    else{
-        event.reply("C", false);
-    }
-})
+};
 
 const handleParser = () => {
     parser = port.pipe(new ByteLength({length: 13}))
@@ -418,5 +103,254 @@ const handleParser = () => {
             mainWindow.webContents.send("B",data);
         }
     });
-}
+};
+
+app.on('ready', createWindow);
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+ipcMain.on('Exit', (event) => {
+    port.close();
+    event.reply("changeWindow", true);
+});
+
+ipcMain.on("openModal", async (event, argument) => {
+    howRequestWindow = argument;
+    const option = await dialog.showMessageBox(mainWindow, {
+        title: "Cristófoli Biossegurança",
+        message: "Um teste está sendo realizado, caso você saia agora todo o progresso será perdido!\nCaso queira salvar o resultado parcial do teste: clique em 'Não' e em seguida em 'Parar'.",
+        buttons: ['Não', 'Sim'],
+        cancelId:0,
+        defaultId:0,
+        type:'warning'
+    });
+    if(option.response){
+        if(howRequestWindow == "/"){
+            port.close();
+        }
+        howRequestWindow = "";
+        mainWindow.webContents.send("changeWindow", true);
+    }
+    else{
+        mainWindow.webContents.send("changeWindow", false);
+    }
+});
+
+ipcMain.on('modelErro', (event, argument) => {
+    dialog.showMessageBoxSync(mainWindow, {
+        title: "Cristófoli Biossegurança",
+        message: "Não é possivel comparar dados de modelos diferentes!",
+        buttons: ['Ok'],
+        cancelId:0,
+        defaultId:0,
+        type:'error'
+    });
+});
+
+ipcMain.on("listPorts", (event) => {
+    SerialPort.list().then(function (data) {
+        const ports = data.map((port) => {
+            return port.path;
+        });
+        event.reply("listPort", ports);
+    });
+});
+
+ipcMain.on("portConnect", (event, argument) => {
+    port = new SerialPort(argument, {
+        baudRate: 115200,
+        autoOpen: false
+    });
+
+    port.open();
+
+    port.on("open", (data) => {
+        handleParser();
+        event.reply("connectionPort", true);
+    });
+
+    port.on("error", (data) => {
+        console.log(data)
+        event.reply("connectionPort", false);
+    });
+});
+
+ipcMain.on('Report', async (event, argument) => {
+    let anexos = [];
+
+    const transporter = nodemailer.createTransport({
+        host: config.serverMail,
+        port: 587,
+        secure: false,
+        auth: {
+          user: config.email,
+          pass: config.password,
+        },
+    });
+
+    if(argument.file){
+        argument.file.forEach((path) => {
+            anexos.push({
+                path: path
+            })
+        });
+    }
+
+    transporter.sendMail({
+        from: config.email,
+        to: config.email,
+        subject: "Report de autoclave",
+        html: `<b>Técnico:</b> ${argument.name}<br /><b>Código da assistência:</b> ${argument.code}<br /><b>Modelo da autoclave:</b> ${argument.model}<br /><b>Número de série:</b> ${argument.serie}<br /><b>Versão do software:</b> ${config.version}<br /><b>Sistema Operacional: </b>${process.platform}<b> - </b>${process.getSystemVersion()}<b> - </b>${process.arch}<br /><b>Ciclo Realizado:</b> ${argument.cycle}<br /><br /><b>Descrição:</b> ${argument.description}`,
+        attachments: anexos,
+    }, (err, info) => {
+        if(err){
+            dialog.showMessageBoxSync(mainWindow, {
+                title: "Cristófoli Autoclave Manager - Reportar",
+                message: "A mensagem Não foi Enviada, Por Favor Tente Novamente",
+                buttons: ['Ok'],
+                type:'error'
+            });
+        }
+        if(info){
+            dialog.showMessageBoxSync(mainWindow, {
+                title: "Cristófoli Autoclave Manager - Reportar",
+                message: "O Reporte foi Enviado, Agradecemos o contato",
+                buttons:['Ok'],
+                type:'warning'
+            });
+        }
+        event.reply("report", true);
+    });
+});
+
+ipcMain.on('Update', async (event, argument) => {
+    Axios({
+        url: config.url,
+        method: 'GET',
+        responseType: 'json',
+        timeout: 4000,
+    }).then(async (response) => {
+        if(response.data[`${process.platform}`][`${process.arch}`].currentVersion > config.version){
+            const option = dialog.showMessageBoxSync(mainWindow, {
+                title: "Cristófoli Biossegurança - Atualização",
+                message: "Uma nova versão está disponivel, deseja fazer o download e instalar?",
+                buttons: ['Não', 'Sim'],
+                cancelId:0,
+                defaultId:0,
+                type:'warning'
+            });
+            if(option){
+                const path = dialog.showSaveDialogSync(mainWindow, {
+                    title: "Cristófoli Biossegurança - Salvar nova versão",
+                    defaultPath: response.data[`${process.platform}`][`${process.arch}`].name,
+                    filters: [{
+                        name: '.exe', extensions: ['exe']
+                    }]
+                });
+                if(path){
+                    dialog.showMessageBoxSync(mainWindow, {
+                        title: "Cristófoli Biossegurança - Atualização",
+                        message: "Durante o processo você será perguntado se deseja fechar a janela, por favor clique em 'ok'",
+                        buttons:['Prosseguir'],
+                        type:'warning'
+                    });
+                    const { data, headers } = await Axios({
+                        url: response.data[`${process.platform}`][`${process.arch}`].address,
+                        method: "GET",
+                        responseType: "stream",
+                    });
+                    let receive = 0;
+                    data.on('data', (data) => {
+                        receive += data.length;
+                        mainWindow.webContents.send("progress",`Download: ${parseInt((receive * 100) / headers['content-length'])}%`)
+                    });
+                    data.on('end', () => {
+                        mainWindow.webContents.send("progress",`Iniciando instalação...`);
+                        setTimeout(() => {
+                            Exec(`start ${path}`, (err, res) => {
+                                mainWindow.webContents.send("status", err)
+                                mainWindow.webContents.send("status", res)
+                            });
+                        },5000);
+                    });
+                    data.pipe(fs.createWriteStream(path));
+                }
+                else{
+                    mainWindow.webContents.send("progress", false);
+                }
+            }
+            else{
+                mainWindow.webContents.send("progress",false);
+            }
+        }
+    }).catch((err) => {
+        mainWindow.webContents.send("progress", false);
+    });
+});
+
+ipcMain.on("saveCSV", (event, argument) => {
+    const date = new Date(null);
+    date.setMilliseconds(Date.now());
+    const path = dialog.showSaveDialogSync(mainWindow, {
+        title: "Cristófoli Biossegurança - Salvar dados do teste",
+        defaultPath: `${handleFileName(Moment().toDate())}${process.platform == 'linux' ? '.csv' : ''}`,
+        filters: [{
+            name: '.csv', extensions: ['csv']
+        }]
+    });
+    if(path){
+        const ws = fs.createWriteStream(path);
+        const stream = format({ headers: true, delimiter: '\t' });
+        stream.pipe(ws);
+        argument.forEach(element => {
+            stream.write(element)
+        });
+        stream.end();
+        stream.on("end", () => {
+            event.reply("C", true);
+        });
+    }
+    else{
+        event.reply("C", false);
+    }
+});
+
+ipcMain.on("loadCSV", async (event, argument) => {
+    const path = dialog.showOpenDialogSync(mainWindow, {
+        title: "Cristófoli Biossegurança - Carregar dados",
+        properties: ['openFile'],
+        filters: [{
+            name: '.csv', extensions: ['csv']
+        }]
+    });
+    if(path){
+        let temp = [];
+        let data = {};
+        csv.parseFile(path[0])
+        .on('error', error => console.error(error))
+        .on('data', (row) => {
+            temp.push(row[0].split("\t"));
+        }).on('end', () => {
+            temp[0].map((element, index) => {
+                data[element] = temp.map((value, subIndex) => {
+                    if(subIndex != 0){
+                        return value[index];
+                    }
+                })
+            });
+            Object.keys(data).forEach((element) => {
+                data[element].shift();
+            });
+            data.label = path[0];
+            event.reply("dataCSV", data);
+        });
+    }
+    else{
+        event.reply("C", false);
+    }
+});
 

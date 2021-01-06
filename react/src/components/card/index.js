@@ -42,6 +42,15 @@ export default function Card(props) {
     }, []);
 
     useEffect(() => {
+        if(refCanvas.current){
+          const temp = new LinearGauge(canvasConfigBase);
+          refCanvas.current.options.width = temp.options.width;
+          refCanvas.current.options.height = temp.options.height;
+          refCanvas.current.update(refCanvas);
+        }
+      },[props.resize]);
+
+    useEffect(() => {
         if (refCanvas.current) {
             refCanvas.current.value = props.value;
         }

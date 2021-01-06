@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "./static/css/main.46820a5e.chunk.css",
-    "main.js": "./static/js/main.fab12973.chunk.js",
-    "main.js.map": "./static/js/main.fab12973.chunk.js.map",
+    "main.css": "./static/css/main.8dabf728.chunk.css",
+    "main.js": "./static/js/main.1e5da350.chunk.js",
+    "main.js.map": "./static/js/main.1e5da350.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.01cf0a47.js",
     "runtime-main.js.map": "./static/js/runtime-main.01cf0a47.js.map",
-    "static/js/2.6a1edf3e.chunk.js": "./static/js/2.6a1edf3e.chunk.js",
-    "static/js/2.6a1edf3e.chunk.js.map": "./static/js/2.6a1edf3e.chunk.js.map",
+    "static/js/2.4d203851.chunk.js": "./static/js/2.4d203851.chunk.js",
+    "static/js/2.4d203851.chunk.js.map": "./static/js/2.4d203851.chunk.js.map",
     "index.html": "./index.html",
-    "static/css/main.46820a5e.chunk.css.map": "./static/css/main.46820a5e.chunk.css.map",
-    "static/js/2.6a1edf3e.chunk.js.LICENSE.txt": "./static/js/2.6a1edf3e.chunk.js.LICENSE.txt",
+    "static/css/main.8dabf728.chunk.css.map": "./static/css/main.8dabf728.chunk.css.map",
+    "static/js/2.4d203851.chunk.js.LICENSE.txt": "./static/js/2.4d203851.chunk.js.LICENSE.txt",
+    "static/media/index.css": "./static/media/SourceSansPro-Regular.efa76f83.ttf",
     "static/media/LogoCristofoli.57beb317.svg": "./static/media/LogoCristofoli.57beb317.svg",
-    "static/media/LogoCristofoli3.f5c9c012.svg": "./static/media/LogoCristofoli3.f5c9c012.svg",
-    "static/media/index.css": "./static/media/SourceSansPro-Regular.efa76f83.ttf"
+    "static/media/LogoCristofoli2.c8d8931f.svg": "./static/media/LogoCristofoli2.c8d8931f.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.01cf0a47.js",
-    "static/js/2.6a1edf3e.chunk.js",
-    "static/css/main.46820a5e.chunk.css",
-    "static/js/main.fab12973.chunk.js"
+    "static/js/2.4d203851.chunk.js",
+    "static/css/main.8dabf728.chunk.css",
+    "static/js/main.1e5da350.chunk.js"
   ]
 }

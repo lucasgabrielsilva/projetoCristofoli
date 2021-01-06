@@ -94,16 +94,17 @@ const DivResult = styled.div`
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    border-top: 1px dotted black;
 `;
 
 const TextArea = styled.textarea`
     height: 100%;
     width: 100%;
+    padding-left: 5px;
     background-color: lightgray;
     color: black;
     font-size: 15px;
     resize: none;
+    border-top: 1px dotted black;
 `;
 
 const Select = styled.select`

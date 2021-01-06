@@ -6,5 +6,4 @@ const config = {
     url: 'https://www.cristofoli.com/apps/AT/SW/version.json',
 };
 
-
 module.exports.conf = config;

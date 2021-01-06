@@ -6,7 +6,7 @@ import { Container, DivCards, Header, Title } from './styles';
 import ModelData from '../../configs';
 
 function Monitor() {
-    const [resize, setResize] = useState(true);
+    const [resize, setResize] = useState(false);
     const [data, setData] = useState(false);
     const [model, setModel] = useState(false);
 
@@ -21,6 +21,7 @@ function Monitor() {
                     minValue={parameter.min}
                     maxValue={parameter.max}
                     unit={parameter.unit}
+                    resize={resize}
                 />
             );
         });
@@ -32,7 +33,7 @@ function Monitor() {
             temp.push(0);
         }
         return temp.map(() => {
-            return <CardInvalid />;
+            return <CardInvalid resize={resize}/>;
         });
     };
 
@@ -43,6 +44,10 @@ function Monitor() {
         });
         setData(temp);
     };
+
+    window.onresize = (event) => {
+        setResize(!resize);
+    }
 
     useEffect(async () => {
         setModel(ModelData[`${await window.api.get('model')}`]);

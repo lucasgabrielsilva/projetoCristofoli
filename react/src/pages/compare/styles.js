@@ -99,12 +99,13 @@ const DivResult = styled.div`
 
 const TextArea = styled.textarea`
     height: 100%;
-    width: 50%;
-    border-right: 1px dotted black;
+    width: 100%;
+    padding-left: 5px;
     background-color: lightgray;
     color: black;
     font-size: 15px;
     resize: none;
+    border-right: 1px dotted black;
 `;
 
 const Select = styled.select`
