@@ -69,6 +69,7 @@ function SendData() {
     const [opacity, setOpacity] = useState(1);
     const [sending, setSending] = useState(false);
 
+    // função responsavel por reiniciar o formulario
     const handleReport = (data) => {
         window.api.stop('report');
         setOpacity(1);
@@ -84,6 +85,7 @@ function SendData() {
         setColorDescription('#003b4d');
     };
 
+    // função responsavel por enviar os dados informados
     const onSubmit = (data) => {
         data.file = files;
         setSending(true);
@@ -92,6 +94,7 @@ function SendData() {
         window.api.receive('report', handleReport);
     };
 
+    // função responsavel por determinar a validade do nome informado pelo usuário
     const handleName = (data) => {
         schema.fields.name.isValid(getValues().name).then((e) => {
             if (e) {
@@ -102,6 +105,7 @@ function SendData() {
         });
     };
 
+    // função responsavel por determinar a validade do numero de serie informado pelo usuário
     const handleSerie = (data) => {
         schema.fields.serie.isValid(getValues().serie).then((e) => {
             if (e) {
@@ -112,6 +116,7 @@ function SendData() {
         });
     };
 
+    //função responsavel por determinar a validade do codigo da assistencia informado pelo usuário
     const handleCode = (data) => {
         schema.fields.code.isValid(getValues().code).then((e) => {
             if (e) {
@@ -122,6 +127,7 @@ function SendData() {
         });
     };
 
+    // função responsavel por determinar a validade do modelo escolhido pelo usuário
     const handleModel = (data) => {
         schema.fields.model.isValid(getValues().model).then((e) => {
             if (e) {
@@ -132,6 +138,7 @@ function SendData() {
         });
     };
 
+    // função responsavel por determinar a validade do ciclo selecionado pelo ciclo
     const handleCycle = (data) => {
         schema.fields.cycle.isValid(getValues().cycle).then((e) => {
             if (e) {
@@ -142,6 +149,7 @@ function SendData() {
         });
     };
 
+    // função responsavel por determinar a validade dos dados enviados pelo usuário na descrição
     const handleDescription = (data) => {
         schema.fields.description.isValid(getValues().description).then((e) => {
             if (e) {
@@ -152,6 +160,7 @@ function SendData() {
         });
     };
 
+    //função responsavel por checar a validade dos arquivos selecionados pelo usuário
     const handleFile = (data) => {
         data.preventDefault();
         schema.fields.file.isValid(getValues().file).then((e) => {
