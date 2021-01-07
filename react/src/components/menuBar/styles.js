@@ -8,7 +8,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     border-right: 1px solid #003b4d;
-    background-color: #0f5aa1;
+    background-color: #003b4d;
     border-radius: 0px 5px 0px 5px;
 
     @media (max-width: 800px) {
@@ -44,7 +44,7 @@ const DivImg = styled.div`
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    background-color: #0f5aa1;
+    background-color: #003b4d;
 `;
 
 const Image = styled.img`
@@ -86,7 +86,7 @@ const Item = styled.button`
 const ButtonExit = styled.button`
     height: 100%;
     width: 100%;
-    background-color: #0f5aa1;
+    background-color: #003b4d;
     color: white;
     border: none;
     text-decoration: none;

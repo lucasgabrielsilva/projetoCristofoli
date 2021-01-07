@@ -11,6 +11,7 @@ import SendData from './pages/sendData';
 
 import './index.css';
 
+//função resposavel por realizar o roteamento entre as telas
 window.onload = () => {
     ReactDOM.render(
         <HashRouter basename="/">

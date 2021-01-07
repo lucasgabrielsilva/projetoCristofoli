@@ -7,7 +7,7 @@ const Container = styled.div`
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    background-color: #0f5aa1;
+    background-color: #003b4d;
 `;
 
 const DivLogin = styled.div`

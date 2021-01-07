@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { LinearGauge } from 'canvas-gauges';
 import { Container, DivCanvas, DivTitle, DivInfo } from './styles';
 
+//valores base do mostrador
 const canvasConfigBase = {
     minorTicks: 5,
     tickSide: 'left',
@@ -27,6 +28,7 @@ const canvasConfigBase = {
 export default function Card(props) {
     const refCanvas = useRef(null);
 
+    //função responsavel por iniciar os valores corretos para o mostrador, e cria-lo
     useEffect(() => {
         if (refCanvas.current) {
             if (!refCanvas.current.options) {
@@ -41,6 +43,7 @@ export default function Card(props) {
         }
     }, []);
 
+    // função resposavel pela renderização do mostrador em conjunto com o "resize" da tela
     useEffect(() => {
         if(refCanvas.current){
           const temp = new LinearGauge(canvasConfigBase);
@@ -50,6 +53,7 @@ export default function Card(props) {
         }
       },[props.resize]);
 
+    // função responsavek pela atualização dos valores do mostrador
     useEffect(() => {
         if (refCanvas.current) {
             refCanvas.current.value = props.value;
@@ -59,7 +63,7 @@ export default function Card(props) {
     return (
         <Container>
             <DivTitle>
-                <label style={{ fontSize: '16px', backgroundColor: 'white', fontWeight: 'bold' }}>
+                <label style={{ fontSize: '14px', backgroundColor: 'white', fontWeight: 'bold' }}>
                     {props.title}
                 </label>
             </DivTitle>
@@ -68,7 +72,7 @@ export default function Card(props) {
             </DivCanvas>
             <DivInfo>
                 <label
-                    style={{ fontSize: '18px', backgroundColor: 'white', fontWeight: 'bold' }}
+                    style={{ fontSize: '16px', backgroundColor: 'white', fontWeight: 'bold' }}
                 >{`${props.value}${props.unit}`}</label>
             </DivInfo>
         </Container>

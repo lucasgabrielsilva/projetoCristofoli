@@ -29,7 +29,7 @@ function createWindow() {
         useContentSize: true,
         icon: Logo,
         webPreferences: {
-            devTools: true,
+            devTools: false,
             allowRunningInsecureContent: false,
             webSecurity: true,
             nodeIntegration: false,
@@ -41,7 +41,7 @@ function createWindow() {
     });
 
     mainWindow.maximize();
-    //mainWindow.removeMenu();
+    mainWindow.removeMenu();
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, '..', 'front/index.html'),
@@ -65,6 +65,7 @@ const handleFileName = (date) => {
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} - ${date.getHours()}_${date.getMinutes() < 10 ? '0'.concat(date.getMinutes()) : date.getMinutes()}`;
 };
 
+// função responsavel por manipular os dados recebidos e envia-los ao front-end
 const handleParser = () => {
     parser = port.pipe(new ByteLength({length: 13}))
     parser.on("data", (values) => {
@@ -118,6 +119,7 @@ ipcMain.on('Exit', (event) => {
     event.reply("changeWindow", true);
 });
 
+//função responsavel por avisar o usuário que um teste está em curso
 ipcMain.on("openModal", async (event, argument) => {
     howRequestWindow = argument;
     const option = await dialog.showMessageBox(mainWindow, {
@@ -140,6 +142,7 @@ ipcMain.on("openModal", async (event, argument) => {
     }
 });
 
+// função responsavel por avisar ao usuário que os modelos de autoclave não são compatives para comparação
 ipcMain.on('modelErro', (event, argument) => {
     dialog.showMessageBoxSync(mainWindow, {
         title: "Cristófoli Biossegurança",
@@ -151,6 +154,7 @@ ipcMain.on('modelErro', (event, argument) => {
     });
 });
 
+// função responsavel por listar todas as portas seriais no sistema
 ipcMain.on("listPorts", (event) => {
     SerialPort.list().then(function (data) {
         const ports = data.map((port) => {
@@ -160,6 +164,7 @@ ipcMain.on("listPorts", (event) => {
     });
 });
 
+// função responsavel pela conexão com a porta serial
 ipcMain.on("portConnect", (event, argument) => {
     port = new SerialPort(argument, {
         baudRate: 115200,
@@ -179,6 +184,7 @@ ipcMain.on("portConnect", (event, argument) => {
     });
 });
 
+// função responsavel pelo envio do e-mail
 ipcMain.on('Report', async (event, argument) => {
     let anexos = [];
 
@@ -227,6 +233,7 @@ ipcMain.on('Report', async (event, argument) => {
     });
 });
 
+// função responsavel pela atualização do software
 ipcMain.on('Update', async (event, argument) => {
     Axios({
         url: config.url,
@@ -292,6 +299,7 @@ ipcMain.on('Update', async (event, argument) => {
     });
 });
 
+// função responsavel por salvar o arquivo no
 ipcMain.on("saveCSV", (event, argument) => {
     const date = new Date(null);
     date.setMilliseconds(Date.now());
@@ -319,6 +327,7 @@ ipcMain.on("saveCSV", (event, argument) => {
     }
 });
 
+//função responsavel por ler os dados dos arquivos csv salvos anteriormente
 ipcMain.on("loadCSV", async (event, argument) => {
     const path = dialog.showOpenDialogSync(mainWindow, {
         title: "Cristófoli Biossegurança - Carregar dados",

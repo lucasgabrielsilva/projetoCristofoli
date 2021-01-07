@@ -5,6 +5,7 @@ import * as Zoom from 'chartjs-plugin-zoom';
 function GraphicCompare(props) {
     const refCanvas = useRef(null);
 
+
     useEffect(() => {
         if (props.model) {
             refCanvas.current = new Chart(refCanvas.current.getContext('2d'), {
