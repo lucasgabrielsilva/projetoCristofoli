@@ -2,18 +2,17 @@ import React, { useRef, useEffect, useState } from 'react';
 import Chart from 'chart.js';
 import * as Zoom from 'chartjs-plugin-zoom';
 import ModelData from '../../configs';
-import { Container } from './styles';
 
 function Graphic(props) {
     const refCanvas = useRef(null);
     const [model, setModel] = useState(false);
 
-    // função responsavel por obter o modelo de autoclave o qual os dados serão lidos
+// função responsavel por obter o modelo de autoclave o qual os dados serão lidos
     useEffect(async () => {
         setModel(ModelData[`${await window.api.get('model')}`]);
     }, []);
 
-    // função responsavel por criar e configurar o grafico
+// função responsavel por criar e configurar o grafico
     useEffect(() => {
         if (model) {
             refCanvas.current = new Chart(refCanvas.current.getContext('2d'), {
@@ -138,7 +137,7 @@ function Graphic(props) {
         }
     }, [model]);
 
-    //função responsavel por atualizar o grafico com os novos recebidos
+// função responsavel por atualizar o grafico com os novos recebidos
     useEffect(() => {
         if (props.data && model) {
             refCanvas.current.chart.data.datasets.forEach((dataset) => {
@@ -161,7 +160,7 @@ function Graphic(props) {
         }
     }, [props.data]);
 
-    //função responsavel por limpar o grafico
+// função responsavel por limpar o grafico
     useEffect(() => {
         if (props.clean && model) {
             refCanvas.current.chart.reset();

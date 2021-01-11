@@ -1,9 +1,9 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { format } = require('@fast-csv/format');
 const path = require("path");
 const url = require("url");
 const fs = require("fs");
 const csv = require('@fast-csv/parse');
-const { format } = require('@fast-csv/format');
 const SerialPort = require("serialport");
 const ByteLength = require('@serialport/parser-byte-length')
 const Moment = require('moment');
@@ -124,6 +124,7 @@ ipcMain.on("openModal", async (event, argument) => {
     howRequestWindow = argument;
     const option = await dialog.showMessageBox(mainWindow, {
         title: "Cristófoli Biossegurança",
+        icon: Logo,
         message: "Um teste está sendo realizado, caso você saia agora todo o progresso será perdido!\nCaso queira salvar o resultado parcial do teste: clique em 'Não' e em seguida em 'Parar'.",
         buttons: ['Não', 'Sim'],
         cancelId:0,
@@ -146,6 +147,7 @@ ipcMain.on("openModal", async (event, argument) => {
 ipcMain.on('modelErro', (event, argument) => {
     dialog.showMessageBoxSync(mainWindow, {
         title: "Cristófoli Biossegurança",
+        icon: Logo,
         message: "Não é possivel comparar dados de modelos diferentes!",
         buttons: ['Ok'],
         cancelId:0,
@@ -216,6 +218,7 @@ ipcMain.on('Report', async (event, argument) => {
         if(err){
             dialog.showMessageBoxSync(mainWindow, {
                 title: "Cristófoli Autoclave Manager - Reportar",
+                icon: Logo,
                 message: "A mensagem Não foi Enviada, Por Favor Tente Novamente",
                 buttons: ['Ok'],
                 type:'error'
@@ -224,6 +227,7 @@ ipcMain.on('Report', async (event, argument) => {
         if(info){
             dialog.showMessageBoxSync(mainWindow, {
                 title: "Cristófoli Autoclave Manager - Reportar",
+                icon: Logo,
                 message: "O Reporte foi Enviado, Agradecemos o contato",
                 buttons:['Ok'],
                 type:'warning'
@@ -244,6 +248,7 @@ ipcMain.on('Update', async (event, argument) => {
         if(response.data[`${process.platform}`][`${process.arch}`].currentVersion > config.version){
             const option = dialog.showMessageBoxSync(mainWindow, {
                 title: "Cristófoli Biossegurança - Atualização",
+                icon: Logo,
                 message: "Uma nova versão está disponivel, deseja fazer o download e instalar?",
                 buttons: ['Não', 'Sim'],
                 cancelId:0,
@@ -253,6 +258,7 @@ ipcMain.on('Update', async (event, argument) => {
             if(option){
                 const path = dialog.showSaveDialogSync(mainWindow, {
                     title: "Cristófoli Biossegurança - Salvar nova versão",
+                    icon: Logo,
                     defaultPath: response.data[`${process.platform}`][`${process.arch}`].name,
                     filters: [{
                         name: '.exe', extensions: ['exe']
@@ -261,6 +267,7 @@ ipcMain.on('Update', async (event, argument) => {
                 if(path){
                     dialog.showMessageBoxSync(mainWindow, {
                         title: "Cristófoli Biossegurança - Atualização",
+                        icon: Logo,
                         message: "Durante o processo você será perguntado se deseja fechar a janela, por favor clique em 'ok'",
                         buttons:['Prosseguir'],
                         type:'warning'
@@ -299,12 +306,13 @@ ipcMain.on('Update', async (event, argument) => {
     });
 });
 
-// função responsavel por salvar o arquivo no
+// função responsavel por salvar o arquivo csv
 ipcMain.on("saveCSV", (event, argument) => {
     const date = new Date(null);
     date.setMilliseconds(Date.now());
     const path = dialog.showSaveDialogSync(mainWindow, {
         title: "Cristófoli Biossegurança - Salvar dados do teste",
+        icon: Logo,
         defaultPath: `${handleFileName(Moment().toDate())}${process.platform == 'linux' ? '.csv' : ''}`,
         filters: [{
             name: '.csv', extensions: ['csv']
@@ -331,6 +339,7 @@ ipcMain.on("saveCSV", (event, argument) => {
 ipcMain.on("loadCSV", async (event, argument) => {
     const path = dialog.showOpenDialogSync(mainWindow, {
         title: "Cristófoli Biossegurança - Carregar dados",
+        icon: Logo,
         properties: ['openFile'],
         filters: [{
             name: '.csv', extensions: ['csv']

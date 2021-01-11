@@ -26,6 +26,7 @@ function Analyze() {
     const [model, setModel] = useState(false);
     const [load, setLoad] = useState(false);
 
+// função responsavel por calcular a media e a maxima dos valores lidos
     const handleCalc = (data) => {
         let max = parseFloat(data[0]);
         let avg = 0;
@@ -41,6 +42,7 @@ function Analyze() {
         };
     };
 
+// função responsavel por ler os dados do arquivo csv e formata-los para apresentação
     const handleLoad = (data) => {
         setLoad(true);
         setModel(ModelData[data.modelo[0]]);
@@ -74,17 +76,20 @@ function Analyze() {
         window.api.stop('dataCSV');
     };
 
+// função responsavel por carregar o arquivo csv
     const handleButtonLoad = (event) => {
         event.preventDefault();
         window.api.send('loadCSV', true);
         window.api.receive('dataCSV', handleLoad);
     };
 
+// função responsavel por alterar as linhas apresentadas
     const handleChangeLines = (event) => {
         event.preventDefault();
         setLines(event.target.value);
     };
 
+// função responsavel por redefinir os valores iniciais do zoom
     const handleResetZoom = (event) => {
         event.preventDefault();
         setZoom(true);

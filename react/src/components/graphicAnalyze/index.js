@@ -1,11 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Chart from 'chart.js';
-import * as Zoom from 'chartjs-plugin-zoom';
 
 function GraphicAnalyze(props) {
     const refCanvas = useRef(null);
 
-    // função responsavel por atribuir os dados recebidos ao grafico
+// função responsavel por atribuir os dados recebidos ao grafico
     const handleSetData = () => {
         if (refCanvas.current.data.datasets.length > 0 && props.data) {
             refCanvas.current.chart.data.datasets.forEach((dataset) => {
@@ -20,7 +19,7 @@ function GraphicAnalyze(props) {
         }
     };
 
-    // função que realiza a ação quando a legenda é clicada
+// função que realiza a ação quando a legenda é clicada
     const handleClickLegend = (...data) => {
         const id = refCanvas.current.getDatasetMeta(data[1].datasetIndex)
             .yAxisID;
@@ -72,7 +71,7 @@ function GraphicAnalyze(props) {
         refCanvas.current.chart.update(0);
     };
 
-    // função responsavel por criar e configurar o grafico
+// função responsavel por criar e configurar o grafico
     useEffect(() => {
         refCanvas.current = new Chart(refCanvas.current.getContext('2d'), {
             type: 'line',
@@ -160,7 +159,7 @@ function GraphicAnalyze(props) {
         });
     }, []);
 
-    // função responsavel por definir
+// função responsavel por definir as escalas
     useEffect(async () => {
         if (refCanvas.current.chart && typeof props.data.modelo === 'object') {
             refCanvas.current.chart.options.scales.yAxes = props.data.modelo.scales.map(
@@ -208,7 +207,7 @@ function GraphicAnalyze(props) {
         }
     }, [props.data]);
 
-    // função responsavel por definir quais as linhas visiveis no grafico
+// função responsavel por definir quais as linhas visiveis no grafico
     useEffect(() => {
         if (refCanvas.current.chart.options.scales.yAxes.length > 0) {
             refCanvas.current.chart.options.scales.yAxes.forEach((scale) => {
@@ -222,7 +221,7 @@ function GraphicAnalyze(props) {
         }
     }, [props.lines]);
 
-    //função responsavel por reiniciar o zoom no grafico
+// função responsavel por reiniciar o zoom no grafico
     useEffect(() => {
         if (refCanvas.current.chart) {
             refCanvas.current.chart.resetZoom();

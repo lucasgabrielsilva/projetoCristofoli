@@ -7,9 +7,9 @@ const Container = styled.div`
     flex-flow: column wrap;
     align-items: center;
     justify-content: space-between;
-    border-right: 1px solid #003b4d;
+    border-right: 1px solid lightgray;
     background-color: #003b4d;
-    border-radius: 0px 5px 0px 5px;
+    border-radius: 0px 5px 5px 0px;
 
     @media (max-width: 800px) {
         justify-content: flex-start;

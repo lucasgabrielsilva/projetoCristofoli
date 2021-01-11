@@ -1,11 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js';
-import * as Zoom from 'chartjs-plugin-zoom';
 
 function GraphicCompare(props) {
     const refCanvas = useRef(null);
 
-
+// função responsavel por criar e configurar o grafico
     useEffect(() => {
         if (props.model) {
             refCanvas.current = new Chart(refCanvas.current.getContext('2d'), {
@@ -133,6 +132,7 @@ function GraphicCompare(props) {
         }
     }, [props.model]);
 
+// função responsavel por configurar o grafico apartir dos dados lidos do csv
     useEffect(() => {
         if (
             refCanvas.current.chart &&
@@ -176,6 +176,7 @@ function GraphicCompare(props) {
         }
     }, [props.data]);
 
+// função responsavel por redefinir o zoom do grafico
     useEffect(() => {
         if (refCanvas.current.chart && props.zoom) {
             refCanvas.current.chart.resetZoom();

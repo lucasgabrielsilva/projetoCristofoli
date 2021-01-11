@@ -37,13 +37,14 @@ function Teste1() {
     const [lines, setLines] = useState('temperature');
     const [model, setModel] = useState(false);
 
+// função responsavel por formatar corretamente o timestamp
     const handleTime = (now) => {
         return Moment(now - timeInitial)
             .add('-21', 'h')
             .toDate();
     };
 
-    // função responsavel por tratar os dados recebidos e encaminhalos para o grafico e para o arquivo csv ainda não salvo
+// função responsavel por tratar os dados recebidos e encaminha-los para o grafico e para o arquivo csv ainda não salvo
     const handleDataA = (data) => {
         data.timeStamp = handleTime(data.timeStamp);
         const temp = Object.keys(data).map((parameter) => {
@@ -54,7 +55,7 @@ function Teste1() {
         setValue(data);
     };
 
-    // função responsavel por receber os dados e finalizar a contabilidade dos testes
+// função responsavel por receber os dados de tempo e finalizar a contabilidade do datalogg
     function handleDataB(data) {
         if (data) {
             data.forEach((value) => {
@@ -65,7 +66,7 @@ function Teste1() {
         handleStop();
     }
 
-    // função responsavel por receber os dados referentes ao salvamento do arquivo csv
+// função responsavel por receber os dados referentes ao salvamento do arquivo csv
     const handleDataC = (data) => {
         setTextAreaValue('finalizando teste...');
         if (data) {
@@ -89,7 +90,7 @@ function Teste1() {
         window.api.stop('C');
     };
 
-    // função resposanvel por iniciar o processamento do teste
+// função responsavel por iniciar o processamento do datalogg
     const handleStart = (event) => {
         event.preventDefault();
         window.api.receive('A', handleDataA);
@@ -107,7 +108,7 @@ function Teste1() {
         timeInitial = Date.now();
     };
 
-    // função responsavel por limpar o grafico
+// função responsavel por limpar o grafico
     const handleClean = (event) => {
         event.preventDefault();
         setClean(true);
@@ -124,7 +125,7 @@ function Teste1() {
         setTextAreaValue('Aguardando...');
     };
 
-    // função responsavel por terminar o teste forçadamente antes do termino total do processo
+// função responsavel por terminar o teste forçadamente antes do termino total do processo
     const handleStop = (event) => {
         if (event) {
             event.preventDefault();
@@ -147,31 +148,31 @@ function Teste1() {
         window.api.send('saveCSV', dataToCsv);
     };
 
-    // função responsavel por determinar qual linha está amostra no grafico
+// função responsavel por determinar qual linha será apresentada no grafico
     const handleChangeLines = (event) => {
         event.preventDefault();
         setLines(event.target.value);
     };
 
-    // função responvavel por alterar o mode de visialização do grafico(tempo real ou analise)
+// função responvavel por alterar o modo de visualização do grafico(tempo real ou analise)
     const handleChangeMode = (event) => {
         event.preventDefault();
         setMode(event.target.value);
     };
 
-    // função responsavel por obter o modelo da autoclave conectada
+// função responsavel por obter o modelo da autoclave conectada
     useEffect(async () => {
         setModel(ModelData[`${await window.api.get('model')}`]);
     }, []);
 
-    // função responsavel por atribuir o modelo da autoclave ao arquivo csv
+// função responsavel por atribuir o modelo da autoclave ao arquivo csv
     useEffect(() => {
         if (model) {
             dataToCsv = [model.csvHead];
         }
     }, [model]);
 
-    // função responsavel por encerrar os listenings quando a janela é trocada
+// função responsavel por encerrar os listenings quando a janela é trocada
     useEffect(() => {
         return () => {
             dataToCsv = [];
@@ -184,7 +185,7 @@ function Teste1() {
 
     return (
         <Container>
-             <MenuBar changeWindow={isRunning} />
+            <MenuBar changeWindow={isRunning} />
             <DivTest>
                 <Header>
                     <Title>DataLogger</Title>

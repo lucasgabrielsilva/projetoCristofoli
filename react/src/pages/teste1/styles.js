@@ -34,7 +34,7 @@ const Title = styled.label`
     align-self: auto;
     margin-left: 3%;
     font-size: 200%;
-    color: #0f5aa1;
+    color: #006580;
     background-color: inherit;
 `;
 
@@ -45,13 +45,13 @@ const Button = styled.button`
     margin: 2px;
     border: none;
     padding: 3px;
-    border: 1px solid #0f5aa1;
-    background-color: #0f5aa1;
+    border: 1px solid #006580;
+    background-color: #006580;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
         background-color: white;
-        color: #0f5aa1;
+        color: #006580;
     }
 `;
 
@@ -100,7 +100,7 @@ const TextArea = styled.textarea`
     height: 100%;
     width: 100%;
     padding-left: 5px;
-    background-color: lightgray;
+    background-color: white;
     color: black;
     font-size: 15px;
     resize: none;
@@ -112,13 +112,13 @@ const Select = styled.select`
     color: white;
     margin: 2px;
     padding: 3px;
-    border: 1px solid #0f5aa1;
-    background-color: #0f5aa1;
+    border: 1px solid #006580;
+    background-color: #006580;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
         background-color: white;
-        color: #0f5aa1;
+        color: #006580;
     }
 `;
 

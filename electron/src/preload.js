@@ -3,6 +3,7 @@ const { contextBridge, ipcRenderer } = require("electron");
 let model;
 let mode;
 
+// função responsavel por fornecer um meio de comunicação entre o front-end e o back-end
 contextBridge.exposeInMainWorld(
     "api", {
         send: (type, data) => {

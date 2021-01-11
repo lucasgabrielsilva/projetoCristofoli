@@ -17,7 +17,7 @@ function MenuBar(props) {
     const [goTo, setGoTo] = useState('#');
     const [mode, setMode] = useState(false);
 
-    // função responsavel por redirecionar o usuário
+// função responsavel por redirecionar o usuário
     const handleChangeWindow = (data) => {
         if (data) {
             // encerra os listenings
@@ -37,7 +37,7 @@ function MenuBar(props) {
         setMode(await window.api.get('mode'));
     }, []);
 
-    // função responsavel por verificar a possibilidade de mudança de tela
+// função responsavel por verificar a possibilidade de mudança de tela
     const handleTryChangeWindow = (data) => {
         if (props.changeWindow) {
             const index = window.location.href.indexOf('#/');

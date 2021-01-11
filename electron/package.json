@@ -10,8 +10,8 @@
   "scripts": {
     "start": "electron .",
     "rebuild": "electron-rebuild",
-    "dist": "electron-builder --win --x64",
-    "distDeb": "electron-builder --linux --x64",
+    "distWindowsx64": "electron-builder --win --x64",
+    "distLinux": "electron-builder --linux --x64",
     "minify": "gulp minify"
   },
   "devDependencies": {
@@ -56,7 +56,6 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "axios": "^0.21.0",
-    "excel4node": "^1.7.2",
     "fast-csv": "^4.3.2",
     "moment": "^2.29.1",
     "nodemailer": "^6.4.17",

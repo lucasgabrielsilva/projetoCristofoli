@@ -1,3 +1,4 @@
+//define os dados exclusivos de cada modelo de autoclave
 const infos = {
     vdr300: {
         name: 'VDR 3.00',

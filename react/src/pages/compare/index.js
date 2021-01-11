@@ -28,17 +28,20 @@ function Teste1() {
     const [textArea1, setTextArea1] = useState('Aguardando dados...');
     const [textArea2, setTextArea2] = useState('Aguardando dados...');
 
+// função responsavel por receber os dados do csv 1
     const handleLoad1 = (data) => {
         setData1(data);
         window.api.stop('dataCSV');
     };
 
+// função responsavel por definir o modelo de autoclave apartir dos dados do csv 1
     useEffect(() => {
         if (data1) {
             setModel(ModelData[data1.modelo[0]]);
         }
     }, [data1]);
 
+// função responsavel por processar os dados do csv 2
     const handleLoad2 = (data) => {
         if (ModelData[data.modelo[0]].name === model.name) {
             setData2(data);
@@ -48,18 +51,21 @@ function Teste1() {
         window.api.stop('dataCSV');
     };
 
+// função responsavel por iniciar a leitura do csv 1
     const handleStart1 = (event) => {
         event.preventDefault();
         window.api.send('loadCSV', true);
         window.api.receive('dataCSV', handleLoad1);
     };
 
+// função responsavel por iniciar a leitura do csv 2
     const handleStart2 = (event) => {
         event.preventDefault();
         window.api.send('loadCSV', true);
         window.api.receive('dataCSV', handleLoad2);
     };
 
+// função responsavel por calcular a media e a maxima dos valores lidos
     const handleCalc = (value) => {
         let max = parseFloat(value[0]);
         let avg = 0;
@@ -152,6 +158,7 @@ function Teste1() {
         }
     }, [type, data1, data2]);
 
+// função responsavel por alterar parametros do grafico apartir do modelo de autoclavw
     useEffect(() => {
         if (model) {
             setType(model.parameters[0].name);
@@ -159,11 +166,13 @@ function Teste1() {
         }
     }, [model]);
 
+// função responsavel por alterar o parametro a ser comparado
     const handleChangeType = (event) => {
         event.preventDefault();
         setType(event.target.value);
     };
 
+// função responsavel por reiniciar os valores iniciais do zoom
     const handleResetZoom = (event) => {
         event.preventDefault();
         setZoom(true);

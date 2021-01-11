@@ -10,6 +10,7 @@ function Monitor() {
     const [data, setData] = useState(false);
     const [model, setModel] = useState(false);
 
+// função responsavel por
     const handleCard = (event) => {
         return model.parameters.map((parameter) => {
             return (
@@ -27,6 +28,7 @@ function Monitor() {
         });
     };
 
+// função responsavel por definir o numero de card invalidos a serem renderizados
     const handleCardInvalid = (event) => {
         const temp = [];
         for (let i = 0; i < 8 - model.parameters.length; i += 1) {
@@ -37,6 +39,7 @@ function Monitor() {
         });
     };
 
+// função responsavel por processar os dados recebidos da autoclave
     const handleDataA = (value) => {
         const temp = {};
         Object.keys(value).forEach((parameter) => {
@@ -45,15 +48,18 @@ function Monitor() {
         setData(temp);
     };
 
+// função responsavel por atualizar a pagina sempre que haver um resize
     window.onresize = (event) => {
         setResize(!resize);
     }
 
+// função responsavel por receber os dados da autoclave
     useEffect(async () => {
         setModel(ModelData[`${await window.api.get('model')}`]);
         window.api.receive('A', handleDataA);
     }, []);
 
+// função responsavel por encerrar o listener quando a janela é trocada
     useEffect(() => {
         return () => window.api.stop('A');
     }, []);

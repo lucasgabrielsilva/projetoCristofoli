@@ -32,6 +32,7 @@ function Login() {
     const [progress, setProgess] = useState('Verificando atualizações...');
     const [showButton, setShowButton] = useState(false);
 
+// função responsavel por redirecionar o usuário
     const handleConnect = (data) => {
         if (data) {
             window.api.send('Model', model);
@@ -41,12 +42,14 @@ function Login() {
         }
     };
 
+// função responsavel por definir a porta selecionada pelo usuário
     const handlePort = (event) => {
         event.preventDefault();
         setPort(event.target.value);
         setError(false);
     };
 
+// função responsavel por atualizar a lista de portas seriais disponiveis
     const handleUpdatePorts = (event) => {
         event.preventDefault();
         setPortsSignal(true);
@@ -56,11 +59,13 @@ function Login() {
         window.api.send('listPorts');
     };
 
+// função seleciona automaticamente a porta da primeira posição da lista
     const handleUpdateListPort = (data) => {
         setListPorts(data);
         setPort(`${data[0]}`);
     };
 
+// função responsavel por realizar a tentativa de conexão com a porta serial
     const handleTryConnect = async (event) => {
         event.preventDefault();
         if (!mode) {
@@ -69,6 +74,7 @@ function Login() {
         window.api.send('portConnect', port);
     };
 
+// função responsavel por selecionar o modelo de autoclave
     const handleChangeModel = (event) => {
         event.preventDefault();
         setModel(event.target.value);
@@ -76,6 +82,7 @@ function Login() {
         setError(false);
     };
 
+// função responsavel por definir se a autoclave será ou não conectada
     const handleChangeMode = (event) => {
         if (!mode) {
             setDestiny('/monitor');
@@ -87,6 +94,7 @@ function Login() {
         setMode(!mode);
     };
 
+// função responsavel por mostrar ao usuário dados do processo de atualização
     const handleProgress = (data) => {
         if (!data) {
             setShowButton(true);
@@ -96,6 +104,7 @@ function Login() {
         }
     };
 
+// função responsavel por definir os listenings
     useEffect(() => {
         window.api.send('Update');
         window.api.send('Mode', false);
@@ -106,6 +115,7 @@ function Login() {
         window.api.send('model', Object.keys(ModelData)[0]);
     }, []);
 
+// função responsavel por encerrar os listenings quando a janela é trocada
     useEffect(() => {
         return () => {
             window.api.stop('listPorts');

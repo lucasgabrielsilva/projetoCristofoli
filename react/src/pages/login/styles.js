@@ -18,6 +18,7 @@ const DivLogin = styled.div`
     justify-content: center;
     align-items: center;
     background-color: white;
+    border: 2px solid lightgray;
     border-radius: 10px;
 `;
 
@@ -106,10 +107,10 @@ const Button = styled.button`
     border: none;
     border-radius: 5px;
     color: white;
-    background-color: #0f5aa1;
+    background-color: #003b4d;
     cursor: pointer;
     &:hover {
-        background-color: #0083c1;
+        background-color: #003b4d;
         color: white;
     }
     &:disabled {

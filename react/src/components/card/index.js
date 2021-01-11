@@ -28,7 +28,7 @@ const canvasConfigBase = {
 export default function Card(props) {
     const refCanvas = useRef(null);
 
-    //função responsavel por iniciar os valores corretos para o mostrador, e cria-lo
+//função responsavel por iniciar os valores corretos para o mostrador, e cria-lo
     useEffect(() => {
         if (refCanvas.current) {
             if (!refCanvas.current.options) {
@@ -43,7 +43,7 @@ export default function Card(props) {
         }
     }, []);
 
-    // função resposavel pela renderização do mostrador em conjunto com o "resize" da tela
+// função resposavel pela renderização do mostrador em conjunto com o "resize" da tela
     useEffect(() => {
         if(refCanvas.current){
           const temp = new LinearGauge(canvasConfigBase);
@@ -53,7 +53,7 @@ export default function Card(props) {
         }
       },[props.resize]);
 
-    // função responsavek pela atualização dos valores do mostrador
+// função responsavel pela atualização dos valores do mostrador
     useEffect(() => {
         if (refCanvas.current) {
             refCanvas.current.value = props.value;

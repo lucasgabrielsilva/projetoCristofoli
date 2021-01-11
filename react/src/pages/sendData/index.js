@@ -22,6 +22,8 @@ import {
 } from './styles';
 
 function SendData() {
+
+// função responsavel por definir um tamanho limite ao anexo
     const handleTest = (data) => {
         let result = true;
         Object.keys(data).forEach((element) => {
@@ -32,6 +34,7 @@ function SendData() {
         return result;
     };
 
+// função responsavel definir os parametros para validação do formulario
     const schema = yup.object().shape({
         name: yup.string().min(3, 'Minimo 3 caracteres').required(),
         serie: yup
@@ -54,6 +57,7 @@ function SendData() {
             ),
     });
 
+// função responsavel configuração do yup
     const { register, handleSubmit, reset, getValues, errors } = useForm({
         resolver: yupResolver(schema),
     });
@@ -69,7 +73,7 @@ function SendData() {
     const [opacity, setOpacity] = useState(1);
     const [sending, setSending] = useState(false);
 
-    // função responsavel por reiniciar o formulario
+// função responsavel por reiniciar o formulario
     const handleReport = (data) => {
         window.api.stop('report');
         setOpacity(1);
@@ -85,7 +89,7 @@ function SendData() {
         setColorDescription('#003b4d');
     };
 
-    // função responsavel por enviar os dados informados
+// função responsavel por enviar os dados informados
     const onSubmit = (data) => {
         data.file = files;
         setSending(true);
@@ -94,7 +98,7 @@ function SendData() {
         window.api.receive('report', handleReport);
     };
 
-    // função responsavel por determinar a validade do nome informado pelo usuário
+// função responsavel por determinar a validade do nome informado pelo usuário
     const handleName = (data) => {
         schema.fields.name.isValid(getValues().name).then((e) => {
             if (e) {
@@ -105,7 +109,7 @@ function SendData() {
         });
     };
 
-    // função responsavel por determinar a validade do numero de serie informado pelo usuário
+// função responsavel por determinar a validade do numero de serie informado pelo usuário
     const handleSerie = (data) => {
         schema.fields.serie.isValid(getValues().serie).then((e) => {
             if (e) {
@@ -116,7 +120,7 @@ function SendData() {
         });
     };
 
-    //função responsavel por determinar a validade do codigo da assistencia informado pelo usuário
+//função responsavel por determinar a validade do codigo da assistência informado pelo usuário
     const handleCode = (data) => {
         schema.fields.code.isValid(getValues().code).then((e) => {
             if (e) {
@@ -127,7 +131,7 @@ function SendData() {
         });
     };
 
-    // função responsavel por determinar a validade do modelo escolhido pelo usuário
+// função responsavel por determinar a validade do modelo escolhido pelo usuário
     const handleModel = (data) => {
         schema.fields.model.isValid(getValues().model).then((e) => {
             if (e) {
@@ -138,7 +142,7 @@ function SendData() {
         });
     };
 
-    // função responsavel por determinar a validade do ciclo selecionado pelo ciclo
+// função responsavel por determinar a validade do ciclo selecionado pelo ciclo
     const handleCycle = (data) => {
         schema.fields.cycle.isValid(getValues().cycle).then((e) => {
             if (e) {
@@ -149,7 +153,7 @@ function SendData() {
         });
     };
 
-    // função responsavel por determinar a validade dos dados enviados pelo usuário na descrição
+// função responsavel por determinar a validade dos dados enviados pelo usuário na descrição
     const handleDescription = (data) => {
         schema.fields.description.isValid(getValues().description).then((e) => {
             if (e) {
@@ -160,7 +164,7 @@ function SendData() {
         });
     };
 
-    //função responsavel por checar a validade dos arquivos selecionados pelo usuário
+//função responsavel por checar a validade dos arquivos selecionados pelo usuário
     const handleFile = (data) => {
         data.preventDefault();
         schema.fields.file.isValid(getValues().file).then((e) => {
@@ -180,6 +184,7 @@ function SendData() {
         });
     };
 
+// função responsavel por limpar o formulario
     const handleReset = (event) => {
         event.preventDefault();
         setFiles([]);

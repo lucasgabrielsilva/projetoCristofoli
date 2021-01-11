@@ -5,11 +5,9 @@
   background-color: #fafafa;
   outline: none;
   @font-face {
-    font-family: 'Dancing Script', cursive;
-    src: url('./assets/Dancing_Script/static/DancingScript-Regular.ttf'),
-        url('./assets/Signika/static/Signika-Regular.ttf'),
+    font-family: 'regular';
+    src: url('./assets/Signika/static/Signika-Regular.ttf'),
         url('./assets/Source_Sans_Pro/SourceSansPro-Regular.ttf')
 
     }
 }
-
